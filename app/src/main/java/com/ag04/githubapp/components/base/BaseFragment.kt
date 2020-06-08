@@ -1,0 +1,90 @@
+package com.ag04.githubapp.components.base
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
+
+/**
+ * Created by akovar on 08/06/2020.
+ */
+abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>>
+    : Fragment()
+    , BaseContract.View {
+
+    private var onGlobalLayoutListener: OnGlobalLayoutListener? = null
+
+    /**
+     * Provides resource layout Id for this fragment.
+     *
+     * @return resource layout id
+     */
+    @LayoutRes
+    protected abstract fun provideResourceViewId(): Int
+
+    /**
+     * Provides presenter for this fragment.
+     *
+     * @return presenter
+     */
+    protected abstract fun providePresenter(): P
+
+    override fun onError(errorStatusCode: Int) {
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val resourceViewId = provideResourceViewId()
+        if (resourceViewId <= 0) {
+            return super.onCreateView(inflater, container, savedInstanceState)
+        }
+
+        val resourceView = inflater.inflate(resourceViewId, null)
+        onGlobalLayoutListener = OnGlobalLayoutListener {
+            resourceView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+            onGlobalLayoutListener = null
+
+            providePresenter().onViewReady()
+        }
+
+        resourceView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+
+        return resourceView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        providePresenter().onView(this@BaseFragment as V)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        providePresenter().onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        providePresenter().onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        providePresenter().onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        providePresenter().onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        providePresenter().onDestroy()
+    }
+}
