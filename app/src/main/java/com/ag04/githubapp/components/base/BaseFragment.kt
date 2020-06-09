@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.ag04.githubapp.R
 
 /**
  * Created by akovar on 08/06/2020.
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>>
     : Fragment()
     , BaseContract.View {
+
+    protected var container: ViewGroup? = null
 
     private var onGlobalLayoutListener: OnGlobalLayoutListener? = null
 
@@ -35,6 +38,16 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     override fun onError(errorStatusCode: Int) {
     }
 
+    /**
+     * In case there is a need for additional implementation
+     * when view is created, just override this!
+     *
+     * @param view the newly created and inflated view
+     */
+    protected open fun onPostViewCreate(view: View) {
+        container = view.findViewById(R.id.container)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +63,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
             resourceView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
             onGlobalLayoutListener = null
 
+            onPostViewCreate(resourceView)
             providePresenter().onViewReady()
         }
 

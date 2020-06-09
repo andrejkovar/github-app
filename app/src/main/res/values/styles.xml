@@ -1,10 +1,43 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="GitHubApp.TextView" parent="Widget.AppCompat.TextView">
+
+    </style>
+
+    <style name="GitHubApp.TextView.Headline.1" parent="GitHubApp.TextView">
+        <item name="android:textColor">@color/textColor1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="GitHubApp.TextView.Headline.2" parent="GitHubApp.TextView">
+        <item name="android:textColor">@color/textColor1</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="GitHubApp.TextView.Body.1" parent="GitHubApp.TextView">
+        <item name="android:textColor">@color/textColor2</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="GitHubApp.TextView.Body.2" parent="GitHubApp.TextView">
+        <item name="android:textColor">@color/textColor3</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="GitHubApp.Button" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/default_corner_radius</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColor1</item>
     </style>
 
 </resources>

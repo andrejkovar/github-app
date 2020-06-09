@@ -1,7 +1,6 @@
 package com.ag04.githubapp.components.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ag04.githubapp.R
 
@@ -32,14 +31,14 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
         return R.layout.activity_base
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(provideLayoutResourceId())
 
         if (savedInstanceState == null) {
             val fragment: BaseFragment<V, P> = provideFragment()
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment, BASE_ACTIVITY_CONTAINER_TAG)
+                .replace(R.id.activity_container, fragment, BASE_ACTIVITY_CONTAINER_TAG)
                 .commit()
         }
     }

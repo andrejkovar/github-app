@@ -6,6 +6,7 @@ package com.ag04.githubapp.components.base
 interface BaseContract {
 
     interface View {
+
         /**
          * Invoked when there is an error.
          *
