@@ -42,13 +42,13 @@ class RepositoryListAdapter :
 
         override fun performBind(item: Repository) {
             binding.textRepositoryName.text = item.name
-            binding.textOwnerName.text = item.owner?.login
+            binding.textOwnerName.text = item.user?.login
             binding.textWatchersCount.text = item.watchersCount.toString()
             binding.textForksCount.text = item.forksCount.toString()
             binding.textOpenIssuesCount.text = item.openIssuesCount.toString()
 
             Glide.with(itemView)
-                .load(item.owner?.avatarUrl)
+                .load(item.user?.avatarUrl)
                 .circleCrop()
                 .into(binding.imageOwnerAvatar)
         }

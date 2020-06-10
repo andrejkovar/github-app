@@ -20,7 +20,7 @@ class RepositoryListPresenter :
 
     override fun onItemImageClick(item: Repository) {
         Timber.d("onItemImageClick: ${item.id}")
-        // TODO navigate to Owner details screen
+        // TODO navigate to User details screen
     }
 
     override fun onSortClick() {

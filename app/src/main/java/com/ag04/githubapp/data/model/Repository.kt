@@ -49,5 +49,5 @@ data class Repository(
     @SerializedName("score")
     val score: Double,
     @SerializedName("owner")
-    val owner: Owner?
+    val user: User?
 )
