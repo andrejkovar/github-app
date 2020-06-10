@@ -1,4 +1,4 @@
-package com.ag04.githubapp.components.search
+package com.ag04.githubapp.components.repositorylist
 
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListPresenter
 import com.ag04.githubapp.data.model.Repository
@@ -7,7 +7,7 @@ import timber.log.Timber
 /**
  * Created by akovar on 08/06/2020.
  */
-class SearchPresenter :
+class RepositoryListPresenter :
     BaseSearchListPresenter<Repository, SearchContract.View<Repository>>(),
     SearchContract.Presenter<Repository> {
 

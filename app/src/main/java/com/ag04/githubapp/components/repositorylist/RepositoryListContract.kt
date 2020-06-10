@@ -1,6 +1,8 @@
-package com.ag04.githubapp.components.search
+package com.ag04.githubapp.components.repositorylist
 
+import com.ag04.githubapp.components.base.adapter.BaseRecyclerViewAdapter
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListContract
+import com.ag04.githubapp.data.model.Repository
 
 /**
  * Created by akovar on 08/06/2020.
@@ -27,3 +29,8 @@ data class RepositorySearchSort(
     var forks: Boolean,
     var updated: Boolean
 )
+
+interface OnRepositoryClickListener : BaseRecyclerViewAdapter.OnItemClickListener<Repository> {
+
+    fun onAvatarClick(item: Repository)
+}
