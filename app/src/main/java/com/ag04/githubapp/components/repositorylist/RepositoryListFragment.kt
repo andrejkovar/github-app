@@ -31,6 +31,10 @@ class RepositoryListFragment :
         return presenter
     }
 
+    override fun provideResourceViewId(): Int {
+        return R.layout.fragment_repository_list
+    }
+
     override fun onPostViewCreate(view: View) {
         super.onPostViewCreate(view)
         initSortDialog()
