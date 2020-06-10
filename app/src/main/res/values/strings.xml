@@ -5,6 +5,7 @@
     <string name="search">Search</string>
     <string name="sort">Sort</string>
     <string name="submit">Submit</string>
+    <string name="repository_last_updated">Last updated: %s</string>
 
     <string name="dialog_title_sort_repositories">Sort repositories by:</string>
     <string name="dialog_option_stars">Stars</string>
