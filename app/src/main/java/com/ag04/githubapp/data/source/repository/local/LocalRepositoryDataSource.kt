@@ -1,44 +1,33 @@
 package com.ag04.githubapp.data.source.repository.local
 
 import com.ag04.githubapp.data.model.Repository
-import com.ag04.githubapp.data.source.DataSource
-import com.ag04.githubapp.data.source.DataSourceParam
-import com.ag04.githubapp.data.source.Result
+import com.ag04.githubapp.data.source.base.Result
+import com.ag04.githubapp.data.source.base.Success
+import com.ag04.githubapp.data.source.repository.RepositoryDataSource
+import com.ag04.githubapp.data.source.repository.RepositorySort
 
 /**
  * Created by akovar on 10/06/2020.
  */
-class LocalRepositoryDataSource : DataSource<Long, Repository> {
+class LocalRepositoryDataSource : RepositoryDataSource {
 
-    override suspend fun getById(
-        id: Repository,
-        vararg params: DataSourceParam<String, String>
-    ): Result<Long> {
+    override suspend fun query(query: String, sort: RepositorySort?) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAll(vararg params: DataSourceParam<String, String>): Result<List<Long>> {
+    override suspend fun getById(id: Long): Result<Repository> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun save(
-        item: Long,
-        vararg params: DataSourceParam<String, String>
-    ): Result<Long> {
+    override suspend fun getAll(): Result<List<Repository>> {
+        return Success(listOf(Repository(), Repository(), Repository(), Repository(), Repository()))
+    }
+
+    override suspend fun save(item: Repository): Result<Repository> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveAll(
-        item: List<Long>,
-        vararg params: DataSourceParam<String, String>
-    ): Result<List<Long>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun query(
-        query: String,
-        vararg params: DataSourceParam<String, String>
-    ): Result<List<Long>> {
+    override suspend fun saveAll(item: List<Repository>): Result<List<Repository>> {
         TODO("Not yet implemented")
     }
 }

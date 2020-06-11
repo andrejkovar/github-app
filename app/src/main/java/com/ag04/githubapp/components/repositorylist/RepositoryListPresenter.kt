@@ -34,11 +34,9 @@ class RepositoryListPresenter :
             forks = sort.forks
             updated = sort.updated
         }
-
-        load(query, sort)
     }
 
-    private fun load(query: String, sort: RepositorySearchSort) {
-        // TODO implement this
+    override suspend fun provideItems(): List<Repository> {
+        return listOf(Repository(), Repository(), Repository(), Repository(), Repository())
     }
 }

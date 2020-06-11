@@ -1,4 +1,4 @@
-package com.ag04.githubapp.data.source
+package com.ag04.githubapp.data.source.base
 
 /**
  * Created by akovar on 10/06/2020.

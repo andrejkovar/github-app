@@ -1,65 +1,50 @@
 package com.ag04.githubapp.data.source.base
 
-import com.ag04.githubapp.data.source.DataSource
-import com.ag04.githubapp.data.source.DataSourceParam
-import com.ag04.githubapp.data.source.Result
-import com.ag04.githubapp.data.source.Success
-
 /**
  * Created by akovar on 10/06/2020.
  */
-abstract class BaseRepository<T, ID>() :
+abstract class BaseRepository<T, ID> :
     DataSource<T, ID> {
 
     abstract fun provideLocalDataSource(): DataSource<T, ID>
 
     abstract fun provideRemoteDataSource(): DataSource<T, ID>
 
-    override suspend fun getById(
-        id: ID,
-        vararg params: DataSourceParam<String, String>
-    ): Result<T> {
-
-        var result = provideLocalDataSource().getById(id, *params)
+    override suspend fun getById(id: ID): Result<T> {
+        var result = provideLocalDataSource().getById(id)
         if (result is Success) {
             return result
         }
 
-        result = provideRemoteDataSource().getById(id, *params)
+        result = provideRemoteDataSource().getById(id)
         if (result is Success) {
             provideLocalDataSource().save(result.item)
-            return provideLocalDataSource().getById(id, *params)
+            return provideLocalDataSource().getById(id)
         }
 
         return result
     }
 
-    override suspend fun getAll(
-        vararg params: DataSourceParam<String, String>
-    ): Result<List<T>> {
-
-        var result = provideLocalDataSource().getAll(*params)
+    override suspend fun getAll(): Result<List<T>> {
+        var result = provideLocalDataSource().getAll()
         if (result is Success) {
             return result
         }
 
-        result = provideRemoteDataSource().getAll(*params)
+        result = provideRemoteDataSource().getAll()
         if (result is Success) {
             provideLocalDataSource().saveAll(result.item)
-            return provideLocalDataSource().getAll(*params)
+            return provideLocalDataSource().getAll()
         }
 
         return result
     }
 
-    override suspend fun save(item: T, vararg params: DataSourceParam<String, String>): Result<T> {
-        return provideLocalDataSource().save(item, *params)
+    override suspend fun save(item: T): Result<T> {
+        return provideLocalDataSource().save(item)
     }
 
-    override suspend fun saveAll(
-        item: List<T>,
-        vararg params: DataSourceParam<String, String>
-    ): Result<List<T>> {
-        return provideLocalDataSource().saveAll(item, *params)
+    override suspend fun saveAll(item: List<T>): Result<List<T>> {
+        return provideLocalDataSource().saveAll(item)
     }
 }
