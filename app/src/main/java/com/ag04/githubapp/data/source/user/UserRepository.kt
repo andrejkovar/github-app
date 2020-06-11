@@ -1,8 +1,8 @@
 package com.ag04.githubapp.data.source.user
 
 import com.ag04.githubapp.data.model.User
+import com.ag04.githubapp.data.source.DataSource
 import com.ag04.githubapp.data.source.base.BaseRepository
-import com.ag04.githubapp.data.source.base.DataSource
 
 /**
  * Created by akovar on 10/06/2020.

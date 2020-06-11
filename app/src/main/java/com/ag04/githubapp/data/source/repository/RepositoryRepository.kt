@@ -1,15 +1,16 @@
 package com.ag04.githubapp.data.source.repository
 
 import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.data.source.DataSource
+import com.ag04.githubapp.data.source.Result
 import com.ag04.githubapp.data.source.base.BaseRepository
-import com.ag04.githubapp.data.source.base.DataSource
 
 /**
  * Created by akovar on 10/06/2020.
  */
 class RepositoryRepository(
-    private val remoteDataSource: DataSource<Repository, Long>,
-    private val localDataSource: DataSource<Repository, Long>
+    private val remoteDataSource: RepositoryDataSource,
+    private val localDataSource: RepositoryDataSource
 ) : BaseRepository<Repository, Long>(),
     RepositoryDataSource {
 
@@ -17,7 +18,7 @@ class RepositoryRepository(
 
     override fun provideRemoteDataSource(): DataSource<Repository, Long> = remoteDataSource
 
-    override suspend fun query(query: String, sort: RepositorySort?) {
-        TODO("Not yet implemented")
+    override suspend fun query(query: String, sort: RepositorySort?): Result<List<Repository>> {
+        return remoteDataSource.query(query, sort)
     }
 }
