@@ -71,9 +71,9 @@ class RepositoryListFragment :
     }
 
     override fun showSortDialog(sort: RepositorySearchSort) {
-        sortDialogBinding.checkboxStars.isChecked = sort.stars
-        sortDialogBinding.checkboxForks.isChecked = sort.forks
-        sortDialogBinding.checkboxUpdate.isChecked = sort.updated
+        sortDialogBinding.radioButtonStars.isChecked = sort.stars
+        sortDialogBinding.radioButtonForks.isChecked = sort.forks
+        sortDialogBinding.radioButtonLastUpdated.isChecked = sort.updated
 
         if (!sortDialog.isShowing) {
             sortDialog.show()
@@ -105,9 +105,9 @@ class RepositoryListFragment :
         sortDialogBinding.buttonSubmit.setOnClickListener {
             presenter.onSortSubmit(
                 RepositorySearchSort(
-                    stars = sortDialogBinding.checkboxStars.isChecked,
-                    forks = sortDialogBinding.checkboxForks.isChecked,
-                    updated = sortDialogBinding.checkboxUpdate.isChecked
+                    stars = sortDialogBinding.radioButtonStars.isChecked,
+                    forks = sortDialogBinding.radioButtonForks.isChecked,
+                    updated = sortDialogBinding.radioButtonLastUpdated.isChecked
                 )
             )
 

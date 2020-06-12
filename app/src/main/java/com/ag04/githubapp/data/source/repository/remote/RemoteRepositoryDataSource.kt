@@ -33,7 +33,26 @@ class RemoteRepositoryDataSource(
 
         val response: Response<RepositoryResponse>
         try {
-            response = repositoryApi.query(query, query)
+            var sortValue: String? = null
+            sort?.let {
+                if (it.forks) {
+                    sortValue = RepositoryApi.SORT_FORKS
+                    return@let
+                }
+
+                if (it.stars) {
+                    sortValue = RepositoryApi.SORT_STARS
+                    return@let
+                }
+
+                if (it.lastUpdated) {
+                    sortValue = RepositoryApi.SORT_LAST_UPDATED
+                    return@let
+                }
+            }
+
+            response = repositoryApi.query(query, sortValue)
+
         } catch (exception: IOException) {
             return Result.Error(
                 DataSourceException(
@@ -109,7 +128,7 @@ interface RepositoryApi {
     @GET("/search/repositories")
     suspend fun query(
         @Query("q") query: String,
-        @Query("sort") sort: String
+        @Query("sort") sort: String?
     ): Response<RepositoryResponse>
 
     @GET("/repos/{ownerLogin}/{repoName}")
@@ -117,6 +136,12 @@ interface RepositoryApi {
         @Path("ownerLogin") ownerLogin: String,
         @Path("repoName") repoName: String
     ): Response<Repository>
+
+    companion object {
+        const val SORT_STARS = "stars"
+        const val SORT_FORKS = "forks"
+        const val SORT_LAST_UPDATED = "updated"
+    }
 }
 
 data class RepositoryResponse(

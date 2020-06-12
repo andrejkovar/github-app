@@ -22,23 +22,29 @@
             android:gravity="center"
             android:text="@string/dialog_title_sort_repositories" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_stars"
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_option_stars" />
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_forks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_option_forks" />
+            <RadioButton
+                android:id="@+id/radio_button_stars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_option_stars" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_update"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_option_last_update" />
+            <RadioButton
+                android:id="@+id/radio_button_forks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_option_forks" />
+
+            <RadioButton
+                android:id="@+id/radio_button_last_updated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_option_last_update" />
+
+        </RadioGroup>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_submit"
