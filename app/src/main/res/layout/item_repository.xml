@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_items_margin"
-    android:orientation="vertical"
     app:cardBackgroundColor="@color/secondaryBackground"
     app:cardCornerRadius="@dimen/default_corner_radius">
 
@@ -35,7 +34,7 @@
                 android:layout_marginEnd="@dimen/default_details_margin"
                 tools:srcCompat="@mipmap/ic_launcher" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_owner_name"
                 style="@style/GitHubApp.TextView.Headline.2"
                 android:layout_width="0dp"
@@ -91,9 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_details_margin"
-            android:text="@string/repository_last_updated"
             android:textAlignment="textEnd"
-            android:textColor="@color/textColor2" />
+            android:textColor="@color/textColor2"
+            tools:text="@string/repository_last_updated" />
 
     </LinearLayout>
 

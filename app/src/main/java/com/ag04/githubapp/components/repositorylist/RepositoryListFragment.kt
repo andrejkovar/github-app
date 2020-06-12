@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.adapter.BaseRecyclerViewAdapter
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListFragment
+import com.ag04.githubapp.components.repository.RepositoryActivity
 import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.data.model.User
 import com.ag04.githubapp.databinding.FragmentRepositoryListBinding
 import com.ag04.githubapp.databinding.LayoutRepositorySortBinding
 import com.ag04.githubapp.di.PresenterInjector
@@ -20,29 +22,34 @@ import com.ag04.githubapp.di.PresenterInjector
 class RepositoryListFragment :
     BaseSearchListFragment<
             Repository,
-            RepositoryListContract.View<Repository>,
-            RepositoryListContract.Presenter<Repository>>(),
-    RepositoryListContract.View<Repository> {
+            RepositoryListContract.View,
+            RepositoryListContract.Presenter>(),
+    RepositoryListContract.View {
 
-    private val presenter: RepositoryListContract.Presenter<Repository> =
+    private val presenter: RepositoryListContract.Presenter =
         PresenterInjector.provideRepositoryListPresenter()
+
+    /**
+     * Sort dialog view properties.
+     */
+    private lateinit var sortDialog: AlertDialog
+    private lateinit var sortDialogBinding: LayoutRepositorySortBinding
+
+    /**
+     * Fragment layout binding.
+     */
+    private lateinit var binding: FragmentRepositoryListBinding
 
     private lateinit var adapter:
             BaseRecyclerViewAdapter<Repository, RepositoryListAdapter.ViewHolder>
 
-    // Sort dialog view properties
-    private lateinit var sortDialog: AlertDialog
-    private lateinit var sortDialogBinding: LayoutRepositorySortBinding
-
-    private lateinit var repositoryListBinding: FragmentRepositoryListBinding
-
-    override fun providePresenter(): RepositoryListContract.Presenter<Repository> {
+    override fun providePresenter(): RepositoryListContract.Presenter {
         return presenter
     }
 
     override fun provideResourceView(inflater: LayoutInflater): View {
-        repositoryListBinding = FragmentRepositoryListBinding.inflate(inflater)
-        return repositoryListBinding.root
+        binding = FragmentRepositoryListBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onPostViewCreate(view: View) {
@@ -56,16 +63,29 @@ class RepositoryListFragment :
         adapter.items = items
     }
 
-    override fun showSortDialog(sort: RepositorySearchSort) {
-        if (sortDialog.isShowing) {
-            sortDialog.dismiss()
+    override fun initRecyclerView() {
+        binding.layoutBaseList.recyclerViewItems.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@RepositoryListFragment.adapter
         }
+    }
 
+    override fun showSortDialog(sort: RepositorySearchSort) {
         sortDialogBinding.checkboxStars.isChecked = sort.stars
         sortDialogBinding.checkboxForks.isChecked = sort.forks
         sortDialogBinding.checkboxUpdate.isChecked = sort.updated
 
-        sortDialog.show()
+        if (!sortDialog.isShowing) {
+            sortDialog.show()
+        }
+    }
+
+    override fun navigateToRepositoryDetails(repo: Repository) {
+        RepositoryActivity.open(context, repo.user.login, repo.name)
+    }
+
+    override fun navigateToUserDetails(user: User) {
+        TODO("Not yet implemented")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -76,6 +96,9 @@ class RepositoryListFragment :
         } else super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Creates and init sort dialog.
+     */
     private fun initSortDialog() {
         sortDialogBinding = LayoutRepositorySortBinding.inflate(layoutInflater)
 
@@ -100,6 +123,9 @@ class RepositoryListFragment :
         sortDialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
     }
 
+    /**
+     * Init adapter.
+     */
     private fun initAdapter() {
         adapter = RepositoryListAdapter().apply {
             onItemClickListener = object : OnRepositoryClickListener {
@@ -109,16 +135,9 @@ class RepositoryListFragment :
                 }
 
                 override fun onAvatarClick(item: Repository) {
-                    presenter.onItemImageClick(item)
+                    presenter.onOwnerAvatarClick(item)
                 }
             }
-        }
-    }
-
-    override fun initRecyclerView() {
-        repositoryListBinding.layoutBaseList.recyclerViewItems.let {
-            it.layoutManager = LinearLayoutManager(context)
-            it.adapter = adapter
         }
     }
 }

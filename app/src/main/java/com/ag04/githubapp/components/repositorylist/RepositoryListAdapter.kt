@@ -42,13 +42,17 @@ class RepositoryListAdapter :
 
         override fun performBind(item: Repository) {
             binding.textRepositoryName.text = item.name
-            binding.textOwnerName.text = item.user?.login
+            binding.textOwnerName.text = item.user.login
             binding.textWatchersCount.text = item.watchersCount.toString()
             binding.textForksCount.text = item.forksCount.toString()
             binding.textOpenIssuesCount.text = item.openIssuesCount.toString()
+            binding.textLastUpdated.text = itemView.context.getString(
+                R.string.repository_last_updated,
+                item.updatedAt
+            )
 
             Glide.with(itemView)
-                .load(item.user?.avatarUrl)
+                .load(item.user.avatarUrl)
                 .circleCrop()
                 .into(binding.imageOwnerAvatar)
         }

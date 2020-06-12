@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ag04.githubapp.R
 
@@ -34,6 +35,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     protected abstract fun providePresenter(): P
 
     override fun onError(errorStatusCode: Int) {
+        Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
     }
 
     /**

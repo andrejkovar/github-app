@@ -13,12 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".components.repositorylist.RepositoryListActivity">
+        <activity
+            android:name=".components.repositorylist.RepositoryListActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".components.repository.RepositoryActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

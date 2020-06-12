@@ -9,6 +9,7 @@ import com.ag04.githubapp.data.source.repository.RepositorySort
 import com.google.gson.annotations.SerializedName
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.io.IOException
 
@@ -20,7 +21,10 @@ class RemoteRepositoryDataSource(
     private val repositoryApi: RepositoryApi
 ) : RepositoryDataSource {
 
-    override suspend fun query(query: String, sort: RepositorySort?): Result<List<Repository>> {
+    override suspend fun query(
+        query: String,
+        sort: RepositorySort?
+    ): Result<List<Repository>> {
 
         // skip api call if query is blank
         if (query.isBlank()) {
@@ -53,6 +57,36 @@ class RemoteRepositoryDataSource(
         }
     }
 
+    override suspend fun getUserRepository(
+        userLogin: String,
+        repoName: String
+    ): Result<Repository> {
+        val response: Response<Repository>
+        try {
+            response = repositoryApi.getOwnerRepo(userLogin, repoName)
+        } catch (exception: IOException) {
+            return Result.Error(
+                DataSourceException(
+                    DataSourceError.CODE_IO_ERROR,
+                    "Get user repo failed",
+                    exception
+                )
+            )
+        }
+
+        return if (response.isSuccessful) {
+            Result.Success(response.body()!!)
+        } else {
+            Result.Error(
+                DataSourceException(
+                    DataSourceError.CODE_UNSUCCESSFUL_ERROR,
+                    "Get user repo response unsuccessful",
+                    Exception(response.toString())
+                )
+            )
+        }
+    }
+
     override suspend fun getById(id: Long): Result<Repository> {
         TODO("Not yet implemented")
     }
@@ -77,6 +111,12 @@ interface RepositoryApi {
         @Query("q") query: String,
         @Query("sort") sort: String
     ): Response<RepositoryResponse>
+
+    @GET("/repos/{ownerLogin}/{repoName}")
+    suspend fun getOwnerRepo(
+        @Path("ownerLogin") ownerLogin: String,
+        @Path("repoName") repoName: String
+    ): Response<Repository>
 }
 
 data class RepositoryResponse(

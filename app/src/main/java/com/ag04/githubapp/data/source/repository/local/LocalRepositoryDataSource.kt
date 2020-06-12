@@ -10,7 +10,17 @@ import com.ag04.githubapp.data.source.repository.RepositorySort
  */
 class LocalRepositoryDataSource : RepositoryDataSource {
 
-    override suspend fun query(query: String, sort: RepositorySort?): Result<List<Repository>> {
+    override suspend fun query(
+        query: String,
+        sort: RepositorySort?
+    ): Result<List<Repository>> {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun getUserRepository(
+        userLogin: String,
+        repoName: String
+    ): Result<Repository> {
         throw UnsupportedOperationException()
     }
 

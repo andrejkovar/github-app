@@ -21,4 +21,11 @@ class RepositoryRepository(
     override suspend fun query(query: String, sort: RepositorySort?): Result<List<Repository>> {
         return remoteDataSource.query(query, sort)
     }
+
+    override suspend fun getUserRepository(
+        userLogin: String,
+        repoName: String
+    ): Result<Repository> {
+        return remoteDataSource.getUserRepository(userLogin, repoName)
+    }
 }

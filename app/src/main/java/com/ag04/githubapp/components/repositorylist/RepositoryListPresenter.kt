@@ -12,20 +12,19 @@ import timber.log.Timber
  */
 class RepositoryListPresenter(
     private val repositoryDataSource: RepositoryDataSource
-) :
-    BaseSearchListPresenter<Repository, RepositoryListContract.View<Repository>>(),
-    RepositoryListContract.Presenter<Repository> {
+) : BaseSearchListPresenter<Repository, RepositoryListContract.View>(),
+    RepositoryListContract.Presenter {
 
     private val sort = RepositorySearchSort(stars = false, forks = false, updated = false)
 
     override fun onItemClick(item: Repository) {
         super.onItemClick(item)
-        // TODO navigate to Repository details screen
+        view?.navigateToRepositoryDetails(item)
     }
 
-    override fun onItemImageClick(item: Repository) {
+    override fun onOwnerAvatarClick(item: Repository) {
         Timber.d("onItemImageClick: ${item.id}")
-        // TODO navigate to User details screen
+
     }
 
     override fun onSortClick() {

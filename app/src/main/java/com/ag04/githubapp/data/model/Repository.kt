@@ -9,7 +9,7 @@ data class Repository(
     @SerializedName("node_id")
     val nodeId: String?,
     @SerializedName("name")
-    val name: String?,
+    val name: String,
     @SerializedName("full_name")
     val fullName: String?,
     @SerializedName("private")
@@ -49,5 +49,5 @@ data class Repository(
     @SerializedName("score")
     val score: Double,
     @SerializedName("owner")
-    val user: User?
+    val user: User
 )

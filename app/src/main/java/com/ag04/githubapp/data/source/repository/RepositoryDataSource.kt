@@ -13,6 +13,11 @@ interface RepositoryDataSource : DataSource<Repository, Long> {
         query: String,
         sort: RepositorySort?
     ): Result<List<Repository>>
+
+    suspend fun getUserRepository(
+        userLogin: String,
+        repoName: String
+    ): Result<Repository>
 }
 
 class RepositorySort(
