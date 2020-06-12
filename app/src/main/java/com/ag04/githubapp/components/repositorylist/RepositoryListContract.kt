@@ -7,7 +7,7 @@ import com.ag04.githubapp.data.model.Repository
 /**
  * Created by akovar on 08/06/2020.
  */
-interface SearchContract {
+interface RepositoryListContract {
 
     interface View<T> : BaseSearchListContract.View<T> {
 

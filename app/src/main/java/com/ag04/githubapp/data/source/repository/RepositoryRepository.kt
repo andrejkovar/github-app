@@ -18,6 +18,11 @@ class RepositoryRepository(
 
     override fun provideRemoteDataSource(): DataSource<Repository, Long> = remoteDataSource
 
+    // Temp fun
+    override suspend fun getAll(): Result<List<Repository>> {
+        return query("a", null)
+    }
+
     override suspend fun query(query: String, sort: RepositorySort?): Result<List<Repository>> {
         return remoteDataSource.query(query, sort)
     }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.adapter.BaseRecyclerViewAdapter
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListFragment
+import com.ag04.githubapp.components.injector.PresenterInjector
 import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.databinding.FragmentRepositoryListBinding
 import com.ag04.githubapp.databinding.LayoutRepositorySortBinding
@@ -16,12 +17,14 @@ import com.ag04.githubapp.databinding.LayoutRepositorySortBinding
  * Created by akovar on 08/06/2020.
  */
 class RepositoryListFragment :
-    BaseSearchListFragment<Repository, SearchContract.View<Repository>, SearchContract.Presenter<Repository>>(),
-    SearchContract.View<Repository> {
+    BaseSearchListFragment<Repository, RepositoryListContract.View<Repository>, RepositoryListContract.Presenter<Repository>>(),
+    RepositoryListContract.View<Repository> {
 
-    // TODO inject this
-    private val presenter: SearchContract.Presenter<Repository> = RepositoryListPresenter()
-    private lateinit var adapter: BaseRecyclerViewAdapter<Repository, RepositoryListAdapter.ViewHolder>
+    private val presenter: RepositoryListContract.Presenter<Repository> =
+        PresenterInjector.provideRepositoryListPresenter()
+
+    private lateinit var adapter:
+            BaseRecyclerViewAdapter<Repository, RepositoryListAdapter.ViewHolder>
 
     // Sort dialog view properties
     private lateinit var sortDialog: AlertDialog
@@ -29,7 +32,7 @@ class RepositoryListFragment :
 
     private lateinit var repositoryListBinding: FragmentRepositoryListBinding
 
-    override fun providePresenter(): SearchContract.Presenter<Repository> {
+    override fun providePresenter(): RepositoryListContract.Presenter<Repository> {
         return presenter
     }
 

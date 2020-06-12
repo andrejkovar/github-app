@@ -2,14 +2,18 @@ package com.ag04.githubapp.components.repositorylist
 
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListPresenter
 import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.data.source.Result
+import com.ag04.githubapp.data.source.repository.RepositoryDataSource
 import timber.log.Timber
 
 /**
  * Created by akovar on 08/06/2020.
  */
-class RepositoryListPresenter :
-    BaseSearchListPresenter<Repository, SearchContract.View<Repository>>(),
-    SearchContract.Presenter<Repository> {
+class RepositoryListPresenter(
+    private val repositoryDataSource: RepositoryDataSource
+) :
+    BaseSearchListPresenter<Repository, RepositoryListContract.View<Repository>>(),
+    RepositoryListContract.Presenter<Repository> {
 
     private val sort = RepositorySearchSort(stars = false, forks = false, updated = false)
 
@@ -36,7 +40,7 @@ class RepositoryListPresenter :
         }
     }
 
-    override suspend fun provideItems(): List<Repository> {
-        return listOf(Repository(), Repository(), Repository(), Repository(), Repository())
+    override suspend fun provideItems(): Result<List<Repository>> {
+        return repositoryDataSource.getAll()
     }
 }

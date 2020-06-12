@@ -61,7 +61,7 @@ class RemoteRepositoryDataSource(
 interface RepositoryApi {
 
     @GET("/search/repositories")
-    suspend fun query(
+    fun query(
         @Query("q") query: String,
         @Query("sort") sort: String
     ): Call<RepositoryResponse>

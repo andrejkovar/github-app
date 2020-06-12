@@ -1,6 +1,7 @@
 package com.ag04.githubapp.components.base.list
 
 import com.ag04.githubapp.components.base.BasePresenter
+import com.ag04.githubapp.data.source.Result
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
 
     protected var items: List<T>? = null
 
-    abstract suspend fun provideItems(): List<T>
+    abstract suspend fun provideItems(): Result<List<T>>
 
     override fun onRefresh() {
         Timber.d("onRefresh")
@@ -32,10 +33,17 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
         scope.launch {
             view?.showLoadingProgress(true)
 
-            items = provideItems()
+            val result = provideItems()
+            if (result is Result.Success) {
+                Timber.d("onLoaded ${result.item}")
+                items = result.item
+                view?.setItems(items)
+                view?.showNoResults(items.isNullOrEmpty())
+            } else {
+                Timber.d("onLoad failed ${result.error}")
+                view?.onError(0)
+            }
 
-            view?.setItems(items)
-            view?.showNoResults(items.isNullOrEmpty())
             view?.showLoadingProgress(false)
         }
     }

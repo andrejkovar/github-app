@@ -2,14 +2,16 @@ package com.ag04.githubapp.components.repositorylist
 
 import com.ag04.githubapp.components.base.BaseFragment
 import com.ag04.githubapp.components.base.BaseToolbarActivity
+import com.ag04.githubapp.components.injector.FragmentInjector
 import com.ag04.githubapp.data.model.Repository
 
 class RepositoryListActivity :
-    BaseToolbarActivity<SearchContract.View<Repository>, SearchContract.Presenter<Repository>>() {
+    BaseToolbarActivity<RepositoryListContract.View<Repository>, RepositoryListContract.Presenter<Repository>>() {
 
-    private val repositoryListFragment: RepositoryListFragment = RepositoryListFragment()
+    private val repositoryListFragment: RepositoryListFragment =
+        FragmentInjector.provideRepositoryListFragment()
 
-    override fun provideFragment(): BaseFragment<SearchContract.View<Repository>, SearchContract.Presenter<Repository>> {
+    override fun provideFragment(): BaseFragment<RepositoryListContract.View<Repository>, RepositoryListContract.Presenter<Repository>> {
         return repositoryListFragment
     }
 }

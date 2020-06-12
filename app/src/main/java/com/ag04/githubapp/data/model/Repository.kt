@@ -5,49 +5,49 @@ import com.google.gson.annotations.SerializedName
 
 data class Repository(
     @SerializedName("id")
-    val id: Long = 0,
+    val id: Long,
     @SerializedName("node_id")
-    val nodeId: String? = null,
+    val nodeId: String?,
     @SerializedName("name")
-    val name: String? = "Tetris",
+    val name: String?,
     @SerializedName("full_name")
-    val fullName: String? = "user/tetris",
+    val fullName: String?,
     @SerializedName("private")
-    val private: Boolean = false,
+    val private: Boolean,
     @SerializedName("html_url")
-    val htmlUrl: String? = "",
+    val htmlUrl: String?,
     @SerializedName("description")
-    val description: String? = "",
+    val description: String?,
     @SerializedName("fork")
-    val fork: Boolean = false,
+    val fork: Boolean,
     @SerializedName("url")
-    val url: String? = "",
+    val url: String?,
     @SerializedName("created_at")
-    val createdAt: String? = "",
+    val createdAt: String?,
     @SerializedName("updated_at")
-    val updatedAt: String? = "",
+    val updatedAt: String?,
     @SerializedName("pushed_at")
-    val pushedAt: String? = "",
+    val pushedAt: String?,
     @SerializedName("homepage")
-    val homepage: String? = "",
+    val homepage: String?,
     @SerializedName("size")
-    val size: Int = 15,
+    val size: Long,
     @SerializedName("stargazers_count")
-    val stargazersCount: Long = 100,
+    val stargazersCount: Long,
     @SerializedName("watchers_count")
-    val watchersCount: Long = 200,
+    val watchersCount: Long,
     @SerializedName("language")
-    val language: String? = "",
+    val language: String?,
     @SerializedName("forks_count")
-    val forksCount: Long = 300,
+    val forksCount: Long,
     @SerializedName("open_issues_count")
-    val openIssuesCount: Int = 400,
+    val openIssuesCount: Long,
     @SerializedName("master_branch")
-    val masterBranch: String? = "",
+    val masterBranch: String?,
     @SerializedName("default_branch")
-    val defaultBranch: String? = "",
+    val defaultBranch: String?,
     @SerializedName("score")
-    val score: Double = 1.0,
+    val score: Double,
     @SerializedName("owner")
-    val user: User? = null
+    val user: User?
 )
