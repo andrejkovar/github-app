@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.ag04.githubapp.R
 
@@ -21,12 +20,11 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     private var onGlobalLayoutListener: OnGlobalLayoutListener? = null
 
     /**
-     * Provides resource layout Id for this fragment.
+     * Provides resource layout view for this fragment.
      *
-     * @return resource layout id
+     * @return resource layout view
      */
-    @LayoutRes
-    protected abstract fun provideResourceViewId(): Int
+    protected abstract fun provideResourceView(inflater: LayoutInflater): View
 
     /**
      * Provides presenter for this fragment.
@@ -53,12 +51,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val resourceViewId = provideResourceViewId()
-        if (resourceViewId <= 0) {
-            return super.onCreateView(inflater, container, savedInstanceState)
-        }
-
-        val resourceView = inflater.inflate(resourceViewId, null)
+        val resourceView = provideResourceView(inflater)
         onGlobalLayoutListener = OnGlobalLayoutListener {
             resourceView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
             onGlobalLayoutListener = null

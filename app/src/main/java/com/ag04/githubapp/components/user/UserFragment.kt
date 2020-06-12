@@ -1,5 +1,7 @@
 package com.ag04.githubapp.components.user
 
+import android.view.LayoutInflater
+import android.view.View
 import com.ag04.githubapp.components.base.BaseFragment
 
 /**
@@ -9,11 +11,12 @@ class UserFragment :
     BaseFragment<UserContract.View, UserContract.Presenter>(),
     UserContract.View {
 
-    override fun provideResourceViewId(): Int {
+
+    override fun providePresenter(): UserContract.Presenter {
         TODO("Not yet implemented")
     }
 
-    override fun providePresenter(): UserContract.Presenter {
+    override fun provideResourceView(inflater: LayoutInflater): View {
         TODO("Not yet implemented")
     }
 }

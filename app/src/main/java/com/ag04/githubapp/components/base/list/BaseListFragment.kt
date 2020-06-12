@@ -27,10 +27,6 @@ abstract class BaseListFragment<T, V : BaseListContract.View<T>, P : BaseListCon
         return R.layout.layout_default_no_results
     }
 
-    override fun provideResourceViewId(): Int {
-        return R.layout.layout_base_list
-    }
-
     override fun setItems(items: List<T>?) {
 
     }

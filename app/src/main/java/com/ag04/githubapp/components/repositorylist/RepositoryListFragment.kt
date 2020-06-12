@@ -2,6 +2,7 @@ package com.ag04.githubapp.components.repositorylist
 
 import android.app.AlertDialog
 import android.graphics.drawable.ColorDrawable
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,13 +40,13 @@ class RepositoryListFragment :
         return presenter
     }
 
-    override fun provideResourceViewId(): Int {
-        return R.layout.fragment_repository_list
+    override fun provideResourceView(inflater: LayoutInflater): View {
+        repositoryListBinding = FragmentRepositoryListBinding.inflate(inflater)
+        return repositoryListBinding.root
     }
 
     override fun onPostViewCreate(view: View) {
         super.onPostViewCreate(view)
-        repositoryListBinding = FragmentRepositoryListBinding.inflate(layoutInflater)
 
         initSortDialog()
         initAdapter()
