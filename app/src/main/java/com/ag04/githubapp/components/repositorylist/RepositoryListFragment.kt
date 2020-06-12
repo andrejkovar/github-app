@@ -17,7 +17,10 @@ import com.ag04.githubapp.databinding.LayoutRepositorySortBinding
  * Created by akovar on 08/06/2020.
  */
 class RepositoryListFragment :
-    BaseSearchListFragment<Repository, RepositoryListContract.View<Repository>, RepositoryListContract.Presenter<Repository>>(),
+    BaseSearchListFragment<
+            Repository,
+            RepositoryListContract.View<Repository>,
+            RepositoryListContract.Presenter<Repository>>(),
     RepositoryListContract.View<Repository> {
 
     private val presenter: RepositoryListContract.Presenter<Repository> =
