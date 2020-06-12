@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.adapter.BaseRecyclerViewAdapter
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListFragment
-import com.ag04.githubapp.components.injector.PresenterInjector
 import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.databinding.FragmentRepositoryListBinding
 import com.ag04.githubapp.databinding.LayoutRepositorySortBinding
+import com.ag04.githubapp.injector.PresenterInjector
 
 /**
  * Created by akovar on 08/06/2020.

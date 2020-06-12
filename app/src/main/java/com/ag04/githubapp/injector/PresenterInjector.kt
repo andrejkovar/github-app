@@ -1,4 +1,4 @@
-package com.ag04.githubapp.components.injector
+package com.ag04.githubapp.injector
 
 import com.ag04.githubapp.components.repository.RepositoryContract
 import com.ag04.githubapp.components.repository.RepositoryPresenter
