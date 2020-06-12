@@ -13,8 +13,8 @@ abstract class BaseListFragment<T, V : BaseListContract.View<T>, P : BaseListCon
     BaseFragment<V, P>(),
     BaseListContract.View<T> {
 
-    protected var swipeRefreshLayout: SwipeRefreshLayout? = null
     protected var emptyStateView: View? = null
+    protected var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     /**
      * Invoked to get the NoResult layout id to be inflate on {@link #emptyStateView} and
@@ -28,8 +28,9 @@ abstract class BaseListFragment<T, V : BaseListContract.View<T>, P : BaseListCon
     }
 
     override fun setItems(items: List<T>?) {
-
     }
+
+    abstract fun initRecyclerView()
 
     override fun onPostViewCreate(view: View) {
         super.onPostViewCreate(view)
@@ -42,6 +43,8 @@ abstract class BaseListFragment<T, V : BaseListContract.View<T>, P : BaseListCon
         swipeRefreshLayout?.setOnRefreshListener {
             providePresenter().onRefresh()
         }
+
+        initRecyclerView()
     }
 
     override fun showLoadingProgress(show: Boolean) {

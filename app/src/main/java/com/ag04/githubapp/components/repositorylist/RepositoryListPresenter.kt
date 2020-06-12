@@ -4,6 +4,7 @@ import com.ag04.githubapp.components.base.searchlist.BaseSearchListPresenter
 import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.data.source.Result
 import com.ag04.githubapp.data.source.repository.RepositoryDataSource
+import com.ag04.githubapp.data.source.repository.RepositorySort
 import timber.log.Timber
 
 /**
@@ -38,9 +39,14 @@ class RepositoryListPresenter(
             forks = sort.forks
             updated = sort.updated
         }
+
+        load()
     }
 
-    override suspend fun provideItems(): Result<List<Repository>> {
-        return repositoryDataSource.getAll()
+    override suspend fun provideQueryItems(): Result<List<Repository>> {
+        return repositoryDataSource.query(
+            query,
+            RepositorySort(sort.stars, sort.forks, sort.updated)
+        )
     }
 }

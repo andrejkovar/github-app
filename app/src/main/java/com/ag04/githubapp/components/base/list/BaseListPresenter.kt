@@ -14,7 +14,7 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
     BasePresenter<V>(),
     BaseListContract.Presenter<T, V> {
 
-    private val scope = MainScope()
+    protected val scope = MainScope()
 
     protected var items: List<T>? = null
 
@@ -29,22 +29,28 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
         Timber.d("onItemClick: $item")
     }
 
-    private fun load() {
+    protected open fun load() {
+        Timber.d("onLoad")
+
         scope.launch {
             view?.showLoadingProgress(true)
 
             val result = provideItems()
-            if (result is Result.Success) {
-                Timber.d("onLoaded ${result.item}")
-                items = result.item
-                view?.setItems(items)
-                view?.showNoResults(items.isNullOrEmpty())
-            } else {
-                Timber.d("onLoad failed ${result.error}")
-                view?.onError(0)
-            }
+            onLoaded(result)
 
             view?.showLoadingProgress(false)
+        }
+    }
+
+    protected fun onLoaded(result: Result<List<T>>) {
+        Timber.d("onLoaded $result")
+
+        if (result is Result.Success) {
+            items = result.item
+            view?.setItems(items)
+            view?.showNoResults(items.isNullOrEmpty())
+        } else {
+            view?.onError(0)
         }
     }
 

@@ -1,13 +1,12 @@
 package com.ag04.githubapp.data.source.repository.remote
 
 import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.data.source.DataSourceError
+import com.ag04.githubapp.data.source.DataSourceException
 import com.ag04.githubapp.data.source.Result
 import com.ag04.githubapp.data.source.repository.RepositoryDataSource
 import com.ag04.githubapp.data.source.repository.RepositorySort
 import com.google.gson.annotations.SerializedName
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -22,22 +21,35 @@ class RemoteRepositoryDataSource(
 ) : RepositoryDataSource {
 
     override suspend fun query(query: String, sort: RepositorySort?): Result<List<Repository>> {
+
+        // skip api call if query is blank
+        if (query.isBlank()) {
+            return Result.Success(emptyList())
+        }
+
         val response: Response<RepositoryResponse>
         try {
-            withContext(Dispatchers.IO) {
-                response = repositoryApi.query(
-                    query,
-                    ""
-                ).execute()
-            }
-        } catch (e: IOException) {
-            return Result.Error(e)
+            response = repositoryApi.query(query, query)
+        } catch (exception: IOException) {
+            return Result.Error(
+                DataSourceException(
+                    DataSourceError.CODE_IO_ERROR,
+                    "Query failed",
+                    exception
+                )
+            )
         }
 
         return if (response.isSuccessful) {
             Result.Success(response.body()!!.items)
         } else {
-            Result.Error(Exception())
+            Result.Error(
+                DataSourceException(
+                    DataSourceError.CODE_UNSUCCESSFUL_ERROR,
+                    "Query response unsuccessful",
+                    Exception(response.toString())
+                )
+            )
         }
     }
 
@@ -61,10 +73,10 @@ class RemoteRepositoryDataSource(
 interface RepositoryApi {
 
     @GET("/search/repositories")
-    fun query(
+    suspend fun query(
         @Query("q") query: String,
         @Query("sort") sort: String
-    ): Call<RepositoryResponse>
+    ): Response<RepositoryResponse>
 }
 
 data class RepositoryResponse(

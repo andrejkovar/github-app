@@ -1,6 +1,8 @@
 package com.ag04.githubapp.components.base.searchlist
 
 import com.ag04.githubapp.components.base.list.BaseListPresenter
+import com.ag04.githubapp.data.source.Result
+import kotlinx.coroutines.cancel
 import timber.log.Timber
 
 /**
@@ -11,13 +13,22 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
     BaseSearchListContract.Presenter<T, V> {
 
     protected var query: String = ""
+    protected var isQueryMode = false
+
+    abstract suspend fun provideQueryItems(): Result<List<T>>
+
+    override suspend fun provideItems(): Result<List<T>> {
+        return provideQueryItems()
+    }
 
     override fun onSearchOpened() {
         Timber.d("onSearchOpened")
+        isQueryMode = true
     }
 
     override fun onSearchClosed() {
         Timber.d("onSearchClosed")
+        isQueryMode = false
     }
 
     override fun onSearchInputChange(input: String) {
@@ -27,5 +38,16 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
 
     override fun onSearchSubmit(query: String) {
         Timber.d("onSearchSubmit: $query")
+        loadQuery()
+    }
+
+    private fun loadQuery() {
+        if (isQueryMode) {
+            super.load()
+        }
+    }
+
+    private fun cancelQuery() {
+        scope.cancel()
     }
 }

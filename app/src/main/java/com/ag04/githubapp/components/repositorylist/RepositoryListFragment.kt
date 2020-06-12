@@ -12,7 +12,7 @@ import com.ag04.githubapp.components.base.searchlist.BaseSearchListFragment
 import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.databinding.FragmentRepositoryListBinding
 import com.ag04.githubapp.databinding.LayoutRepositorySortBinding
-import com.ag04.githubapp.injector.PresenterInjector
+import com.ag04.githubapp.di.PresenterInjector
 
 /**
  * Created by akovar on 08/06/2020.
@@ -46,11 +46,9 @@ class RepositoryListFragment :
     }
 
     override fun onPostViewCreate(view: View) {
-        super.onPostViewCreate(view)
-
         initSortDialog()
         initAdapter()
-        initRecyclerView()
+        super.onPostViewCreate(view)
     }
 
     override fun setItems(items: List<Repository>?) {
@@ -117,7 +115,7 @@ class RepositoryListFragment :
         }
     }
 
-    private fun initRecyclerView() {
+    override fun initRecyclerView() {
         repositoryListBinding.layoutBaseList.recyclerViewItems.let {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = adapter

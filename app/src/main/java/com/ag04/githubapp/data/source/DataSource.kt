@@ -13,3 +13,13 @@ interface DataSource<T, ID> {
 
     suspend fun saveAll(item: List<T>): Result<List<T>>
 }
+
+class DataSourceError {
+
+    companion object {
+
+        const val CODE_IO_ERROR = 0
+        const val CODE_UNSUCCESSFUL_ERROR = 1
+        const val C0DE_UNKNOWN_ERR0R = Int.MAX_VALUE
+    }
+}
