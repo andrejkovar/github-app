@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_items_margin"
-    android:background="@color/secondaryBackground"
     android:orientation="vertical"
+    app:cardBackgroundColor="@color/secondaryBackground"
     app:cardCornerRadius="@dimen/default_corner_radius">
 
     <LinearLayout
@@ -32,6 +32,7 @@
                 android:id="@+id/image_owner_avatar"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
+                android:layout_marginEnd="@dimen/default_details_margin"
                 tools:srcCompat="@mipmap/ic_launcher" />
 
             <TextView

@@ -3,7 +3,7 @@
     <dimen name="default_padding">16dp</dimen>
 
     <dimen name="default_items_margin">12dp</dimen>
-    <dimen name="default_details_margin">6dp</dimen>
+    <dimen name="default_details_margin">8dp</dimen>
 
     <dimen name="default_corner_radius">12dp</dimen>
 </resources>
