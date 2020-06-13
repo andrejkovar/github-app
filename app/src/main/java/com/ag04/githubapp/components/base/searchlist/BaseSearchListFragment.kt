@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.SearchView
 import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.list.BaseListFragment
@@ -15,7 +16,20 @@ abstract class BaseSearchListFragment<T, V : BaseSearchListContract.View<T>, P :
     BaseListFragment<T, V, P>(),
     BaseSearchListContract.View<T> {
 
+    /**
+     * Search menu item holder.
+     */
     protected var searchMenuItem: MenuItem? = null
+
+    /**
+     * Provides search hint resource id.
+     *
+     * @return search hint resource id
+     */
+    @StringRes
+    protected open fun provideSearchHintResourceId(): Int {
+        return R.string.label_search
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -52,7 +66,7 @@ abstract class BaseSearchListFragment<T, V : BaseSearchListContract.View<T>, P :
                 })
 
                 maxWidth = Int.MAX_VALUE
-                queryHint = getString(R.string.label_search)
+                queryHint = getString(provideSearchHintResourceId())
             }
         }
 

@@ -16,7 +16,14 @@ class UserFragment :
     BaseDetailsFragment<User, UserContract.View<User>, UserContract.Presenter<User>>(),
     UserContract.View<User> {
 
+    /**
+     * User presenter holder.
+     */
     private lateinit var presenter: UserContract.Presenter<User>
+
+    /**
+     * Layout binding holder for this fragment.
+     */
     private lateinit var binding: FragmentUserDetailsBinding
 
     override fun providePresenter(): UserContract.Presenter<User> {

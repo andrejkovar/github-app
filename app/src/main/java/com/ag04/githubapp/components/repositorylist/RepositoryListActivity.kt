@@ -7,6 +7,9 @@ import com.ag04.githubapp.di.FragmentInjector
 class RepositoryListActivity :
     BaseToolbarActivity<RepositoryListContract.View, RepositoryListContract.Presenter>() {
 
+    /**
+     * Repository list fragment holder.
+     */
     private val repositoryListFragment: RepositoryListFragment =
         FragmentInjector.provideRepositoryListFragment()
 

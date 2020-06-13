@@ -28,6 +28,9 @@ class RepositoryListFragment :
             RepositoryListContract.Presenter>(),
     RepositoryListContract.View {
 
+    /**
+     * Repository list presenter holder.
+     */
     private val presenter: RepositoryListContract.Presenter =
         PresenterInjector.provideRepositoryListPresenter()
 
@@ -38,12 +41,14 @@ class RepositoryListFragment :
     private lateinit var sortDialogBinding: LayoutRepositorySortBinding
 
     /**
-     * Fragment layout binding.
+     * Layout binding holder for this fragment.
      */
     private lateinit var binding: FragmentRepositoryListBinding
 
-    private lateinit var adapter:
-            BaseRecyclerViewAdapter<Repository, RepositoryListAdapter.ViewHolder>
+    /**
+     * Repository list adapter holder.
+     */
+    private lateinit var adapter: BaseRecyclerViewAdapter<Repository, RepositoryListAdapter.ViewHolder>
 
     override fun providePresenter(): RepositoryListContract.Presenter {
         return presenter
@@ -61,7 +66,6 @@ class RepositoryListFragment :
     }
 
     override fun setItems(items: List<Repository>?) {
-        super.setItems(items)
         adapter.items = items
     }
 
@@ -99,7 +103,7 @@ class RepositoryListFragment :
     }
 
     /**
-     * Creates and init sort dialog.
+     * Creates and setups sort dialog.
      */
     private fun initSortDialog() {
         sortDialogBinding = LayoutRepositorySortBinding.inflate(layoutInflater)
@@ -126,13 +130,13 @@ class RepositoryListFragment :
     }
 
     /**
-     * Init adapter.
+     * Setups adapter.
      */
     private fun initAdapter() {
         adapter = RepositoryListAdapter().apply {
             onItemClickListener = object : OnRepositoryClickListener {
 
-                override fun onClick(item: Repository) {
+                override fun onItemClick(item: Repository) {
                     presenter.onItemClick(item)
                 }
 

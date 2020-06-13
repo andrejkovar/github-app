@@ -15,6 +15,9 @@ class RepositoryListPresenter(
 ) : BaseSearchListPresenter<Repository, RepositoryListContract.View>(),
     RepositoryListContract.Presenter {
 
+    /**
+     * Current selected sort holder.
+     */
     private val sort = RepositorySearchSort(stars = false, forks = false, updated = false)
 
     override fun onItemClick(item: Repository) {
@@ -42,7 +45,7 @@ class RepositoryListPresenter(
         load()
     }
 
-    override suspend fun provideQueryItems(): Result<List<Repository>> {
+    override suspend fun provideQueryItemsResult(): Result<List<Repository>> {
         return repositoryDataSource.query(
             query,
             RepositorySort(sort.stars, sort.forks, sort.updated)

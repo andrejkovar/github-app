@@ -16,8 +16,14 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     : Fragment()
     , BaseContract.View {
 
+    /**
+     * Root view container holder.
+     */
     protected var container: ViewGroup? = null
 
+    /**
+     * Used to make sure that view is ready to be used.
+     */
     private var onGlobalLayoutListener: OnGlobalLayoutListener? = null
 
     /**
@@ -45,7 +51,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
      * @param view the newly created and inflated view
      */
     protected open fun onPostViewCreate(view: View) {
-        container = view.findViewById(R.id.container)
+
     }
 
     override fun onCreateView(
@@ -54,6 +60,8 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
         savedInstanceState: Bundle?
     ): View? {
         val resourceView = provideResourceView(inflater)
+        this.container = resourceView.findViewById(R.id.container)
+
         onGlobalLayoutListener = OnGlobalLayoutListener {
             resourceView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
             onGlobalLayoutListener = null

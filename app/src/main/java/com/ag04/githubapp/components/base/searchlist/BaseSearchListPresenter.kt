@@ -2,7 +2,6 @@ package com.ag04.githubapp.components.base.searchlist
 
 import com.ag04.githubapp.components.base.list.BaseListPresenter
 import com.ag04.githubapp.data.source.Result
-import kotlinx.coroutines.cancel
 import timber.log.Timber
 
 /**
@@ -12,13 +11,28 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
     BaseListPresenter<T, V>(),
     BaseSearchListContract.Presenter<T, V> {
 
+    /**
+     * Current entered query holder.
+     */
     protected var query: String = ""
+
+    /**
+     * Current query mode holder. True if search is opened,
+     * false otherwise.i
+     */
     protected var isQueryMode = false
 
-    abstract suspend fun provideQueryItems(): Result<List<T>>
+    /**
+     * Provides query items list result. This is suspend function because
+     * item will probably come from some data source which
+     * will be blocking function.
+     *
+     * @return query items list result
+     */
+    abstract suspend fun provideQueryItemsResult(): Result<List<T>>
 
-    override suspend fun provideItems(): Result<List<T>> {
-        return provideQueryItems()
+    override suspend fun provideItemsResult(): Result<List<T>> {
+        return provideQueryItemsResult()
     }
 
     override fun onSearchOpened() {
@@ -41,13 +55,13 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
         loadQuery()
     }
 
-    private fun loadQuery() {
+    /**
+     * Loads items from current query. It checks if components
+     * is in query mode and only then, load is executed.
+     */
+    protected fun loadQuery() {
         if (isQueryMode) {
             super.load()
         }
-    }
-
-    private fun cancelQuery() {
-        scope.cancel()
     }
 }

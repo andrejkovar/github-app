@@ -20,7 +20,7 @@ abstract class BaseRemoteDataSource<T, ID> : DataSource<T, ID> {
         throw UnsupportedOperationException()
     }
 
-    override suspend fun saveAll(item: List<T>): Result<List<T>> {
+    override suspend fun saveAll(items: List<T>): Result<List<T>> {
         throw UnsupportedOperationException()
     }
 }

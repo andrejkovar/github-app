@@ -13,7 +13,14 @@ abstract class BaseListFragment<T, V : BaseListContract.View<T>, P : BaseListCon
     BaseFragment<V, P>(),
     BaseListContract.View<T> {
 
+    /**
+     * Empty state view holder.
+     */
     protected var emptyStateView: View? = null
+
+    /**
+     * Swipe to refresh view holder.
+     */
     protected var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     /**
@@ -27,9 +34,9 @@ abstract class BaseListFragment<T, V : BaseListContract.View<T>, P : BaseListCon
         return R.layout.layout_default_no_results
     }
 
-    override fun setItems(items: List<T>?) {
-    }
-
+    /**
+     * Setups recycler view.
+     */
     abstract fun initRecyclerView()
 
     override fun onPostViewCreate(view: View) {

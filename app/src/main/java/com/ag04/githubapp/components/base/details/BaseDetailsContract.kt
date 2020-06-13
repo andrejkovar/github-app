@@ -10,23 +10,21 @@ interface BaseDetailsContract {
     interface View<T> : BaseContract.View {
 
         /**
-         * Invoked by presenter to show/hide loading indicator.
+         * Invoked by presenter to show/hide loading progress indicator.
          *
          * @param show show loading indicator
          */
         fun showLoadingProgress(show: Boolean)
 
         /**
-         * Invoked by presenter to show/hide
-         * item details.
+         * Invoked by presenter to show/hide item details.
          *
          * @param show show item details
          */
         fun showDetails(show: Boolean)
 
         /**
-         * Invoked by presenter when item data is loaded
-         * and ready to display.
+         * Invoked by presenter when item data is loaded and ready to display.
          *
          * @param item item data
          */

@@ -14,11 +14,24 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
     BasePresenter<V>(),
     BaseListContract.Presenter<T, V> {
 
+    /**
+     * Coroutines scope used to load items list.
+     */
     protected val scope = MainScope()
 
+    /**
+     * Items list holder.
+     */
     protected var items: List<T>? = null
 
-    abstract suspend fun provideItems(): Result<List<T>>
+    /**
+     * Provides items list result. This is suspend function because
+     * item will probably come from some data source which
+     * will be blocking function.
+     *
+     * @return items list result
+     */
+    abstract suspend fun provideItemsResult(): Result<List<T>>
 
     override fun onRefresh() {
         Timber.d("onRefresh")
@@ -29,19 +42,25 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
         Timber.d("onItemClick: $item")
     }
 
+    /**
+     * Loads items list and notifies view about result.
+     */
     protected open fun load() {
         Timber.d("onLoad")
 
         scope.launch {
             view?.showLoadingProgress(true)
 
-            val result = provideItems()
+            val result = provideItemsResult()
             onLoaded(result)
-
-            view?.showLoadingProgress(false)
         }
     }
 
+    /**
+     * Invoked when items list result has been loaded.
+     *
+     * @param result items list result
+     */
     protected fun onLoaded(result: Result<List<T>>) {
         Timber.d("onLoaded $result")
 
@@ -50,8 +69,10 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
             view?.setItems(items)
             view?.showNoResults(items.isNullOrEmpty())
         } else {
-            view?.onError(0)
+            view?.onError((result as Result.Error).error.code)
         }
+
+        view?.showLoadingProgress(false)
     }
 
     override fun onDestroy() {

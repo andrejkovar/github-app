@@ -21,9 +21,16 @@ class RepositoryFragment :
             RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>>>(),
     RepositoryContract.View<Repository> {
 
+    /**
+     * Repository presenter holder.
+     */
     private lateinit var presenter: RepositoryContract.Presenter<
             Repository,
             RepositoryContract.View<Repository>>
+
+    /**
+     * Layout binding holder for this fragment.
+     */
     private lateinit var binding: FragmentRepositoryDetailsBinding
 
     override fun providePresenter(): RepositoryContract.Presenter<

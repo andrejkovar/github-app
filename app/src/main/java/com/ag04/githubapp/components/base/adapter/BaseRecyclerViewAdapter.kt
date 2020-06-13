@@ -9,12 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseRecyclerViewAdapter<T, VH : BaseRecyclerViewAdapter<T, VH>.BaseVH> :
     RecyclerView.Adapter<VH>() {
 
+    /**
+     * Adapter items holder.
+     */
     var items: List<T>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
+    /**
+     * Item click listener holder.
+     */
     var onItemClickListener: OnItemClickListener<T>? = null
 
     override fun getItemCount(): Int {
@@ -30,6 +36,12 @@ abstract class BaseRecyclerViewAdapter<T, VH : BaseRecyclerViewAdapter<T, VH>.Ba
         holder.doBind(position, payloads)
     }
 
+    /**
+     * Gets item on provided position.
+     *
+     * @param position position
+     * @return item or null if not found
+     */
     fun getItemAt(position: Int): T? {
         items?.let {
             if (it.size > position) {
@@ -42,6 +54,11 @@ abstract class BaseRecyclerViewAdapter<T, VH : BaseRecyclerViewAdapter<T, VH>.Ba
 
     abstract inner class BaseVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        /**
+         * Binds item for provided position.
+         *
+         * @param position position
+         */
         fun doBind(position: Int) {
             val item = getItemAt(position)
             item?.let {
@@ -53,12 +70,22 @@ abstract class BaseRecyclerViewAdapter<T, VH : BaseRecyclerViewAdapter<T, VH>.Ba
 
         }
 
+        /**
+         * Performs binding for provided item.
+         *
+         * @param item item
+         */
         abstract fun performBind(item: T)
     }
 
     interface OnItemClickListener<T> {
 
-        fun onClick(item: T)
+        /**
+         * Called when item has been clicked.
+         *
+         * @param item clicked item
+         */
+        fun onItemClick(item: T)
     }
 }
 

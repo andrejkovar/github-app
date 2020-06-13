@@ -16,9 +16,23 @@ abstract class BaseDetailsPresenter<T, ID, V : BaseDetailsContract.View<T>>(
     BaseDetailsContract.Presenter<T, V>,
     BasePresenter<V>() {
 
+    /**
+     * Coroutines scope used to load item details.
+     */
     protected val scope = MainScope()
+
+    /**
+     * Item details holder.
+     */
     protected var item: T? = null
 
+    /**
+     * Provides item result. This is suspend function because
+     * item will probably come from some data source which
+     * will be blocking function.
+     *
+     * @return item result
+     */
     abstract suspend fun provideItemResult(): Result<T>
 
     override fun onViewReady() {
@@ -30,6 +44,11 @@ abstract class BaseDetailsPresenter<T, ID, V : BaseDetailsContract.View<T>>(
         loadItem(itemId)
     }
 
+    /**
+     * Loads item and notifies view about item result.
+     *
+     * @param itemId item id
+     */
     protected open fun loadItem(itemId: ID) {
         Timber.d("loadItem $itemId")
 
@@ -42,6 +61,11 @@ abstract class BaseDetailsPresenter<T, ID, V : BaseDetailsContract.View<T>>(
         }
     }
 
+    /**
+     * Invoked when item result has been loaded.
+     *
+     * @param result item result
+     */
     protected open fun onItemLoaded(result: Result<T>) {
         Timber.d("onItemLoaded $result")
 

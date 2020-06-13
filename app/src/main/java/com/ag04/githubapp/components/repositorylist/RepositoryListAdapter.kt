@@ -31,7 +31,7 @@ class RepositoryListAdapter :
         init {
             binding.root.setOnClickListener {
                 (onItemClickListener as OnRepositoryClickListener)
-                    .onClick(getItemAt(adapterPosition)!!)
+                    .onItemClick(getItemAt(adapterPosition)!!)
             }
 
             binding.imageOwnerAvatar.setOnClickListener {

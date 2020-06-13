@@ -7,6 +7,9 @@ import timber.log.Timber
  */
 open class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V> {
 
+    /**
+     * View holder.
+     */
     protected var view: V? = null
 
     override fun onView(view: V) {

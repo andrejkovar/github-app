@@ -14,6 +14,9 @@ import com.ag04.githubapp.di.FragmentInjector
 class UserActivity :
     BaseToolbarActivity<UserContract.View<User>, UserContract.Presenter<User>>() {
 
+    /**
+     * User fragment holder.
+     */
     private val userFragment: UserFragment = FragmentInjector.provideUserFragment()
 
     override fun provideFragment(): BaseFragment<UserContract.View<User>, UserContract.Presenter<User>> {
@@ -32,6 +35,12 @@ class UserActivity :
 
         const val USER_ID_EXTRA = "com.ag04.githubapp.components.user.USER_ID_EXTRA"
 
+        /**
+         * Opens UserActivity.
+         *
+         * @param context context
+         * @param userId  user id
+         */
         fun open(context: Context?, userId: String) {
             context?.let {
                 it.startActivity(Intent(it, UserActivity::class.java).apply {

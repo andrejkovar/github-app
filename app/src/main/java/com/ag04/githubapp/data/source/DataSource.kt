@@ -5,13 +5,36 @@ package com.ag04.githubapp.data.source
  */
 interface DataSource<T, ID> {
 
+    /**
+     * Gets data by provided id.
+     *
+     * @param id id
+     * @return data result
+     */
     suspend fun getById(id: ID): Result<T>
 
+    /**
+     * Gets data list.
+     *
+     * @return data list result
+     */
     suspend fun getAll(): Result<List<T>>
 
+    /**
+     * Saves provided item.
+     *
+     * @param item item
+     * @return result of saved item
+     */
     suspend fun save(item: T): Result<T>
 
-    suspend fun saveAll(item: List<T>): Result<List<T>>
+    /**
+     * Saves provided items list.
+     *
+     * @param items
+     * @return result of saved items list
+     */
+    suspend fun saveAll(items: List<T>): Result<List<T>>
 }
 
 class DataSourceError {

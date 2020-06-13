@@ -15,6 +15,9 @@ class RepositoryActivity :
     BaseToolbarActivity<RepositoryContract.View<Repository>,
             RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>>>() {
 
+    /**
+     * Repository fragment holder.
+     */
     private val repositoryFragment: RepositoryFragment =
         FragmentInjector.provideRepositoryFragment()
 
@@ -40,8 +43,7 @@ class RepositoryActivity :
          * Opens RepositoryActivity.
          *
          * @param context context
-         * @param userLogin user login
-         * @param repoName repository name
+         * @param repositoryPairId repository pair id
          */
         fun open(context: Context?, repositoryPairId: RepositoryPairId) {
             context?.let {

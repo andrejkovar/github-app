@@ -1,14 +1,13 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="GitHubApp.TextView" parent="Widget.AppCompat.TextView">
-
+        <!-- Nothing for now -->
     </style>
 
     <style name="GitHubApp.TextView.Headline.1" parent="GitHubApp.TextView">

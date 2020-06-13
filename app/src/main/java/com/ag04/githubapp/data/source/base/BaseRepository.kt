@@ -8,8 +8,18 @@ import com.ag04.githubapp.data.source.Result
  */
 abstract class BaseRepository<T, ID> : DataSource<T, ID> {
 
+    /**
+     * Provides local data source.
+     *
+     * @return local data source
+     */
     abstract fun provideLocalDataSource(): DataSource<T, ID>
 
+    /**
+     * Provides remote data source.
+     *
+     * @return remote data source
+     */
     abstract fun provideRemoteDataSource(): DataSource<T, ID>
 
     override suspend fun getById(id: ID): Result<T> {
@@ -24,7 +34,7 @@ abstract class BaseRepository<T, ID> : DataSource<T, ID> {
         throw UnsupportedOperationException()
     }
 
-    override suspend fun saveAll(item: List<T>): Result<List<T>> {
+    override suspend fun saveAll(items: List<T>): Result<List<T>> {
         throw UnsupportedOperationException()
     }
 }

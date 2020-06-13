@@ -14,7 +14,7 @@ interface BaseSearchListContract {
     interface Presenter<T, V : View<T>> : BaseListContract.Presenter<T, V> {
 
         /**
-         * Invoked when user clicks on the search icon. It informs
+         * Invoked when user clicks on the search action view. It informs
          * presenter that search is active.
          */
         fun onSearchOpened()
