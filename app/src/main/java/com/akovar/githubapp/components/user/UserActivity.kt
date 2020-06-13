@@ -6,7 +6,7 @@ import com.akovar.githubapp.R
 import com.akovar.githubapp.components.base.BaseFragment
 import com.akovar.githubapp.components.base.BaseToolbarActivity
 import com.akovar.githubapp.data.model.User
-import com.akovar.githubapp.di.FragmentInjector
+import org.koin.android.ext.android.inject
 
 /**
  * Created by akovar on 08/06/2020.
@@ -17,7 +17,7 @@ class UserActivity :
     /**
      * User fragment holder.
      */
-    private val userFragment: UserFragment = FragmentInjector.provideUserFragment()
+    private val userFragment: UserFragment by inject()
 
     override fun provideFragment(): BaseFragment<UserContract.View<User>, UserContract.Presenter<User>> {
         return userFragment

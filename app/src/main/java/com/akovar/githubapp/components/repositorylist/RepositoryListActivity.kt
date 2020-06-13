@@ -2,7 +2,7 @@ package com.akovar.githubapp.components.repositorylist
 
 import com.akovar.githubapp.components.base.BaseFragment
 import com.akovar.githubapp.components.base.BaseToolbarActivity
-import com.akovar.githubapp.di.FragmentInjector
+import org.koin.android.ext.android.inject
 
 class RepositoryListActivity :
     BaseToolbarActivity<RepositoryListContract.View, RepositoryListContract.Presenter>() {
@@ -10,8 +10,7 @@ class RepositoryListActivity :
     /**
      * Repository list fragment holder.
      */
-    private val repositoryListFragment: RepositoryListFragment =
-        FragmentInjector.provideRepositoryListFragment()
+    private val repositoryListFragment: RepositoryListFragment by inject()
 
     override fun provideFragment(): BaseFragment<RepositoryListContract.View, RepositoryListContract.Presenter> {
         return repositoryListFragment

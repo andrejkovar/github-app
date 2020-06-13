@@ -10,6 +10,7 @@ import com.akovar.githubapp.data.source.user.UserRepository
 import com.akovar.githubapp.data.source.user.local.LocalUserDataSource
 import com.akovar.githubapp.data.source.user.remote.RemoteUserDataSource
 import com.akovar.githubapp.data.source.user.remote.UserApi
+import org.koin.java.KoinJavaComponent.get
 
 /**
  * Created by akovar on 12/06/2020.
@@ -23,11 +24,7 @@ class DataSourceInjector {
         }
 
         private fun provideRepositoryRemoteDataSource(): RepositoryDataSource {
-            return RemoteRepositoryDataSource(provideRepositoryApi())
-        }
-
-        private fun provideRepositoryApi(): RepositoryApi {
-            return ApplicationInjector.provideRetrofit().create(RepositoryApi::class.java)
+            return RemoteRepositoryDataSource(get(RepositoryApi::class.java))
         }
 
         fun provideRepositoryDataSource(): RepositoryDataSource {
@@ -42,11 +39,7 @@ class DataSourceInjector {
         }
 
         private fun provideUserRemoteDataSource(): UserDataSource {
-            return RemoteUserDataSource(provideUserApi())
-        }
-
-        private fun provideUserApi(): UserApi {
-            return ApplicationInjector.provideRetrofit().create(UserApi::class.java)
+            return RemoteUserDataSource(get(UserApi::class.java))
         }
 
         fun provideUserDataSource(): UserDataSource {
