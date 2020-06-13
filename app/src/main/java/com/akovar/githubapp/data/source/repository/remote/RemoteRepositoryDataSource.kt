@@ -1,7 +1,6 @@
 package com.akovar.githubapp.data.source.repository.remote
 
 import com.akovar.githubapp.data.model.Repository
-import com.akovar.githubapp.data.source.DataSourceError
 import com.akovar.githubapp.data.source.DataSourceException
 import com.akovar.githubapp.data.source.RemoteDataSourceHelper
 import com.akovar.githubapp.data.source.Result
@@ -12,7 +11,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.io.IOException
 
 
 /**
@@ -50,31 +48,13 @@ class RemoteRepositoryDataSource(
             }
         }
 
-        val response: Response<RepositoryResponse>
-        try {
-            response = repositoryApi.query(query, sortValue)
-
-        } catch (exception: IOException) {
-            return Result.Error(
-                DataSourceException(
-                    DataSourceError.CODE_IO_ERROR,
-                    "Query failed",
-                    exception
-                )
-            )
+        val result: Result<RepositoryResponse>
+        result = RemoteDataSourceHelper.processGet { repositoryApi.query(query, sortValue) }
+        if (result is Result.Success) {
+            return Result.Success(result.item.items)
         }
 
-        return if (response.isSuccessful) {
-            Result.Success(response.body()!!.items)
-        } else {
-            Result.Error(
-                DataSourceException(
-                    DataSourceError.CODE_UNSUCCESSFUL_ERROR,
-                    "Query response unsuccessful",
-                    Exception(response.toString())
-                )
-            )
-        }
+        return Result.Error(result.error as DataSourceException)
     }
 
     override suspend fun getUserRepository(
