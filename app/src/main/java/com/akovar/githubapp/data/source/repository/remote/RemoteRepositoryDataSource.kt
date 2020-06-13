@@ -3,6 +3,7 @@ package com.akovar.githubapp.data.source.repository.remote
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.source.DataSourceError
 import com.akovar.githubapp.data.source.DataSourceException
+import com.akovar.githubapp.data.source.RemoteDataSourceHelper
 import com.akovar.githubapp.data.source.Result
 import com.akovar.githubapp.data.source.repository.RepositoryDataSource
 import com.akovar.githubapp.data.source.repository.RepositorySort
@@ -31,26 +32,26 @@ class RemoteRepositoryDataSource(
             return Result.Success(emptyList())
         }
 
-        val response: Response<RepositoryResponse>
-        try {
-            var sortValue: String? = null
-            sort?.let {
-                if (it.forks) {
-                    sortValue = RepositoryApi.SORT_FORKS
-                    return@let
-                }
-
-                if (it.stars) {
-                    sortValue = RepositoryApi.SORT_STARS
-                    return@let
-                }
-
-                if (it.lastUpdated) {
-                    sortValue = RepositoryApi.SORT_LAST_UPDATED
-                    return@let
-                }
+        var sortValue: String? = null
+        sort?.let {
+            if (it.forks) {
+                sortValue = RepositoryApi.SORT_FORKS
+                return@let
             }
 
+            if (it.stars) {
+                sortValue = RepositoryApi.SORT_STARS
+                return@let
+            }
+
+            if (it.lastUpdated) {
+                sortValue = RepositoryApi.SORT_LAST_UPDATED
+                return@let
+            }
+        }
+
+        val response: Response<RepositoryResponse>
+        try {
             response = repositoryApi.query(query, sortValue)
 
         } catch (exception: IOException) {
@@ -80,30 +81,7 @@ class RemoteRepositoryDataSource(
         userLogin: String,
         repoName: String
     ): Result<Repository> {
-        val response: Response<Repository>
-        try {
-            response = repositoryApi.getOwnerRepo(userLogin, repoName)
-        } catch (exception: IOException) {
-            return Result.Error(
-                DataSourceException(
-                    DataSourceError.CODE_IO_ERROR,
-                    "Get user repo failed",
-                    exception
-                )
-            )
-        }
-
-        return if (response.isSuccessful) {
-            Result.Success(response.body()!!)
-        } else {
-            Result.Error(
-                DataSourceException(
-                    DataSourceError.CODE_UNSUCCESSFUL_ERROR,
-                    "Get user repo response unsuccessful",
-                    Exception(response.toString())
-                )
-            )
-        }
+        return RemoteDataSourceHelper.processGet { repositoryApi.getOwnerRepo(userLogin, repoName) }
     }
 
     override suspend fun getById(id: Long): Result<Repository> {
