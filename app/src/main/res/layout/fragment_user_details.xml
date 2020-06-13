@@ -34,9 +34,113 @@
                 style="@style/GitHubApp.TextView.Headline.1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_details_margin"
                 android:textAlignment="center"
                 tools:text="chvin" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_user_company"
+                style="@style/GitHubApp.TextView.Headline.2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:text="Company name"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_user_email"
+                style="@style/GitHubApp.TextView.Body.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@android:drawable/sym_action_email"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:text="user@email.com"
+                tools:visibility="visible" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="@dimen/default_details_margin"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="@dimen/default_details_margin"
+                app:cardBackgroundColor="@color/secondaryBackground"
+                app:cardCornerRadius="@dimen/default_corner_radius">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/GitHubApp.TextView.Body.1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/label_followers"
+                            android:textAlignment="center" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/GitHubApp.TextView.Body.1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/label_following"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_user_follower_count_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_user_followers_count"
+                            style="@style/GitHubApp.TextView.Body.2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/textColor1"
+                            tools:text="1000" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_user_following_count"
+                            style="@style/GitHubApp.TextView.Body.2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/textColor1"
+                            tools:text="500" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_user_bio"
+                style="@style/GitHubApp.TextView.Body.1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableTop="@android:drawable/ic_menu_info_details"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:text="This is user biography."
+                tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_user_url"
@@ -45,6 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_details_margin"
                 android:autoLink="web"
+                android:textAlignment="center"
                 tools:text="https://api.github.com" />
 
         </LinearLayout>

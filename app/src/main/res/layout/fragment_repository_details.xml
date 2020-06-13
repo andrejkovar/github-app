@@ -45,15 +45,6 @@
                 android:layout_marginBottom="@dimen/default_details_margin"
                 tools:text="This is repository description." />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_repository_url"
-                style="@style/GitHubApp.TextView.Body.1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_details_margin"
-                android:autoLink="web"
-                tools:text="https://api.github.com" />
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/mtrl_card_owner"
                 android:layout_width="match_parent"
@@ -162,6 +153,17 @@
                 android:layout_marginTop="@dimen/default_details_margin"
                 android:textAlignment="textEnd"
                 tools:text="@string/text_repository_last_updated" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_repository_url"
+                style="@style/GitHubApp.TextView.Body.1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_details_margin"
+                android:autoLink="web"
+                android:textAlignment="center"
+                tools:text="https://api.github.com" />
 
         </LinearLayout>
 

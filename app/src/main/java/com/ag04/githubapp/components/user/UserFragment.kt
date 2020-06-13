@@ -47,12 +47,28 @@ class UserFragment :
     }
 
     override fun setItem(item: User) {
-        binding.textUserName.text = item.login
-        binding.textUserUrl.text = item.url
-
         Glide.with(context!!)
             .load(item.avatarUrl)
             .circleCrop()
             .into(binding.imageUserAvatar)
+
+        binding.textUserName.text = item.login
+
+        binding.textUserCompany.text = item.company
+        binding.textUserCompany.visibility =
+            if (item.company.isNullOrBlank()) View.GONE else View.VISIBLE
+
+        binding.textUserEmail.text = item.email
+        binding.textUserEmail.visibility =
+            if (item.email.isNullOrBlank()) View.GONE else View.VISIBLE
+
+        binding.textUserBio.text = item.bio
+        binding.textUserBio.visibility =
+            if (item.bio.isNullOrBlank()) View.GONE else View.VISIBLE
+
+        binding.textUserFollowersCount.text = item.followers.toString()
+        binding.textUserFollowingCount.text = item.following.toString()
+
+        binding.textUserUrl.text = item.htmlUrl
     }
 }

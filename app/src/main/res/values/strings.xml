@@ -5,6 +5,8 @@
     <string name="label_search">Search</string>
     <string name="label_sort">Sort</string>
     <string name="label_submit">Submit</string>
+    <string name="label_followers">Followers</string>
+    <string name="label_following">Following</string>
 
     <string name="text_repository_last_updated">Last updated at: %s</string>
     <string name="text_repository_created">Created at: %s</string>
