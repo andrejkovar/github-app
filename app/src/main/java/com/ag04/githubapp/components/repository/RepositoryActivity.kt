@@ -4,18 +4,21 @@ import android.content.Context
 import android.content.Intent
 import com.ag04.githubapp.components.base.BaseFragment
 import com.ag04.githubapp.components.base.BaseToolbarActivity
+import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.di.FragmentInjector
 
 /**
  * Created by akovar on 08/06/2020.
  */
 class RepositoryActivity :
-    BaseToolbarActivity<RepositoryContract.View, RepositoryContract.Presenter>() {
+    BaseToolbarActivity<RepositoryContract.View<Repository>,
+            RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>>>() {
 
     private val repositoryFragment: RepositoryFragment =
         FragmentInjector.provideRepositoryFragment()
 
-    override fun provideFragment(): BaseFragment<RepositoryContract.View, RepositoryContract.Presenter> {
+    override fun provideFragment(): BaseFragment<RepositoryContract.View<Repository>,
+            RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>>> {
         return repositoryFragment
     }
 
@@ -25,10 +28,8 @@ class RepositoryActivity :
 
     companion object {
 
-        const val USER_LOGIN_EXTRA =
-            "com.ag04.githubapp.components.repository.USER_LOGIN_EXTRA"
-        const val REPO_NAME_EXTRA =
-            "com.ag04.githubapp.components.repository.REPO_NAME_EXTRA"
+        const val REPOSITORY_PAIR_ID_EXTRA =
+            "com.ag04.githubapp.components.repository.REPOSITORY_PAIR_ID_EXTRA"
 
         /**
          * Opens RepositoryActivity.
@@ -37,11 +38,10 @@ class RepositoryActivity :
          * @param userLogin user login
          * @param repoName repository name
          */
-        fun open(context: Context?, userLogin: String, repoName: String) {
+        fun open(context: Context?, repositoryPairId: RepositoryPairId) {
             context?.let {
                 it.startActivity(Intent(context, RepositoryActivity::class.java).apply {
-                    putExtra(USER_LOGIN_EXTRA, userLogin)
-                    putExtra(REPO_NAME_EXTRA, repoName)
+                    putExtra(REPOSITORY_PAIR_ID_EXTRA, repositoryPairId)
                     flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 })
             }

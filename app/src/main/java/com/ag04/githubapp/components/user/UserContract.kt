@@ -1,17 +1,17 @@
 package com.ag04.githubapp.components.user
 
-import com.ag04.githubapp.components.base.BaseContract
+import com.ag04.githubapp.components.base.details.BaseDetailsContract
 
 /**
  * Created by akovar on 08/06/2020.
  */
 interface UserContract {
 
-    interface View : BaseContract.View {
+    interface View<T> : BaseDetailsContract.View<T> {
 
     }
 
-    interface Presenter : BaseContract.Presenter<View> {
+    interface Presenter<T> : BaseDetailsContract.Presenter<T, View<T>> {
 
     }
 }

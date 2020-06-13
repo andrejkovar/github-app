@@ -10,6 +10,8 @@ import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.adapter.BaseRecyclerViewAdapter
 import com.ag04.githubapp.components.base.searchlist.BaseSearchListFragment
 import com.ag04.githubapp.components.repository.RepositoryActivity
+import com.ag04.githubapp.components.repository.RepositoryPairId
+import com.ag04.githubapp.components.user.UserActivity
 import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.data.model.User
 import com.ag04.githubapp.databinding.FragmentRepositoryListBinding
@@ -81,11 +83,11 @@ class RepositoryListFragment :
     }
 
     override fun navigateToRepositoryDetails(repo: Repository) {
-        RepositoryActivity.open(context, repo.user.login, repo.name)
+        RepositoryActivity.open(context, RepositoryPairId(repo.user.login, repo.name))
     }
 
     override fun navigateToUserDetails(user: User) {
-        TODO("Not yet implemented")
+        UserActivity.open(context, user.login)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

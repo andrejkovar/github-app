@@ -107,11 +107,11 @@ class RemoteRepositoryDataSource(
     }
 
     override suspend fun getById(id: Long): Result<Repository> {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException()
     }
 
     override suspend fun getAll(): Result<List<Repository>> {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException()
     }
 
     override suspend fun save(item: Repository): Result<Repository> {

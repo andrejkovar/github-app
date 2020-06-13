@@ -1,11 +1,14 @@
 package com.ag04.githubapp.di
 
 import com.ag04.githubapp.components.repository.RepositoryContract
+import com.ag04.githubapp.components.repository.RepositoryPairId
 import com.ag04.githubapp.components.repository.RepositoryPresenter
 import com.ag04.githubapp.components.repositorylist.RepositoryListContract
 import com.ag04.githubapp.components.repositorylist.RepositoryListPresenter
 import com.ag04.githubapp.components.user.UserContract
 import com.ag04.githubapp.components.user.UserPresenter
+import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.data.model.User
 
 /**
  * Created by akovar on 12/06/2020.
@@ -19,18 +22,16 @@ class PresenterInjector {
         }
 
         fun provideRepositoryPresenter(
-            userLogin: String,
-            repoName: String
-        ): RepositoryContract.Presenter {
+            repositoryPairId: RepositoryPairId
+        ): RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>> {
             return RepositoryPresenter(
-                userLogin,
-                repoName,
+                repositoryPairId,
                 DataSourceInjector.provideRepositoryDataSource()
             )
         }
 
-        fun provideUserPresenter(): UserContract.Presenter {
-            return UserPresenter()
+        fun provideUserPresenter(userId: String): UserContract.Presenter<User> {
+            return UserPresenter(userId, DataSourceInjector.provideUserDataSource())
         }
     }
 }

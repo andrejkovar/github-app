@@ -1,27 +1,27 @@
 package com.ag04.githubapp.data.source.user.local
 
 import com.ag04.githubapp.data.model.User
-import com.ag04.githubapp.data.source.DataSource
 import com.ag04.githubapp.data.source.Result
+import com.ag04.githubapp.data.source.user.UserDataSource
 
 /**
  * Created by akovar on 10/06/2020.
  */
-class UserLocalDataSource : DataSource<Long, User> {
+class LocalUserDataSource : UserDataSource {
 
-    override suspend fun getById(id: User): Result<Long> {
+    override suspend fun getById(id: String): Result<User> {
         throw UnsupportedOperationException()
     }
 
-    override suspend fun getAll(): Result<List<Long>> {
+    override suspend fun getAll(): Result<List<User>> {
         throw UnsupportedOperationException()
     }
 
-    override suspend fun save(item: Long): Result<Long> {
+    override suspend fun save(item: User): Result<User> {
         throw UnsupportedOperationException()
     }
 
-    override suspend fun saveAll(item: List<Long>): Result<List<Long>> {
+    override suspend fun saveAll(item: List<User>): Result<List<User>> {
         throw UnsupportedOperationException()
     }
 }

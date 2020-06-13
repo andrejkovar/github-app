@@ -1,81 +1,37 @@
 package com.ag04.githubapp.components.repository
 
-import com.ag04.githubapp.components.base.BasePresenter
+import android.os.Parcelable
+import com.ag04.githubapp.components.base.details.BaseDetailsPresenter
 import com.ag04.githubapp.data.model.Repository
 import com.ag04.githubapp.data.source.Result
 import com.ag04.githubapp.data.source.repository.RepositoryDataSource
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by akovar on 08/06/2020.
  */
 class RepositoryPresenter(
-    private val userLogin: String,
-    private val repoName: String,
+    private val repositoryPairId: RepositoryPairId,
     private val repositoryDataSource: RepositoryDataSource
-) : BasePresenter<RepositoryContract.View>(),
-    RepositoryContract.Presenter {
+) : BaseDetailsPresenter<
+        Repository,
+        RepositoryPairId,
+        RepositoryContract.View<Repository>>(repositoryPairId),
+    RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>> {
 
-    /**
-     * Scope responsible to load repository data.
-     */
-    private val scope = MainScope()
-
-    /**
-     * Repository data holder.
-     */
-    private lateinit var repository: Repository
-
-    override fun onViewReady() {
-        super.onViewReady()
-        loadRepositoryDetails(userLogin, repoName)
-    }
-
-    override fun onRefresh() {
-        loadRepositoryDetails(userLogin, repoName)
+    override suspend fun provideItemResult(): Result<Repository> {
+        return repositoryDataSource.getUserRepository(
+            repositoryPairId.userLogin,
+            repositoryPairId.repoName
+        )
     }
 
     override fun onRepositoryOwnerClick() {
-        // TODO navigate to owner details
-    }
-
-    /**
-     * Loads repository data and notifies view about result.
-     */
-    private fun loadRepositoryDetails(userLogin: String, repoName: String) {
-        Timber.d("loadRepositoryDetails")
-
-        scope.launch {
-            view?.showLoadingIndicator(true)
-            view?.showDetails(false)
-
-            val result = repositoryDataSource.getUserRepository(userLogin, repoName)
-            onLoadedRepositoryDetails(result)
-
-            view?.showLoadingIndicator(false)
-            view?.showDetails(true)
+        item?.let {
+            view?.navigateToUserDetails(it.user)
         }
-    }
-
-    /**
-     * Invoked when repository data is loaded and notifies view.
-     */
-    private fun onLoadedRepositoryDetails(result: Result<Repository>) {
-        Timber.d("onLoadedRepositoryDetails $result")
-
-        if (result is Result.Success) {
-            repository = result.item
-            view?.onRepositoryLoaded(repository)
-        } else {
-            view?.onError((result as Result.Error).error.code)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        scope.cancel()
     }
 }
+
+@Parcelize
+data class RepositoryPairId(val userLogin: String, val repoName: String) : Parcelable

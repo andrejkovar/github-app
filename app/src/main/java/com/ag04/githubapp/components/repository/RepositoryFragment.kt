@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.BaseFragment
+import com.ag04.githubapp.components.user.UserActivity
 import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.data.model.User
 import com.ag04.githubapp.databinding.FragmentRepositoryDetailsBinding
 import com.ag04.githubapp.di.PresenterInjector
 import com.bumptech.glide.Glide
@@ -14,13 +16,19 @@ import com.bumptech.glide.Glide
  * Created by akovar on 08/06/2020.
  */
 class RepositoryFragment :
-    BaseFragment<RepositoryContract.View, RepositoryContract.Presenter>(),
-    RepositoryContract.View {
+    BaseFragment<
+            RepositoryContract.View<Repository>,
+            RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>>>(),
+    RepositoryContract.View<Repository> {
 
-    private lateinit var presenter: RepositoryContract.Presenter
+    private lateinit var presenter: RepositoryContract.Presenter<
+            Repository,
+            RepositoryContract.View<Repository>>
     private lateinit var binding: FragmentRepositoryDetailsBinding
 
-    override fun providePresenter(): RepositoryContract.Presenter {
+    override fun providePresenter(): RepositoryContract.Presenter<
+            Repository,
+            RepositoryContract.View<Repository>> {
         return presenter
     }
 
@@ -45,47 +53,50 @@ class RepositoryFragment :
         activity?.let {
             val intent = it.intent
             presenter = PresenterInjector.provideRepositoryPresenter(
-                intent.getStringExtra(RepositoryActivity.USER_LOGIN_EXTRA)!!,
-                intent.getStringExtra(RepositoryActivity.REPO_NAME_EXTRA)!!
+                intent.getParcelableExtra(RepositoryActivity.REPOSITORY_PAIR_ID_EXTRA)!!
             )
+            super.onActivityCreated(savedInstanceState)
         }
-        super.onActivityCreated(savedInstanceState)
-    }
-
-    override fun showLoadingIndicator(show: Boolean) {
-        binding.swipeRefreshLayout.isRefreshing = show
     }
 
     override fun showDetails(show: Boolean) {
         binding.scrollDetails.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
-    override fun onRepositoryLoaded(repository: Repository) {
-        binding.textRepositoryName.text = repository.name
-        binding.textRepositoryFullName.text = repository.fullName
-        binding.textRepositoryDescription.text = repository.description
-        binding.textRepositoryUrl.text = repository.htmlUrl
+    override fun showLoadingProgress(show: Boolean) {
+        binding.swipeRefreshLayout.isRefreshing = show
+    }
+
+    override fun setItem(item: Repository) {
+        binding.textRepositoryName.text = item.name
+        binding.textRepositoryFullName.text = item.fullName
+        binding.textRepositoryDescription.text = item.description
+        binding.textRepositoryUrl.text = item.htmlUrl
         binding.textRepositoryLanguage.text = getString(
             R.string.repository_language,
-            repository.language
+            item.language
         )
 
         Glide.with(context!!)
-            .load(repository.user.avatarUrl)
+            .load(item.user.avatarUrl)
             .circleCrop()
             .into(binding.imageOwnerAvatar)
 
-        binding.textOwnerName.text = repository.user.login
-        binding.textWatchersCount.text = repository.watchersCount.toString()
-        binding.textForksCount.text = repository.forksCount.toString()
-        binding.textOpenIssuesCount.text = repository.openIssuesCount.toString()
+        binding.textOwnerName.text = item.user.login
+        binding.textWatchersCount.text = item.watchersCount.toString()
+        binding.textForksCount.text = item.forksCount.toString()
+        binding.textOpenIssuesCount.text = item.openIssuesCount.toString()
         binding.textCreated.text = getString(
             R.string.repository_created,
-            repository.createdAt
+            item.createdAt
         )
         binding.textLastUpdated.text = getString(
             R.string.repository_last_updated,
-            repository.updatedAt
+            item.updatedAt
         )
+    }
+
+    override fun navigateToUserDetails(user: User) {
+        UserActivity.open(context, user.login)
     }
 }

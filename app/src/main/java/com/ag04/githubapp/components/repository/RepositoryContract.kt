@@ -1,45 +1,25 @@
 package com.ag04.githubapp.components.repository
 
-import com.ag04.githubapp.components.base.BaseContract
-import com.ag04.githubapp.data.model.Repository
+import com.ag04.githubapp.components.base.details.BaseDetailsContract
+import com.ag04.githubapp.data.model.User
 
 /**
  * Created by akovar on 08/06/2020.
  */
 interface RepositoryContract {
 
-    interface View : BaseContract.View {
+    interface View<T> : BaseDetailsContract.View<T> {
 
         /**
-         * Invoked by presenter to show/hide loading indicator.
+         * Invoked by presenter to navigate to user
+         * details screen.
          *
-         * @param show show loading indicator
+         * @param user user
          */
-        fun showLoadingIndicator(show: Boolean)
-
-        /**
-         * Invoked by presenter to show/hide
-         * repository details.
-         *
-         * @param show show details
-         */
-        fun showDetails(show: Boolean)
-
-        /**
-         * Invoked by presenter when repository data is loaded
-         * and ready to display.
-         *
-         * @param repository repository data
-         */
-        fun onRepositoryLoaded(repository: Repository)
+        fun navigateToUserDetails(user: User)
     }
 
-    interface Presenter : BaseContract.Presenter<View> {
-
-        /**
-         * Invoked when user triggers refresh view.
-         */
-        fun onRefresh()
+    interface Presenter<T, V : View<T>> : BaseDetailsContract.Presenter<T, V> {
 
         /**
          * Invoked when user click on owner details view item.

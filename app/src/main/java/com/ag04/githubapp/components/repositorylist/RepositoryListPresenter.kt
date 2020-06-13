@@ -23,8 +23,8 @@ class RepositoryListPresenter(
     }
 
     override fun onOwnerAvatarClick(item: Repository) {
-        Timber.d("onItemImageClick: ${item.id}")
-
+        Timber.d("onOwnerAvatarClick: ${item.id}")
+        view?.navigateToUserDetails(item.user)
     }
 
     override fun onSortClick() {

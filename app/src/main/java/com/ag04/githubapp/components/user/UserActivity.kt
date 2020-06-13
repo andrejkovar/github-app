@@ -1,15 +1,39 @@
 package com.ag04.githubapp.components.user
 
+import android.content.Context
+import android.content.Intent
 import com.ag04.githubapp.components.base.BaseFragment
 import com.ag04.githubapp.components.base.BaseToolbarActivity
+import com.ag04.githubapp.data.model.User
+import com.ag04.githubapp.di.FragmentInjector
 
 /**
  * Created by akovar on 08/06/2020.
  */
 class UserActivity :
-    BaseToolbarActivity<UserContract.View, UserContract.Presenter>() {
+    BaseToolbarActivity<UserContract.View<User>, UserContract.Presenter<User>>() {
 
-    override fun provideFragment(): BaseFragment<UserContract.View, UserContract.Presenter> {
-        TODO("Not yet implemented")
+    private val userFragment: UserFragment = FragmentInjector.provideUserFragment()
+
+    override fun provideFragment(): BaseFragment<UserContract.View<User>, UserContract.Presenter<User>> {
+        return userFragment
+    }
+
+    override fun isDisplayHomeAsUpEnabled(): Boolean {
+        return true
+    }
+
+    companion object {
+
+        const val USER_ID_EXTRA = "com.ag04.githubapp.components.user.USER_ID_EXTRA"
+
+        fun open(context: Context?, userId: String) {
+            context?.let {
+                it.startActivity(Intent(it, UserActivity::class.java).apply {
+                    putExtra(USER_ID_EXTRA, userId)
+                    flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                })
+            }
+        }
     }
 }

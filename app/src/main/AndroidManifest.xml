@@ -26,6 +26,10 @@
             android:name=".components.repository.RepositoryActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".components.user.UserActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
