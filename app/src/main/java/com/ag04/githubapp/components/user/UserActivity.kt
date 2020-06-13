@@ -2,6 +2,7 @@ package com.ag04.githubapp.components.user
 
 import android.content.Context
 import android.content.Intent
+import com.ag04.githubapp.R
 import com.ag04.githubapp.components.base.BaseFragment
 import com.ag04.githubapp.components.base.BaseToolbarActivity
 import com.ag04.githubapp.data.model.User
@@ -21,6 +22,10 @@ class UserActivity :
 
     override fun isDisplayHomeAsUpEnabled(): Boolean {
         return true
+    }
+
+    override fun provideToolbarTitleResourceId(): Int {
+        return R.string.title_user_details
     }
 
     companion object {

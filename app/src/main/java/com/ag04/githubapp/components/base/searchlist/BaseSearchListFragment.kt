@@ -52,7 +52,7 @@ abstract class BaseSearchListFragment<T, V : BaseSearchListContract.View<T>, P :
                 })
 
                 maxWidth = Int.MAX_VALUE
-                queryHint = getString(R.string.search)
+                queryHint = getString(R.string.label_search)
             }
         }
 

@@ -47,7 +47,7 @@ class RepositoryListAdapter :
             binding.textForksCount.text = item.forksCount.toString()
             binding.textOpenIssuesCount.text = item.openIssuesCount.toString()
             binding.textLastUpdated.text = itemView.context.getString(
-                R.string.repository_last_updated,
+                R.string.text_repository_last_updated,
                 item.updatedAt
             )
 

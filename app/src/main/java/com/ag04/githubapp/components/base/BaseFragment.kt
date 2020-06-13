@@ -35,7 +35,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     protected abstract fun providePresenter(): P
 
     override fun onError(errorStatusCode: Int) {
-        Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.error_unknown_error, Toast.LENGTH_SHORT).show()
     }
 
     /**

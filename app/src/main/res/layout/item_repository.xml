@@ -93,7 +93,7 @@
             android:layout_marginTop="@dimen/default_details_margin"
             android:textAlignment="textEnd"
             android:textColor="@color/textColor2"
-            tools:text="@string/repository_last_updated" />
+            tools:text="@string/text_repository_last_updated" />
 
     </LinearLayout>
 

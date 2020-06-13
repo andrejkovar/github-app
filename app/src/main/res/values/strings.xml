@@ -1,18 +1,23 @@
 <resources>
     <string name="app_name">GitHubApp</string>
 
-    <string name="no_results">No results</string>
-    <string name="search">Search</string>
-    <string name="sort">Sort</string>
-    <string name="submit">Submit</string>
-    <string name="repository_last_updated">Last updated at: %s</string>
-    <string name="repository_created">Created at: %s</string>
-    <string name="repository_language">Language: %s</string>
+    <string name="label_no_results">No results</string>
+    <string name="label_search">Search</string>
+    <string name="label_sort">Sort</string>
+    <string name="label_submit">Submit</string>
+
+    <string name="text_repository_last_updated">Last updated at: %s</string>
+    <string name="text_repository_created">Created at: %s</string>
+    <string name="text_repository_language">Language: %s</string>
 
     <string name="dialog_title_sort_repositories">Sort repositories by:</string>
     <string name="dialog_option_stars">Stars</string>
     <string name="dialog_option_forks">Forks</string>
     <string name="dialog_option_last_update">Last update</string>
-    <string name="unknown_error">Something went wrong!</string>
+
+    <string name="error_unknown_error">Something went wrong!</string>
+
+    <string name="title_repository_details">Repository details</string>
+    <string name="title_user_details">User details</string>
 
 </resources>

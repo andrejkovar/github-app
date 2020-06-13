@@ -73,7 +73,7 @@ class RepositoryFragment :
         binding.textRepositoryDescription.text = item.description
         binding.textRepositoryUrl.text = item.htmlUrl
         binding.textRepositoryLanguage.text = getString(
-            R.string.repository_language,
+            R.string.text_repository_language,
             item.language
         )
 
@@ -87,11 +87,11 @@ class RepositoryFragment :
         binding.textForksCount.text = item.forksCount.toString()
         binding.textOpenIssuesCount.text = item.openIssuesCount.toString()
         binding.textCreated.text = getString(
-            R.string.repository_created,
+            R.string.text_repository_created,
             item.createdAt
         )
         binding.textLastUpdated.text = getString(
-            R.string.repository_last_updated,
+            R.string.text_repository_last_updated,
             item.updatedAt
         )
     }
