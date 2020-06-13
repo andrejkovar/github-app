@@ -6,7 +6,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.ag04.githubapp"
+        applicationId "com.akovar.githubapp"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
