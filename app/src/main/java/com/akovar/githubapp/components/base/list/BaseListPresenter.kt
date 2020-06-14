@@ -33,6 +33,11 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
      */
     abstract suspend fun provideItemsResult(): Result<List<T>>
 
+    override fun onViewReady() {
+        super.onViewReady()
+        load()
+    }
+
     override fun onRefresh() {
         Timber.d("onRefresh")
         load()

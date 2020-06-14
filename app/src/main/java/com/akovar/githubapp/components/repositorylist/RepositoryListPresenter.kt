@@ -51,4 +51,13 @@ class RepositoryListPresenter(
             RepositorySort(sort.stars, sort.forks, sort.updated)
         )
     }
+
+    override suspend fun provideItemsResult(): Result<List<Repository>> {
+        // by default, this presenter will research latest repositories
+        // about android topic
+        return repositoryDataSource.query(
+            "android",
+            RepositorySort(stars = false, forks = false, lastUpdated = true)
+        )
+    }
 }
