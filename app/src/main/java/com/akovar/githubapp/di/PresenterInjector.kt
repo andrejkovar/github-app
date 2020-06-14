@@ -7,6 +7,7 @@ import com.akovar.githubapp.components.repositorylist.RepositoryListContract
 import com.akovar.githubapp.components.repositorylist.RepositoryListPresenter
 import com.akovar.githubapp.components.user.UserContract
 import com.akovar.githubapp.components.user.UserPresenter
+import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.model.User
 import com.akovar.githubapp.data.source.repository.RepositoryDataSource
@@ -25,7 +26,7 @@ class PresenterInjector {
             return RepositoryListPresenter(
                 get(
                     RepositoryDataSource::class.java,
-                    qualifier("repositoryDataSource")
+                    qualifier(Constant.DI.NAMED_REPOSITORY_DATA_SOURCE)
                 )
             )
         }
@@ -37,7 +38,7 @@ class PresenterInjector {
                 repositoryPairId,
                 get(
                     RepositoryDataSource::class.java,
-                    qualifier("repositoryDataSource")
+                    qualifier(Constant.DI.NAMED_REPOSITORY_DATA_SOURCE)
                 )
             )
         }
@@ -47,7 +48,7 @@ class PresenterInjector {
                 userId,
                 get(
                     UserDataSource::class.java,
-                    qualifier("userDataSource")
+                    qualifier(Constant.DI.NAMED_USER_DATA_SOURCE)
                 )
             )
         }
