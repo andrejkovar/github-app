@@ -52,11 +52,11 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
         loadQuery()
     }
 
-    override fun onRefresh() {
+    override fun load() {
         if (isQueryMode) {
             loadQuery()
         } else {
-            load()
+            super.load()
         }
     }
 
@@ -65,6 +65,8 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
      * is in query mode and only then, load is executed.
      */
     protected fun loadQuery() {
+        Timber.d("loadQuery: isQueryMode=$isQueryMode query=$query")
+
         if (isQueryMode) {
             scope.launch {
                 view?.showLoadingProgress(true)

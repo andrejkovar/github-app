@@ -1,5 +1,7 @@
 package com.akovar.githubapp.data
 
+import com.akovar.githubapp.data.source.repository.RepositorySort
+
 /**
  * This class holds main application constants constants.
  *
@@ -16,6 +18,15 @@ class Constant {
              * research latest repositories about default topic.
              */
             const val DEFAULT_QUERY: String = "android"
+
+            /**
+             * Default repository sort if not set.
+             */
+            val DEFAULT_REPOSITORY_SORT = RepositorySort(
+                stars = true,
+                forks = false,
+                lastUpdated = false
+            )
         }
     }
 

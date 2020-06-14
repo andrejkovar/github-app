@@ -14,6 +14,7 @@ import com.akovar.githubapp.components.repository.RepositoryPairId
 import com.akovar.githubapp.components.user.UserActivity
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.model.User
+import com.akovar.githubapp.data.source.repository.RepositorySort
 import com.akovar.githubapp.databinding.FragmentRepositoryListBinding
 import com.akovar.githubapp.databinding.LayoutRepositorySortBinding
 import com.akovar.githubapp.di.PresenterInjector
@@ -76,10 +77,10 @@ class RepositoryListFragment :
         }
     }
 
-    override fun showSortDialog(sort: RepositorySearchSort) {
+    override fun showSortDialog(sort: RepositorySort) {
         sortDialogBinding.radioButtonStars.isChecked = sort.stars
         sortDialogBinding.radioButtonForks.isChecked = sort.forks
-        sortDialogBinding.radioButtonLastUpdated.isChecked = sort.updated
+        sortDialogBinding.radioButtonLastUpdated.isChecked = sort.lastUpdated
 
         if (!sortDialog.isShowing) {
             sortDialog.show()
@@ -110,10 +111,10 @@ class RepositoryListFragment :
 
         sortDialogBinding.buttonSubmit.setOnClickListener {
             presenter.onSortSubmit(
-                RepositorySearchSort(
+                RepositorySort(
                     stars = sortDialogBinding.radioButtonStars.isChecked,
                     forks = sortDialogBinding.radioButtonForks.isChecked,
-                    updated = sortDialogBinding.radioButtonLastUpdated.isChecked
+                    lastUpdated = sortDialogBinding.radioButtonLastUpdated.isChecked
                 )
             )
 

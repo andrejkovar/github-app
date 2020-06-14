@@ -19,7 +19,7 @@ class RepositoryListPresenter(
     /**
      * Current selected sort holder.
      */
-    private val sort = RepositorySearchSort(stars = false, forks = false, updated = false)
+    private var sort: RepositorySort = Constant.UI.DEFAULT_REPOSITORY_SORT
 
     override fun onItemClick(item: Repository) {
         super.onItemClick(item)
@@ -36,20 +36,16 @@ class RepositoryListPresenter(
         view?.showSortDialog(sort)
     }
 
-    override fun onSortSubmit(sort: RepositorySearchSort) {
-        this.sort.apply {
-            stars = sort.stars
-            forks = sort.forks
-            updated = sort.updated
-        }
-
+    override fun onSortSubmit(sort: RepositorySort) {
+        Timber.d("onSortSubmit $sort")
+        this.sort = sort
         load()
     }
 
     override suspend fun provideQueryItemsResult(): Result<List<Repository>> {
         return repositoryDataSource.query(
             query,
-            RepositorySort(sort.stars, sort.forks, sort.updated)
+            sort
         )
     }
 
@@ -60,7 +56,7 @@ class RepositoryListPresenter(
     override suspend fun provideItemsResult(): Result<List<Repository>> {
         return repositoryDataSource.query(
             Constant.UI.DEFAULT_QUERY,
-            RepositorySort(stars = false, forks = false, lastUpdated = true)
+            sort
         )
     }
 }
