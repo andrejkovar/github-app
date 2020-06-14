@@ -4,6 +4,7 @@ import android.app.Application
 import com.akovar.githubapp.BuildConfig
 import com.akovar.githubapp.di.apiModule
 import com.akovar.githubapp.di.applicationModule
+import com.akovar.githubapp.di.dataSourceModule
 import com.akovar.githubapp.di.fragmentModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.fragment.koin.fragmentFactory
@@ -25,6 +26,7 @@ class GitHubApplication : Application() {
             modules(
                 applicationModule,
                 apiModule,
+                dataSourceModule,
                 fragmentModule
             )
         }
