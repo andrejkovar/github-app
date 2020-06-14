@@ -1,6 +1,7 @@
 package com.akovar.githubapp.components.repositorylist
 
 import com.akovar.githubapp.components.base.searchlist.BaseSearchListPresenter
+import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.source.Result
 import com.akovar.githubapp.data.source.repository.RepositoryDataSource
@@ -49,6 +50,17 @@ class RepositoryListPresenter(
         return repositoryDataSource.query(
             query,
             RepositorySort(sort.stars, sort.forks, sort.updated)
+        )
+    }
+
+    /**
+     * By default, this presenter will research latest
+     * repositories about provided topic.
+     */
+    override suspend fun provideItemsResult(): Result<List<Repository>> {
+        return repositoryDataSource.query(
+            Constant.UI.DEFAULT_QUERY,
+            RepositorySort(stars = false, forks = false, lastUpdated = true)
         )
     }
 }

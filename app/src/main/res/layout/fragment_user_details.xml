@@ -136,7 +136,7 @@
                 style="@style/GitHubApp.TextView.Body.1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableTop="@android:drawable/ic_menu_info_details"
+                android:layout_marginBottom="@dimen/default_margin_details"
                 android:textAlignment="center"
                 android:visibility="gone"
                 tools:text="This is user biography."

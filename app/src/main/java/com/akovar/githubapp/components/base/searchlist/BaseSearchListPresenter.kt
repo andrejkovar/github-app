@@ -2,6 +2,7 @@ package com.akovar.githubapp.components.base.searchlist
 
 import com.akovar.githubapp.components.base.list.BaseListPresenter
 import com.akovar.githubapp.data.source.Result
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -31,10 +32,6 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
      */
     abstract suspend fun provideQueryItemsResult(): Result<List<T>>
 
-    override suspend fun provideItemsResult(): Result<List<T>> {
-        return provideQueryItemsResult()
-    }
-
     override fun onSearchOpened() {
         Timber.d("onSearchOpened")
         isQueryMode = true
@@ -55,13 +52,35 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
         loadQuery()
     }
 
+    override fun onRefresh() {
+        if (isQueryMode) {
+            loadQuery()
+        } else {
+            load()
+        }
+    }
+
     /**
      * Loads items from current query. It checks if components
      * is in query mode and only then, load is executed.
      */
     protected fun loadQuery() {
         if (isQueryMode) {
-            super.load()
+            scope.launch {
+                view?.showLoadingProgress(true)
+
+                val result = provideQueryItemsResult()
+                onQueryLoaded(result)
+            }
         }
+    }
+
+    /**
+     * Invoked when query items list result is loaded.
+     *
+     * @param result query items list result
+     */
+    protected fun onQueryLoaded(result: Result<List<T>>) {
+        onLoaded(result)
     }
 }
