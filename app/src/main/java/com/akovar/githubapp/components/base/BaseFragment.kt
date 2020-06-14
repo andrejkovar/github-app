@@ -40,10 +40,6 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
      */
     protected abstract fun providePresenter(): P
 
-    override fun onError(errorStatusCode: Int) {
-        Toast.makeText(context, R.string.error_unknown_error, Toast.LENGTH_SHORT).show()
-    }
-
     /**
      * In case there is a need for additional implementation
      * when view is created, just override this!
@@ -103,5 +99,9 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     override fun onDestroy() {
         super.onDestroy()
         providePresenter().onDestroy()
+    }
+
+    override fun onError(errorStatusCode: Int) {
+        Toast.makeText(context, R.string.error_unknown_error, Toast.LENGTH_SHORT).show()
     }
 }

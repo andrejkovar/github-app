@@ -30,6 +30,7 @@ class RemoteRepositoryDataSource(
             return Result.Success(emptyList())
         }
 
+        // prepare sort
         var sortValue: String? = null
         sort?.let {
             if (it.forks) {
@@ -50,11 +51,12 @@ class RemoteRepositoryDataSource(
 
         val result: Result<RepositoryResponse>
         result = RemoteDataSourceHelper.processGet { repositoryApi.query(query, sortValue) }
-        if (result is Result.Success) {
-            return Result.Success(result.item.items)
-        }
 
-        return Result.Error(result.error as DataSourceException)
+        return if (result is Result.Success) {
+            Result.Success(result.item.items)
+        } else {
+            Result.Error(result.error as DataSourceException)
+        }
     }
 
     override suspend fun getUserRepository(
@@ -76,7 +78,7 @@ class RemoteRepositoryDataSource(
         throw UnsupportedOperationException()
     }
 
-    override suspend fun saveAll(item: List<Repository>): Result<List<Repository>> {
+    override suspend fun saveAll(items: List<Repository>): Result<List<Repository>> {
         throw UnsupportedOperationException()
     }
 }

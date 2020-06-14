@@ -27,7 +27,7 @@ class RemoteUserDataSource(
         throw UnsupportedOperationException()
     }
 
-    override suspend fun saveAll(item: List<User>): Result<List<User>> {
+    override suspend fun saveAll(items: List<User>): Result<List<User>> {
         throw UnsupportedOperationException()
     }
 }

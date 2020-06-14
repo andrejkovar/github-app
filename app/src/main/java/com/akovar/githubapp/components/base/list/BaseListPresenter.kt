@@ -66,8 +66,10 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
 
         if (result is Result.Success) {
             items = result.item
-            view?.setItems(items)
-            view?.showNoResults(items.isNullOrEmpty())
+            view?.let {
+                view?.setItems(items)
+                view?.showNoResults(items.isNullOrEmpty())
+            }
         } else {
             view?.onError((result as Result.Error).error.code)
         }

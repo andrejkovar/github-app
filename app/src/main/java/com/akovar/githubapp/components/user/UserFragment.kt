@@ -54,7 +54,7 @@ class UserFragment :
     }
 
     override fun setItem(item: User) {
-        Glide.with(context!!)
+        Glide.with(requireContext())
             .load(item.avatarUrl)
             .circleCrop()
             .into(binding.imageUserAvatar)
