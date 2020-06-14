@@ -4,6 +4,7 @@ import com.akovar.githubapp.components.base.adapter.BaseRecyclerViewAdapter
 import com.akovar.githubapp.components.base.searchlist.BaseSearchListContract
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.model.User
+import com.akovar.githubapp.data.source.repository.RepositorySort
 
 /**
  * Created by akovar on 08/06/2020.
@@ -17,7 +18,7 @@ interface RepositoryListContract {
          *
          * @param sort repository search sort
          */
-        fun showSortDialog(sort: RepositorySearchSort)
+        fun showSortDialog(sort: RepositorySort)
 
         /**
          * Invoked by presenter to navigate to repository
@@ -46,7 +47,7 @@ interface RepositoryListContract {
         /**
          * Invoked when user press on sort submit action view.
          */
-        fun onSortSubmit(sort: RepositorySearchSort)
+        fun onSortSubmit(sort: RepositorySort)
 
         /**
          * Invoked when user press on owner avatar action view.

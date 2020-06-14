@@ -20,7 +20,7 @@ interface RepositoryDataSource : DataSource<Repository, Long> {
     ): Result<Repository>
 }
 
-class RepositorySort(
+data class RepositorySort(
     val stars: Boolean,
     val forks: Boolean,
     val lastUpdated: Boolean
