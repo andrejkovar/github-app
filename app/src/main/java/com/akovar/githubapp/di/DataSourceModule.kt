@@ -21,6 +21,14 @@ import retrofit2.Retrofit
  */
 val dataSourceModule = module {
 
+    single<UserApi> {
+        get<Retrofit>().create(UserApi::class.java)
+    }
+
+    single<RepositoryApi> {
+        get<Retrofit>().create(RepositoryApi::class.java)
+    }
+
     factory<RepositoryDataSource>(named(Constant.DI.NAMED_REMOTE_REPOSITORY_DATA_SOURCE)) {
         RemoteRepositoryDataSource(get())
     }
@@ -49,13 +57,5 @@ val dataSourceModule = module {
             get(qualifier(Constant.DI.NAMED_REMOTE_USER_DATA_SOURCE)),
             get(qualifier(Constant.DI.NAMED_LOCAL_USER_DATA_SOURCE))
         )
-    }
-
-    single<UserApi> {
-        get<Retrofit>().create(UserApi::class.java)
-    }
-
-    single<RepositoryApi> {
-        get<Retrofit>().create(RepositoryApi::class.java)
     }
 }

@@ -14,7 +14,7 @@ val applicationModule = module {
     single {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .client(get<OkHttpClient>())
+            .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
