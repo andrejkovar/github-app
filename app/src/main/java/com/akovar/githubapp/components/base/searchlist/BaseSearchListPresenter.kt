@@ -18,7 +18,7 @@ abstract class BaseSearchListPresenter<T, V : BaseSearchListContract.View<T>> :
 
     /**
      * Current query mode holder. True if search is opened,
-     * false otherwise.i
+     * false otherwise.
      */
     protected var isQueryMode = false
 

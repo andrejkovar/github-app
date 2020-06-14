@@ -84,7 +84,7 @@ class RepositoryFragment :
             item.language
         )
 
-        Glide.with(context!!)
+        Glide.with(requireContext())
             .load(item.user.avatarUrl)
             .circleCrop()
             .into(binding.imageOwnerAvatar)

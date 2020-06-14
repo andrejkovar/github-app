@@ -53,8 +53,10 @@ abstract class BaseDetailsPresenter<T, ID, V : BaseDetailsContract.View<T>>(
         Timber.d("loadItem $itemId")
 
         scope.launch {
-            view?.showLoadingProgress(true)
-            view?.showDetails(false)
+            view?.let {
+                it.showLoadingProgress(true)
+                it.showDetails(false)
+            }
 
             val result = provideItemResult()
             onItemLoaded(result)
@@ -71,9 +73,9 @@ abstract class BaseDetailsPresenter<T, ID, V : BaseDetailsContract.View<T>>(
 
         if (result is Result.Success) {
             item = result.item
-            view?.apply {
-                setItem(item!!)
-                showDetails(true)
+            view?.let {
+                it.setItem(item!!)
+                it.showDetails(true)
             }
         } else {
             view?.onError((result as Result.Error).error.code)

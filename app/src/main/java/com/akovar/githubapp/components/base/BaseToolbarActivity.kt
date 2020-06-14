@@ -15,7 +15,7 @@ abstract class BaseToolbarActivity<V : BaseContract.View, P : BaseContract.Prese
     protected var toolbar: Toolbar? = null
 
     /**
-     * Provides toolbar title resource id
+     * Provides toolbar title resource id.
      *
      * @return toolbar title resource id
      */
@@ -47,9 +47,8 @@ abstract class BaseToolbarActivity<V : BaseContract.View, P : BaseContract.Prese
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        toolbar = findViewById(provideToolbarId())
-        toolbar?.let {
-            setSupportActionBar(it)
+        toolbar = findViewById<Toolbar>(provideToolbarId())?.apply {
+            setSupportActionBar(this)
         }
 
         supportActionBar?.apply {
