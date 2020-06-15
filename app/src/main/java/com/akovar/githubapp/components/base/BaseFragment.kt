@@ -104,4 +104,8 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     override fun onError(errorStatusCode: Int) {
         Toast.makeText(context, R.string.error_unknown_error, Toast.LENGTH_SHORT).show()
     }
+
+    override fun close() {
+        activity?.finish()
+    }
 }

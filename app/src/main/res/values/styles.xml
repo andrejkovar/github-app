@@ -34,8 +34,22 @@
 
     <style name="GitHubApp.Button" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/default_corner_radius</item>
-        <item name="backgroundTint">@color/colorAccent</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColor1</item>
+    </style>
+
+    <style name="GitHubApp.Button.Primary" parent="GitHubApp.Button">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textColor3</item>
+    </style>
+
+    <style name="GitHubApp.Button.Secondary" parent="GitHubApp.Button">
+        <item name="backgroundTint">@color/secondaryBackground</item>
+        <item name="android:textColor">@color/textColor1</item>
+    </style>
+
+    <style name="GitHubApp.Button.Accent" parent="GitHubApp.Button">
+        <item name="backgroundTint">@color/colorAccent</item>
         <item name="android:textColor">@color/textColor1</item>
     </style>
 

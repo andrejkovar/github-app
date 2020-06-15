@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">GitHubApp</string>
 
+    <string name="label_login">Login</string>
+    <string name="label_skip">Skip</string>
     <string name="label_no_results">No results</string>
     <string name="label_search">Search</string>
     <string name="label_sort">Sort</string>
@@ -11,6 +13,7 @@
     <string name="title_repository_details">Repository details</string>
     <string name="title_user_details">User details</string>
 
+    <string name="text_login_welcome">Welcome to GitHub App</string>
     <string name="text_repository_last_updated">Last updated at: %s</string>
     <string name="text_repository_created">Created at: %s</string>
     <string name="text_repository_language">Language: %s</string>

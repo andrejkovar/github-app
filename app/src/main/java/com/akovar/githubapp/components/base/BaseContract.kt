@@ -13,6 +13,11 @@ interface BaseContract {
          * @param errorStatusCode the error status code
          */
         fun onError(errorStatusCode: Int)
+
+        /**
+         * Invoked be presenter to close this view.
+         */
+        fun close()
     }
 
     /**
