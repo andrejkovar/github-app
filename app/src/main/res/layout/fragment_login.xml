@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBackground"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/GitHubApp.TextView.Headline.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_please_wait"
+        android:textAlignment="center" />
+
+    <ProgressBar
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="@dimen/default_margin_details"
+        android:indeterminate="true"
+        android:visibility="visible" />
+
+</LinearLayout>

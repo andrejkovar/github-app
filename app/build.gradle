@@ -15,6 +15,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField('String', 'BASE_URL', '"https://api.github.com"')
+
+        // github auth
+        buildConfigField('String', 'GITHUB_AUTH_URL', '"https://github.com/login/oauth/authorize"')
+        buildConfigField('String', 'GITHUB_CLIENT_ID', '"31f62f30a584cbc8dbe6"')
+        buildConfigField('String', 'GITHUB_CLIENT_SECRET', '"6d622ad0d4d75f114d5f30a8d4e7ce7459ac0717"')
+        buildConfigField('String', 'GITHUB_REDIRECT_URL', '"akovar-githubapp://oauth-callback"')
     }
 
     compileOptions {

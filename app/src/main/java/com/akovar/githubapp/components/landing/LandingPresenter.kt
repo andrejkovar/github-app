@@ -1,4 +1,4 @@
-package com.akovar.githubapp.components.login
+package com.akovar.githubapp.components.landing
 
 import com.akovar.githubapp.components.base.BasePresenter
 import timber.log.Timber
@@ -6,9 +6,9 @@ import timber.log.Timber
 /**
  * Created by akovar on 15/06/2020.
  */
-class LoginPresenter :
-    BasePresenter<LoginContract.View>(),
-    LoginContract.Presenter {
+class LandingPresenter :
+    BasePresenter<LandingContract.View>(),
+    LandingContract.Presenter {
 
     override fun onLoginClick() {
         Timber.d("onLoginClick")

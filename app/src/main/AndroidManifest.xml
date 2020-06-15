@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".components.login.LoginActivity"
+            android:name=".components.landing.LandingActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -35,6 +35,24 @@
         <activity
             android:name=".components.user.UserActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".components.base.login.LoginActivity"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth-callback"
+                    android:scheme="akovar-githubapp" />
+
+            </intent-filter>
+
+        </activity>
 
     </application>
 

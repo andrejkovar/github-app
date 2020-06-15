@@ -1,6 +1,7 @@
 package com.akovar.githubapp.components.base.details
 
 import com.akovar.githubapp.components.base.BasePresenter
+import com.akovar.githubapp.data.source.DataSourceException
 import com.akovar.githubapp.data.source.Result
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -78,7 +79,7 @@ abstract class BaseDetailsPresenter<T, ID, V : BaseDetailsContract.View<T>>(
                 it.showDetails(true)
             }
         } else {
-            view?.onError((result as Result.Error).error.code)
+            view?.onError((result.error as DataSourceException).code)
         }
 
         view?.showLoadingProgress(false)

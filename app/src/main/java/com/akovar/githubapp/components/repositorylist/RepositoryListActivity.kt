@@ -29,7 +29,7 @@ class RepositoryListActivity :
         fun open(context: Context?) {
             context?.let {
                 it.startActivity(Intent(it, RepositoryListActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 })
             }
         }

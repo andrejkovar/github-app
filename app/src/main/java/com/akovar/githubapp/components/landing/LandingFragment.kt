@@ -1,35 +1,36 @@
-package com.akovar.githubapp.components.login
+package com.akovar.githubapp.components.landing
 
 import android.view.LayoutInflater
 import android.view.View
 import com.akovar.githubapp.components.base.BaseFragment
+import com.akovar.githubapp.components.base.login.LoginActivity
 import com.akovar.githubapp.components.repositorylist.RepositoryListActivity
-import com.akovar.githubapp.databinding.FragmnetLoginBinding
+import com.akovar.githubapp.databinding.FragmentLandingBinding
 import com.akovar.githubapp.di.PresenterInjector
 
 /**
  * Created by akovar on 15/06/2020.
  */
-class LoginFragment :
-    BaseFragment<LoginContract.View, LoginContract.Presenter>(),
-    LoginContract.View {
+class LandingFragment :
+    BaseFragment<LandingContract.View, LandingContract.Presenter>(),
+    LandingContract.View {
 
     /**
      * Login presenter holder.
      */
-    private val presenter: LoginContract.Presenter = PresenterInjector.provideLoginPresenter()
+    private val presenter: LandingContract.Presenter = PresenterInjector.provideLandingPresenter()
 
     /**
      * Layout binding holder for this fragment.
      */
-    private lateinit var binding: FragmnetLoginBinding
+    private lateinit var binding: FragmentLandingBinding
 
     override fun provideResourceView(inflater: LayoutInflater): View {
-        binding = FragmnetLoginBinding.inflate(inflater)
+        binding = FragmentLandingBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun providePresenter(): LoginContract.Presenter {
+    override fun providePresenter(): LandingContract.Presenter {
         return presenter
     }
 
@@ -46,7 +47,7 @@ class LoginFragment :
     }
 
     override fun navigateToLogin() {
-        // TODO
+        LoginActivity.open(context)
     }
 
     override fun navigateToHome() {

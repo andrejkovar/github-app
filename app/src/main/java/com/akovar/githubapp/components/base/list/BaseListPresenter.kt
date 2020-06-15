@@ -1,6 +1,7 @@
 package com.akovar.githubapp.components.base.list
 
 import com.akovar.githubapp.components.base.BasePresenter
+import com.akovar.githubapp.data.source.DataSourceException
 import com.akovar.githubapp.data.source.Result
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -76,7 +77,7 @@ abstract class BaseListPresenter<T, V : BaseListContract.View<T>> :
                 view?.showNoResults(items.isNullOrEmpty())
             }
         } else {
-            view?.onError((result as Result.Error).error.code)
+            view?.onError((result.error as DataSourceException).code)
         }
 
         view?.showLoadingProgress(false)

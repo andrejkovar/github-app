@@ -1,7 +1,9 @@
 package com.akovar.githubapp.di
 
-import com.akovar.githubapp.components.login.LoginContract
-import com.akovar.githubapp.components.login.LoginPresenter
+import com.akovar.githubapp.components.base.login.LoginContract
+import com.akovar.githubapp.components.base.login.LoginPresenter
+import com.akovar.githubapp.components.landing.LandingContract
+import com.akovar.githubapp.components.landing.LandingPresenter
 import com.akovar.githubapp.components.repository.RepositoryContract
 import com.akovar.githubapp.components.repository.RepositoryPairId
 import com.akovar.githubapp.components.repository.RepositoryPresenter
@@ -20,7 +22,11 @@ class PresenterInjector {
     companion object {
 
         fun provideLoginPresenter(): LoginContract.Presenter {
-            return LoginPresenter()
+            return LoginPresenter(ApplicationInjector.provideAuthClient())
+        }
+
+        fun provideLandingPresenter(): LandingContract.Presenter {
+            return LandingPresenter()
         }
 
         fun provideRepositoryListPresenter(): RepositoryListContract.Presenter {

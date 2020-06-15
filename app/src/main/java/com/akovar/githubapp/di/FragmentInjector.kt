@@ -1,6 +1,7 @@
 package com.akovar.githubapp.di
 
-import com.akovar.githubapp.components.login.LoginFragment
+import com.akovar.githubapp.components.base.login.LoginFragment
+import com.akovar.githubapp.components.landing.LandingFragment
 import com.akovar.githubapp.components.repository.RepositoryFragment
 import com.akovar.githubapp.components.repositorylist.RepositoryListFragment
 import com.akovar.githubapp.components.user.UserFragment
@@ -11,6 +12,10 @@ import com.akovar.githubapp.components.user.UserFragment
 class FragmentInjector {
 
     companion object {
+
+        fun provideLandingFragment(): LandingFragment {
+            return LandingFragment()
+        }
 
         fun provideLoginFragment(): LoginFragment {
             return LoginFragment()

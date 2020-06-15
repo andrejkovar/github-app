@@ -1,16 +1,16 @@
-package com.akovar.githubapp.components.login
+package com.akovar.githubapp.components.landing
 
 import com.akovar.githubapp.components.base.BaseContract
 
 /**
  * Created by akovar on 15/06/2020.
  */
-interface LoginContract {
+interface LandingContract {
 
     interface View : BaseContract.View {
 
         /**
-         * TODO
+         * Navigates to login screen.
          */
         fun navigateToLogin()
 

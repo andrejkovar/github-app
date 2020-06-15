@@ -3,6 +3,7 @@
 
     <string name="label_login">Login</string>
     <string name="label_skip">Skip</string>
+    <string name="label_please_wait">Please wait…</string>
     <string name="label_no_results">No results</string>
     <string name="label_search">Search</string>
     <string name="label_sort">Sort</string>
