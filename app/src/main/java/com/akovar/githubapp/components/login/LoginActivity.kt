@@ -1,4 +1,4 @@
-package com.akovar.githubapp.components.base.login
+package com.akovar.githubapp.components.login
 
 import android.content.Context
 import android.content.Intent

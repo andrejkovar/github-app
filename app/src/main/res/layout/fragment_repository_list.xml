@@ -7,23 +7,24 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mtrl_card_my_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin_items"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="@dimen/default_corner_radius">
+        app:cardCornerRadius="@dimen/default_corner_radius"
+        tools:visibility="visible">
 
         <LinearLayout
             android:id="@+id/linear_my_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/default_margin_details"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:padding="@dimen/default_margin_details">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_my_profile"

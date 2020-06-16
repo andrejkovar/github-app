@@ -51,13 +51,16 @@ class RepositoryListPresenter(
         Timber.d("onMyProfileClick")
 
         userScope.launch {
-            val result = userDataSource.getMe()
+            view?.showLoadingProgress(true)
 
+            val result = userDataSource.getMe()
             if (result is Result.Success) {
                 view?.navigateToMyProfileDetails(result.item)
             } else {
                 view?.onError(0)
             }
+
+            view?.showLoadingProgress(false)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.akovar.githubapp.components.base.login
+package com.akovar.githubapp.components.login
 
 import android.net.Uri
 import com.akovar.githubapp.BuildConfig
@@ -14,8 +14,14 @@ class LoginPresenter(
     private val authClient: AuthClient<GitHubToken, GitHubCredentials>
 ) : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
 
+    /**
+     * Current credentials holder.
+     */
     private var credentials: GitHubCredentials? = null
 
+    /**
+     * On token handler holder.
+     */
     private val onTokenHandler =
         object : AuthClient.TokenHandler<GitHubToken, GitHubCredentials> {
 
@@ -58,6 +64,9 @@ class LoginPresenter(
         }
     }
 
+    /**
+     * Starts with authorisation process.
+     */
     private fun startAuth() {
         view?.openGitHubLoginWeb(
             Uri.parse(
@@ -68,6 +77,11 @@ class LoginPresenter(
         )
     }
 
+    /**
+     * Called when code is received from GitHub authorisation service.
+     *
+     * @param code received code
+     */
     private fun onCode(code: String) {
         credentials = GitHubCredentials(code)
         authClient.authenticate(credentials!!)

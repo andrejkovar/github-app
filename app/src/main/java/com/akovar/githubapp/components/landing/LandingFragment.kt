@@ -3,7 +3,7 @@ package com.akovar.githubapp.components.landing
 import android.view.LayoutInflater
 import android.view.View
 import com.akovar.githubapp.components.base.BaseFragment
-import com.akovar.githubapp.components.base.login.LoginActivity
+import com.akovar.githubapp.components.login.LoginActivity
 import com.akovar.githubapp.components.repositorylist.RepositoryListActivity
 import com.akovar.githubapp.databinding.FragmentLandingBinding
 import com.akovar.githubapp.di.PresenterProvider

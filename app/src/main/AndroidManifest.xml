@@ -37,7 +37,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".components.base.login.LoginActivity"
+            android:name="com.akovar.githubapp.components.login.LoginActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>

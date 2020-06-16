@@ -1,10 +1,11 @@
-package com.akovar.githubapp.components.base.login
+package com.akovar.githubapp.components.login
 
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import com.akovar.githubapp.components.base.BaseFragment
+import com.akovar.githubapp.components.landing.LandingActivity
 import com.akovar.githubapp.components.repositorylist.RepositoryListActivity
 import com.akovar.githubapp.databinding.FragmentLoginBinding
 import com.akovar.githubapp.di.PresenterProvider
@@ -42,6 +43,6 @@ class LoginFragment :
     }
 
     override fun navigateBackToLanding() {
-        close()
+        LandingActivity.open(context)
     }
 }

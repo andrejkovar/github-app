@@ -64,7 +64,7 @@ class RepositoryListFragment :
         initSortDialog()
         initAdapter()
 
-        binding.linearMyProfile.setOnClickListener {
+        binding.mtrlCardMyProfile.setOnClickListener {
             presenter.onMyProfileClick()
         }
 
@@ -83,7 +83,7 @@ class RepositoryListFragment :
     }
 
     override fun showUserProfile(show: Boolean) {
-        binding.linearMyProfile.visibility = if (show) View.VISIBLE else View.GONE
+        binding.mtrlCardMyProfile.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun showSortDialog(sort: RepositorySort) {

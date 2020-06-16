@@ -17,16 +17,19 @@ class LandingActivity : BaseActivity<LandingContract.View, LandingContract.Prese
         return landingFragment
     }
 
-    /**
-     * Opens LandingActivity.
-     *
-     * @param context context
-     */
-    fun open(context: Context?) {
-        context?.let {
-            it.startActivity(Intent(context, LandingActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            })
+    companion object {
+
+        /**
+         * Opens LandingActivity.
+         *
+         * @param context context
+         */
+        fun open(context: Context?) {
+            context?.let {
+                it.startActivity(Intent(context, LandingActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                })
+            }
         }
     }
 }

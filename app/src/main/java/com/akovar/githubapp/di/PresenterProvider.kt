@@ -1,9 +1,9 @@
 package com.akovar.githubapp.di
 
-import com.akovar.githubapp.components.base.login.LoginContract
-import com.akovar.githubapp.components.base.login.LoginPresenter
 import com.akovar.githubapp.components.landing.LandingContract
 import com.akovar.githubapp.components.landing.LandingPresenter
+import com.akovar.githubapp.components.login.LoginContract
+import com.akovar.githubapp.components.login.LoginPresenter
 import com.akovar.githubapp.components.repository.RepositoryContract
 import com.akovar.githubapp.components.repository.RepositoryPairId
 import com.akovar.githubapp.components.repository.RepositoryPresenter
@@ -26,7 +26,7 @@ class PresenterProvider {
         }
 
         fun provideLandingPresenter(): LandingContract.Presenter {
-            return LandingPresenter()
+            return LandingPresenter(ApplicationProvider.provideAuthClient())
         }
 
         fun provideRepositoryListPresenter(): RepositoryListContract.Presenter {
