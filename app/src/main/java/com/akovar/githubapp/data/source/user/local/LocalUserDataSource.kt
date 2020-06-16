@@ -18,6 +18,10 @@ class LocalUserDataSource : DataSource<User, UserId> {
         throw UnsupportedOperationException()
     }
 
+    override suspend fun getAll(id: UserId): Result<List<User>> {
+        throw UnsupportedOperationException()
+    }
+
     override suspend fun save(item: User): Result<User> {
         throw UnsupportedOperationException()
     }

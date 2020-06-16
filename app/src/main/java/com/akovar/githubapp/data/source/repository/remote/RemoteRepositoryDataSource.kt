@@ -2,16 +2,18 @@ package com.akovar.githubapp.data.source.repository.remote
 
 import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.Repository
+import com.akovar.githubapp.data.source.DataSource
 import com.akovar.githubapp.data.source.DataSourceException
 import com.akovar.githubapp.data.source.RemoteDataSourceHelper
 import com.akovar.githubapp.data.source.Result
-import com.akovar.githubapp.data.source.repository.RepositoryDataSource
+import com.akovar.githubapp.data.source.repository.Query
+import com.akovar.githubapp.data.source.repository.RepositoryId
 import com.akovar.githubapp.data.source.repository.RepositorySort
+import com.akovar.githubapp.data.source.repository.UserRepository
 import com.google.gson.annotations.SerializedName
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 
 /**
@@ -19,9 +21,37 @@ import retrofit2.http.Query
  */
 class RemoteRepositoryDataSource(
     private val repositoryApi: RepositoryApi
-) : RepositoryDataSource {
+) : DataSource<Repository, RepositoryId> {
 
-    override suspend fun query(
+    override suspend fun getById(id: RepositoryId): Result<Repository> {
+        return RemoteDataSourceHelper.processGet {
+            when (id) {
+                is UserRepository -> repositoryApi.getOwnerRepo(id.userLogin, id.repoName)
+                else -> throw UnsupportedOperationException()
+            }
+        }
+    }
+
+    override suspend fun getAll(): Result<List<Repository>> {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun getAll(id: RepositoryId): Result<List<Repository>> {
+        return when (id) {
+            is Query -> query(id.query, id.sort)
+            else -> throw UnsupportedOperationException()
+        }
+    }
+
+    override suspend fun save(item: Repository): Result<Repository> {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun saveAll(items: List<Repository>): Result<List<Repository>> {
+        throw UnsupportedOperationException()
+    }
+
+    private suspend fun query(
         query: String,
         sort: RepositorySort?
     ): Result<List<Repository>> {
@@ -59,37 +89,14 @@ class RemoteRepositoryDataSource(
             Result.Error(result.error as DataSourceException)
         }
     }
-
-    override suspend fun getUserRepository(
-        userLogin: String,
-        repoName: String
-    ): Result<Repository> {
-        return RemoteDataSourceHelper.processGet { repositoryApi.getOwnerRepo(userLogin, repoName) }
-    }
-
-    override suspend fun getById(id: Long): Result<Repository> {
-        throw UnsupportedOperationException()
-    }
-
-    override suspend fun getAll(): Result<List<Repository>> {
-        throw UnsupportedOperationException()
-    }
-
-    override suspend fun save(item: Repository): Result<Repository> {
-        throw UnsupportedOperationException()
-    }
-
-    override suspend fun saveAll(items: List<Repository>): Result<List<Repository>> {
-        throw UnsupportedOperationException()
-    }
 }
 
 interface RepositoryApi {
 
     @GET(Constant.HTTP.ENDPOINT_REPOSITORY_SEARCH)
     suspend fun query(
-        @Query("q") query: String,
-        @Query("sort") sort: String?
+        @retrofit2.http.Query("q") query: String,
+        @retrofit2.http.Query("sort") sort: String?
     ): Response<RepositoryResponse>
 
     @GET(Constant.HTTP.ENDPOINT_USER_REPO)

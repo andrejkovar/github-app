@@ -30,6 +30,10 @@ abstract class BaseRepository<T, ID> : DataSource<T, ID> {
         return provideRemoteDataSource().getAll()
     }
 
+    override suspend fun getAll(id: ID): Result<List<T>> {
+        return provideRemoteDataSource().getAll(id)
+    }
+
     override suspend fun save(item: T): Result<T> {
         throw UnsupportedOperationException()
     }

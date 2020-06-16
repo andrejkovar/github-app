@@ -30,6 +30,10 @@ class RemoteUserDataSource(private val userApi: UserApi) : DataSource<User, User
         throw UnsupportedOperationException()
     }
 
+    override suspend fun getAll(id: UserId): Result<List<User>> {
+        throw UnsupportedOperationException()
+    }
+
     override suspend fun save(item: User): Result<User> {
         throw UnsupportedOperationException()
     }

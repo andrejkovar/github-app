@@ -1,8 +1,9 @@
 package com.akovar.githubapp.di
 
+import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.model.User
 import com.akovar.githubapp.data.source.DataSource
-import com.akovar.githubapp.data.source.repository.RepositoryDataSource
+import com.akovar.githubapp.data.source.repository.RepositoryId
 import com.akovar.githubapp.data.source.repository.RepositoryRepository
 import com.akovar.githubapp.data.source.repository.local.LocalRepositoryDataSource
 import com.akovar.githubapp.data.source.repository.remote.RemoteRepositoryDataSource
@@ -18,15 +19,15 @@ class DataSourceProvider {
 
     companion object {
 
-        private fun provideRepositoryLocalDataSource(): RepositoryDataSource {
+        private fun provideRepositoryLocalDataSource(): DataSource<Repository, RepositoryId> {
             return LocalRepositoryDataSource()
         }
 
-        private fun provideRepositoryRemoteDataSource(): RepositoryDataSource {
+        private fun provideRepositoryRemoteDataSource(): DataSource<Repository, RepositoryId> {
             return RemoteRepositoryDataSource(ApplicationProvider.provideRepositoryApi())
         }
 
-        fun provideRepositoryDataSource(): RepositoryDataSource {
+        fun provideRepositoryDataSource(): DataSource<Repository, RepositoryId> {
             return RepositoryRepository(
                 provideRepositoryRemoteDataSource(),
                 provideRepositoryLocalDataSource()

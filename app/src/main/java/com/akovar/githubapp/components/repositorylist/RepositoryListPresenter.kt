@@ -9,7 +9,8 @@ import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.model.User
 import com.akovar.githubapp.data.source.DataSource
 import com.akovar.githubapp.data.source.Result
-import com.akovar.githubapp.data.source.repository.RepositoryDataSource
+import com.akovar.githubapp.data.source.repository.Query
+import com.akovar.githubapp.data.source.repository.RepositoryId
 import com.akovar.githubapp.data.source.repository.RepositorySort
 import com.akovar.githubapp.data.source.user.UserId
 import com.akovar.githubapp.data.source.user.UserMe
@@ -22,7 +23,7 @@ import timber.log.Timber
  * Created by akovar on 08/06/2020.
  */
 class RepositoryListPresenter(
-    private val repositoryDataSource: RepositoryDataSource,
+    private val repositoryDataSource: DataSource<Repository, RepositoryId>,
     private val userDataSource: DataSource<User, UserId>,
     private val authClient: AuthClient<GitHubToken, GitHubCredentials>
 ) : BaseSearchListPresenter<Repository, RepositoryListContract.View>(),
@@ -79,10 +80,7 @@ class RepositoryListPresenter(
     }
 
     override suspend fun provideQueryItemsResult(): Result<List<Repository>> {
-        return repositoryDataSource.query(
-            query,
-            sort
-        )
+        return repositoryDataSource.getAll(Query(query, sort))
     }
 
     /**
@@ -90,9 +88,11 @@ class RepositoryListPresenter(
      * repositories about provided topic.
      */
     override suspend fun provideItemsResult(): Result<List<Repository>> {
-        return repositoryDataSource.query(
-            Constant.UI.DEFAULT_QUERY,
-            sort
+        return repositoryDataSource.getAll(
+            Query(
+                Constant.UI.DEFAULT_QUERY,
+                sort
+            )
         )
     }
 

@@ -24,6 +24,13 @@ interface DataSource<T, ID> {
     suspend fun getAll(): Result<List<T>>
 
     /**
+     * Gets data list by provided id.
+     *
+     * @return data list result
+     */
+    suspend fun getAll(id: ID): Result<List<T>>
+
+    /**
      * Saves provided item.
      *
      * @param item item

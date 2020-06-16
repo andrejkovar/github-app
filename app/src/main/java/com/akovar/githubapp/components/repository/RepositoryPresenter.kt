@@ -3,8 +3,10 @@ package com.akovar.githubapp.components.repository
 import android.os.Parcelable
 import com.akovar.githubapp.components.base.details.BaseDetailsPresenter
 import com.akovar.githubapp.data.model.Repository
+import com.akovar.githubapp.data.source.DataSource
 import com.akovar.githubapp.data.source.Result
-import com.akovar.githubapp.data.source.repository.RepositoryDataSource
+import com.akovar.githubapp.data.source.repository.RepositoryId
+import com.akovar.githubapp.data.source.repository.UserRepository
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -12,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
  */
 class RepositoryPresenter(
     private val repositoryPairId: RepositoryPairId,
-    private val repositoryDataSource: RepositoryDataSource
+    private val repositoryDataSource: DataSource<Repository, RepositoryId>
 ) : BaseDetailsPresenter<
         Repository,
         RepositoryPairId,
@@ -20,9 +22,11 @@ class RepositoryPresenter(
     RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>> {
 
     override suspend fun provideItemResult(): Result<Repository> {
-        return repositoryDataSource.getUserRepository(
-            repositoryPairId.userLogin,
-            repositoryPairId.repoName
+        return repositoryDataSource.getById(
+            UserRepository(
+                repositoryPairId.userLogin,
+                repositoryPairId.repoName
+            )
         )
     }
 
