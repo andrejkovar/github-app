@@ -12,7 +12,7 @@ import com.akovar.githubapp.data.source.user.remote.RemoteUserDataSource
 /**
  * Created by akovar on 12/06/2020.
  */
-class DataSourceInjector {
+class DataSourceProvider {
 
     companion object {
 
@@ -21,7 +21,7 @@ class DataSourceInjector {
         }
 
         private fun provideRepositoryRemoteDataSource(): RepositoryDataSource {
-            return RemoteRepositoryDataSource(ApplicationInjector.provideRepositoryApi())
+            return RemoteRepositoryDataSource(ApplicationProvider.provideRepositoryApi())
         }
 
         fun provideRepositoryDataSource(): RepositoryDataSource {
@@ -36,7 +36,7 @@ class DataSourceInjector {
         }
 
         private fun provideUserRemoteDataSource(): UserDataSource {
-            return RemoteUserDataSource(ApplicationInjector.provideUserApi())
+            return RemoteUserDataSource(ApplicationProvider.provideUserApi())
         }
 
         fun provideUserDataSource(): UserDataSource {

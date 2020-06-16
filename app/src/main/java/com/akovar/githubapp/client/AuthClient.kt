@@ -7,10 +7,7 @@ import okhttp3.OkHttpClient
  * AuthClient interface which define the contract to handle authentication
  * with the provided [Credentials].
  *
- *
- * [AuthClient] extends [Interceptor] in order to intercept http request and
- * add the authorization token in the header.
- *
+ * [AuthClient] extends [Interceptor] in order to intercept http request.
  *
  * Created by akovar on 15/06/2020.
  */
@@ -48,6 +45,13 @@ interface AuthClient<T : AuthToken?, C : Credentials?> : Interceptor {
     fun client(): OkHttpClient
 
     /**
+     * Sets token handler to current AuthClient.
+     *
+     * @param tokenHandler token handler
+     */
+    fun setTokenHandler(tokenHandler: TokenHandler<T, C>?)
+
+    /**
      * Callback interface to be invoke when a new token is fetched.
      *
      * @param <T> AuthToken
@@ -71,11 +75,4 @@ interface AuthClient<T : AuthToken?, C : Credentials?> : Interceptor {
          */
         fun onFailed(client: AuthClient<T, C>, throwable: Throwable)
     }
-
-    /**
-     * Sets token handler to current AuthClient.
-     *
-     * @param tokenHandler token handler
-     */
-    fun setTokenHandler(tokenHandler: TokenHandler<T, C>?)
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.akovar.githubapp.components.base.BaseFragment
 import com.akovar.githubapp.components.base.BaseToolbarActivity
-import com.akovar.githubapp.di.FragmentInjector
+import com.akovar.githubapp.di.FragmentProvider
 
 class RepositoryListActivity :
     BaseToolbarActivity<RepositoryListContract.View, RepositoryListContract.Presenter>() {
@@ -13,7 +13,7 @@ class RepositoryListActivity :
      * Repository list fragment holder.
      */
     private val repositoryListFragment: RepositoryListFragment =
-        FragmentInjector.provideRepositoryListFragment()
+        FragmentProvider.provideRepositoryListFragment()
 
     override fun provideFragment(): BaseFragment<RepositoryListContract.View, RepositoryListContract.Presenter> {
         return repositoryListFragment

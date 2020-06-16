@@ -7,7 +7,7 @@ import android.view.View
 import com.akovar.githubapp.components.base.BaseFragment
 import com.akovar.githubapp.components.repositorylist.RepositoryListActivity
 import com.akovar.githubapp.databinding.FragmentLoginBinding
-import com.akovar.githubapp.di.PresenterInjector
+import com.akovar.githubapp.di.PresenterProvider
 
 /**
  * Created by akovar on 15/06/2020.
@@ -16,7 +16,7 @@ class LoginFragment :
     BaseFragment<LoginContract.View, LoginContract.Presenter>(),
     LoginContract.View {
 
-    private val presenter: LoginContract.Presenter = PresenterInjector.provideLoginPresenter()
+    private val presenter: LoginContract.Presenter = PresenterProvider.provideLoginPresenter()
 
     private lateinit var binding: FragmentLoginBinding
 

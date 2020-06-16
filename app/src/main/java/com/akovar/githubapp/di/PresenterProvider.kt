@@ -17,12 +17,12 @@ import com.akovar.githubapp.data.model.User
 /**
  * Created by akovar on 12/06/2020.
  */
-class PresenterInjector {
+class PresenterProvider {
 
     companion object {
 
         fun provideLoginPresenter(): LoginContract.Presenter {
-            return LoginPresenter(ApplicationInjector.provideAuthClient())
+            return LoginPresenter(ApplicationProvider.provideAuthClient())
         }
 
         fun provideLandingPresenter(): LandingContract.Presenter {
@@ -31,9 +31,9 @@ class PresenterInjector {
 
         fun provideRepositoryListPresenter(): RepositoryListContract.Presenter {
             return RepositoryListPresenter(
-                DataSourceInjector.provideRepositoryDataSource(),
-                DataSourceInjector.provideUserDataSource(),
-                ApplicationInjector.provideAuthClient()
+                DataSourceProvider.provideRepositoryDataSource(),
+                DataSourceProvider.provideUserDataSource(),
+                ApplicationProvider.provideAuthClient()
             )
         }
 
@@ -42,12 +42,12 @@ class PresenterInjector {
         ): RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>> {
             return RepositoryPresenter(
                 repositoryPairId,
-                DataSourceInjector.provideRepositoryDataSource()
+                DataSourceProvider.provideRepositoryDataSource()
             )
         }
 
         fun provideUserPresenter(userId: String): UserContract.Presenter<User> {
-            return UserPresenter(userId, DataSourceInjector.provideUserDataSource())
+            return UserPresenter(userId, DataSourceProvider.provideUserDataSource())
         }
     }
 }

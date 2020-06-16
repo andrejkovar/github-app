@@ -6,7 +6,7 @@ import com.akovar.githubapp.R
 import com.akovar.githubapp.components.base.BaseFragment
 import com.akovar.githubapp.components.base.BaseToolbarActivity
 import com.akovar.githubapp.data.model.Repository
-import com.akovar.githubapp.di.FragmentInjector
+import com.akovar.githubapp.di.FragmentProvider
 
 /**
  * Created by akovar on 08/06/2020.
@@ -19,7 +19,7 @@ class RepositoryActivity :
      * Repository fragment holder.
      */
     private val repositoryFragment: RepositoryFragment =
-        FragmentInjector.provideRepositoryFragment()
+        FragmentProvider.provideRepositoryFragment()
 
     override fun provideFragment(): BaseFragment<RepositoryContract.View<Repository>,
             RepositoryContract.Presenter<Repository, RepositoryContract.View<Repository>>> {

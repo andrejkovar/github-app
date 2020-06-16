@@ -24,12 +24,18 @@ class GitHubAuthClient(
     BaseAuthClient<GitHubToken, GitHubCredentials>(),
     AuthClient<GitHubToken, GitHubCredentials> {
 
-    private val client = OkHttpClient.Builder()
+    /**
+     * Auth client holder.
+     */
+    private val authClient = OkHttpClient.Builder()
         .addInterceptor(this)
         .build()
 
     companion object {
 
+        /**
+         * List of endpoints for which you authorisation is required (token in header).
+         */
         private val needAuthPathsList: List<String> = listOf(
             Constant.HTTP.ENDPOINT_USER_ME
         )
@@ -59,7 +65,9 @@ class GitHubAuthClient(
 
     override fun needToken(request: Request): Boolean {
         val uri = request.url.toUri().toString()
-        return needAuthPathsList.any { needAuthPathsList -> uri.endsWith(needAuthPathsList) }
+        return needAuthPathsList.any { needAuthPathsList ->
+            uri.endsWith(needAuthPathsList)
+        }
     }
 
     override fun provideTokenHeader(): Pair<String, String> {
@@ -67,7 +75,7 @@ class GitHubAuthClient(
     }
 
     override fun client(): OkHttpClient {
-        return client
+        return authClient
     }
 }
 

@@ -6,7 +6,7 @@ import com.akovar.githubapp.components.base.BaseFragment
 import com.akovar.githubapp.components.base.login.LoginActivity
 import com.akovar.githubapp.components.repositorylist.RepositoryListActivity
 import com.akovar.githubapp.databinding.FragmentLandingBinding
-import com.akovar.githubapp.di.PresenterInjector
+import com.akovar.githubapp.di.PresenterProvider
 
 /**
  * Created by akovar on 15/06/2020.
@@ -18,7 +18,7 @@ class LandingFragment :
     /**
      * Login presenter holder.
      */
-    private val presenter: LandingContract.Presenter = PresenterInjector.provideLandingPresenter()
+    private val presenter: LandingContract.Presenter = PresenterProvider.provideLandingPresenter()
 
     /**
      * Layout binding holder for this fragment.

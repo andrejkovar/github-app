@@ -9,7 +9,7 @@ import com.akovar.githubapp.components.user.UserFragment
 /**
  * Created by akovar on 12/06/2020.
  */
-class FragmentInjector {
+class FragmentProvider {
 
     companion object {
 

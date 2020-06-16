@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import com.akovar.githubapp.components.base.BaseActivity
 import com.akovar.githubapp.components.base.BaseFragment
-import com.akovar.githubapp.di.FragmentInjector
+import com.akovar.githubapp.di.FragmentProvider
 
 /**
  * Created by akovar on 15/06/2020.
  */
 class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>() {
 
-    private val loginFragment: LoginFragment = FragmentInjector.provideLoginFragment()
+    private val loginFragment: LoginFragment = FragmentProvider.provideLoginFragment()
 
     override fun provideFragment(): BaseFragment<LoginContract.View, LoginContract.Presenter> {
         return loginFragment

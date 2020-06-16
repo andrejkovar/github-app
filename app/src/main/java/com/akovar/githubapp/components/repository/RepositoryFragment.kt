@@ -9,7 +9,7 @@ import com.akovar.githubapp.components.user.UserActivity
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.model.User
 import com.akovar.githubapp.databinding.FragmentRepositoryDetailsBinding
-import com.akovar.githubapp.di.PresenterInjector
+import com.akovar.githubapp.di.PresenterProvider
 import com.bumptech.glide.Glide
 
 /**
@@ -59,7 +59,7 @@ class RepositoryFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         activity?.let {
             val intent = it.intent
-            presenter = PresenterInjector.provideRepositoryPresenter(
+            presenter = PresenterProvider.provideRepositoryPresenter(
                 intent.getParcelableExtra(RepositoryActivity.REPOSITORY_PAIR_ID_EXTRA)!!
             )
             super.onActivityCreated(savedInstanceState)

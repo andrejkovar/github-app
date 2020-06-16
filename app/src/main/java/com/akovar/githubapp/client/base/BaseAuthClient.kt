@@ -31,51 +31,56 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?> :
      */
     var credentials: C? = null
 
+    /**
+     * Current token handler holder.
+     */
     private var tokenHandler: AuthClient.TokenHandler<T, C>? = null
 
-    protected val scope = MainScope()
+    /**
+     * Auth coroutine scope holder.
+     */
+    protected val authScope = MainScope()
 
+    /**
+     * Provides result with token for provided credentials.
+     *
+     * @param credentials credentials
+     * @return result with token
+     */
     abstract suspend fun provideTokenFor(credentials: C): Result<T>
 
+    /**
+     * Checks if provided request need token header.
+     *
+     * @param request request to check
+     * @return true if need token header, false otherwise
+     */
+    abstract fun needToken(request: Request): Boolean
+
+    /**
+     * Provides token header pair with auth header name and its value.
+     *
+     * @return pair pair with auth header name and its value
+     */
+    abstract fun provideTokenHeader(): Pair<String, String>
+
     override fun hasToken(): Boolean {
+        Timber.d("hasToken ${token != null}")
         return token != null
     }
 
     override fun resetToken() {
+        Timber.d("resetToken")
         token = null
     }
 
     override fun authenticate(credentials: C) {
         Timber.d("authenticate with $credentials")
 
-        scope.launch {
+        authScope.launch {
             val result = provideTokenFor(credentials)
             onAuthenticateResult(result)
         }
-    }
-
-    private fun onAuthenticateResult(result: Result<T>) {
-        Timber.d("onNewTokenResult $result")
-
-        if (result is Result.Success<T>) {
-            onAuthenticateSuccess(result)
-        } else {
-            onAuthenticateError(result as Result.Error<T>)
-        }
-    }
-
-    protected open fun onAuthenticateSuccess(success: Result.Success<T>) {
-        Timber.d("onAuthenticateSuccess $success")
-
-        token = success.item
-        tokenHandler?.onNewToken(this, token!!)
-    }
-
-    protected open fun onAuthenticateError(error: Result.Error<T>) {
-        Timber.d("onAuthenticateError $error")
-
-        resetToken()
-        tokenHandler?.onFailed(this, error.error)
     }
 
     override fun setTokenHandler(tokenHandler: AuthClient.TokenHandler<T, C>?) {
@@ -94,7 +99,37 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?> :
         return chain.proceed(request)
     }
 
-    abstract fun needToken(request: Request): Boolean
+    private fun onAuthenticateResult(result: Result<T>) {
+        Timber.d("onNewTokenResult $result")
 
-    abstract fun provideTokenHeader(): Pair<String, String>
+        if (result is Result.Success<T>) {
+            onAuthenticateSuccess(result)
+        } else {
+            onAuthenticateError(result as Result.Error<T>)
+        }
+    }
+
+    /**
+     * Called when authentication is success and it returns its result.
+     *
+     * @param success success result
+     */
+    protected open fun onAuthenticateSuccess(success: Result.Success<T>) {
+        Timber.d("onAuthenticateSuccess $success")
+
+        token = success.item
+        tokenHandler?.onNewToken(this, token!!)
+    }
+
+    /**
+     * Called when authentication failed and it returns its result.
+     *
+     * @param error error result
+     */
+    protected open fun onAuthenticateError(error: Result.Error<T>) {
+        Timber.d("onAuthenticateError $error")
+
+        resetToken()
+        tokenHandler?.onFailed(this, error.error)
+    }
 }

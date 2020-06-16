@@ -17,7 +17,7 @@ import com.akovar.githubapp.data.model.User
 import com.akovar.githubapp.data.source.repository.RepositorySort
 import com.akovar.githubapp.databinding.FragmentRepositoryListBinding
 import com.akovar.githubapp.databinding.LayoutRepositorySortBinding
-import com.akovar.githubapp.di.PresenterInjector
+import com.akovar.githubapp.di.PresenterProvider
 
 /**
  * Created by akovar on 08/06/2020.
@@ -33,7 +33,7 @@ class RepositoryListFragment :
      * Repository list presenter holder.
      */
     private val presenter: RepositoryListContract.Presenter =
-        PresenterInjector.provideRepositoryListPresenter()
+        PresenterProvider.provideRepositoryListPresenter()
 
     /**
      * Sort dialog view properties.

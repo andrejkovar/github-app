@@ -6,7 +6,7 @@ import android.view.View
 import com.akovar.githubapp.components.base.details.BaseDetailsFragment
 import com.akovar.githubapp.data.model.User
 import com.akovar.githubapp.databinding.FragmentUserDetailsBinding
-import com.akovar.githubapp.di.PresenterInjector
+import com.akovar.githubapp.di.PresenterProvider
 import com.bumptech.glide.Glide
 
 /**
@@ -38,7 +38,7 @@ class UserFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         activity?.let {
             val intent = it.intent
-            presenter = PresenterInjector.provideUserPresenter(
+            presenter = PresenterProvider.provideUserPresenter(
                 intent.getStringExtra(UserActivity.USER_ID_EXTRA)!!
             )
             super.onActivityCreated(savedInstanceState)
