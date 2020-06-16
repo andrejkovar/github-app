@@ -44,7 +44,8 @@ class RepositoryListFragment :
     /**
      * Layout binding holder for this fragment.
      */
-    private lateinit var binding: FragmentRepositoryListBinding
+    private var binding: FragmentRepositoryListBinding? = null
+    private fun binding(): FragmentRepositoryListBinding = binding!!
 
     /**
      * Repository list adapter holder.
@@ -57,14 +58,14 @@ class RepositoryListFragment :
 
     override fun provideResourceView(inflater: LayoutInflater): View {
         binding = FragmentRepositoryListBinding.inflate(inflater)
-        return binding.root
+        return binding().root
     }
 
     override fun onPostViewCreate(view: View) {
         initSortDialog()
         initAdapter()
 
-        binding.mtrlCardMyProfile.setOnClickListener {
+        binding().mtrlCardMyProfile.setOnClickListener {
             presenter.onMyProfileClick()
         }
 
@@ -76,14 +77,14 @@ class RepositoryListFragment :
     }
 
     override fun initRecyclerView() {
-        binding.layoutBaseList.recyclerViewItems.apply {
+        binding().layoutBaseList.recyclerViewItems.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@RepositoryListFragment.adapter
         }
     }
 
     override fun showUserProfile(show: Boolean) {
-        binding.mtrlCardMyProfile.visibility = if (show) View.VISIBLE else View.GONE
+        binding().mtrlCardMyProfile.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun showSortDialog(sort: RepositorySort) {
@@ -159,5 +160,9 @@ class RepositoryListFragment :
                 }
             }
         }
+    }
+
+    override fun destroyViewBinding() {
+        binding = null
     }
 }

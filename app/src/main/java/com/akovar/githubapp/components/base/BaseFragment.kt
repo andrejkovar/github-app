@@ -41,6 +41,15 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     protected abstract fun providePresenter(): P
 
     /**
+     * Destroy all view bindings in this method implementation.
+     * ViewBindings are heavy objects and you don't need to keep them
+     * in memory when Fragment.onDestroyView() method is called.
+     *
+     * Your binding objects should live only between onCreateView and onDestroyView.
+     */
+    protected abstract fun destroyViewBinding()
+
+    /**
      * In case there is a need for additional implementation
      * when view is created, just override this!
      *
@@ -69,6 +78,11 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
         resourceView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
 
         return resourceView
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        destroyViewBinding()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

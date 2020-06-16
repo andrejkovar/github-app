@@ -31,7 +31,8 @@ class RepositoryFragment :
     /**
      * Layout binding holder for this fragment.
      */
-    private lateinit var binding: FragmentRepositoryDetailsBinding
+    private var binding: FragmentRepositoryDetailsBinding? = null
+    private fun binding(): FragmentRepositoryDetailsBinding = binding!!
 
     override fun providePresenter(): RepositoryContract.Presenter<
             Repository,
@@ -41,17 +42,17 @@ class RepositoryFragment :
 
     override fun provideResourceView(inflater: LayoutInflater): View {
         binding = FragmentRepositoryDetailsBinding.inflate(inflater)
-        return binding.root
+        return binding().root
     }
 
     override fun onPostViewCreate(view: View) {
         super.onPostViewCreate(view)
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
+        binding().swipeRefreshLayout.setOnRefreshListener {
             presenter.onRefresh()
         }
 
-        binding.linearOwnerDetails.setOnClickListener {
+        binding().linearOwnerDetails.setOnClickListener {
             presenter.onRepositoryOwnerClick()
         }
     }
@@ -67,19 +68,19 @@ class RepositoryFragment :
     }
 
     override fun showDetails(show: Boolean) {
-        binding.scrollDetails.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        binding().scrollDetails.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
     override fun showLoadingProgress(show: Boolean) {
-        binding.swipeRefreshLayout.isRefreshing = show
+        binding().swipeRefreshLayout.isRefreshing = show
     }
 
     override fun setItem(item: Repository) {
-        binding.textRepositoryName.text = item.name
-        binding.textRepositoryFullName.text = item.fullName
-        binding.textRepositoryDescription.text = item.description
-        binding.textRepositoryUrl.text = item.htmlUrl
-        binding.textRepositoryLanguage.text = getString(
+        binding().textRepositoryName.text = item.name
+        binding().textRepositoryFullName.text = item.fullName
+        binding().textRepositoryDescription.text = item.description
+        binding().textRepositoryUrl.text = item.htmlUrl
+        binding().textRepositoryLanguage.text = getString(
             R.string.text_repository_language,
             item.language
         )
@@ -87,17 +88,17 @@ class RepositoryFragment :
         Glide.with(requireContext())
             .load(item.user.avatarUrl)
             .circleCrop()
-            .into(binding.imageOwnerAvatar)
+            .into(binding().imageOwnerAvatar)
 
-        binding.textOwnerName.text = item.user.login
-        binding.textWatchersCount.text = item.watchersCount.toString()
-        binding.textForksCount.text = item.forksCount.toString()
-        binding.textOpenIssuesCount.text = item.openIssuesCount.toString()
-        binding.textCreated.text = getString(
+        binding().textOwnerName.text = item.user.login
+        binding().textWatchersCount.text = item.watchersCount.toString()
+        binding().textForksCount.text = item.forksCount.toString()
+        binding().textOpenIssuesCount.text = item.openIssuesCount.toString()
+        binding().textCreated.text = getString(
             R.string.text_repository_created,
             item.createdAt
         )
-        binding.textLastUpdated.text = getString(
+        binding().textLastUpdated.text = getString(
             R.string.text_repository_last_updated,
             item.updatedAt
         )
@@ -105,5 +106,9 @@ class RepositoryFragment :
 
     override fun navigateToUserDetails(user: User) {
         UserActivity.open(context, user.login)
+    }
+
+    override fun destroyViewBinding() {
+        binding = null
     }
 }

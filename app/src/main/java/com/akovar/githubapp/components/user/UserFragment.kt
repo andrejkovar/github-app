@@ -24,7 +24,8 @@ class UserFragment :
     /**
      * Layout binding holder for this fragment.
      */
-    private lateinit var binding: FragmentUserDetailsBinding
+    private var binding: FragmentUserDetailsBinding? = null
+    private fun binding(): FragmentUserDetailsBinding = binding!!
 
     override fun providePresenter(): UserContract.Presenter<User> {
         return presenter
@@ -32,7 +33,7 @@ class UserFragment :
 
     override fun provideResourceView(inflater: LayoutInflater): View {
         binding = FragmentUserDetailsBinding.inflate(inflater)
-        return binding.root
+        return binding().root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -46,36 +47,40 @@ class UserFragment :
     }
 
     override fun showLoadingProgress(show: Boolean) {
-        binding.swipeRefreshLayout.isRefreshing = show
+        binding().swipeRefreshLayout.isRefreshing = show
     }
 
     override fun showDetails(show: Boolean) {
-        binding.scrollDetails.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        binding().scrollDetails.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
     override fun setItem(item: User) {
         Glide.with(requireContext())
             .load(item.avatarUrl)
             .circleCrop()
-            .into(binding.imageUserAvatar)
+            .into(binding().imageUserAvatar)
 
-        binding.textUserName.text = item.login
+        binding().textUserName.text = item.login
 
-        binding.textUserCompany.text = item.company
-        binding.textUserCompany.visibility =
+        binding().textUserCompany.text = item.company
+        binding().textUserCompany.visibility =
             if (item.company.isNullOrBlank()) View.GONE else View.VISIBLE
 
-        binding.textUserEmail.text = item.email
-        binding.textUserEmail.visibility =
+        binding().textUserEmail.text = item.email
+        binding().textUserEmail.visibility =
             if (item.email.isNullOrBlank()) View.GONE else View.VISIBLE
 
-        binding.textUserBio.text = item.bio
-        binding.textUserBio.visibility =
+        binding().textUserBio.text = item.bio
+        binding().textUserBio.visibility =
             if (item.bio.isNullOrBlank()) View.GONE else View.VISIBLE
 
-        binding.textUserFollowersCount.text = item.followers.toString()
-        binding.textUserFollowingCount.text = item.following.toString()
+        binding().textUserFollowersCount.text = item.followers.toString()
+        binding().textUserFollowingCount.text = item.following.toString()
 
-        binding.textUserUrl.text = item.htmlUrl
+        binding().textUserUrl.text = item.htmlUrl
+    }
+
+    override fun destroyViewBinding() {
+        binding = null
     }
 }

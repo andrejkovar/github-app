@@ -19,11 +19,12 @@ class LoginFragment :
 
     private val presenter: LoginContract.Presenter = PresenterProvider.provideLoginPresenter()
 
-    private lateinit var binding: FragmentLoginBinding
+    private var binding: FragmentLoginBinding? = null
+    private fun binding(): FragmentLoginBinding = binding!!
 
     override fun provideResourceView(inflater: LayoutInflater): View {
         binding = FragmentLoginBinding.inflate(inflater)
-        return binding.root
+        return binding!!.root
     }
 
     override fun providePresenter(): LoginContract.Presenter {
@@ -44,5 +45,9 @@ class LoginFragment :
 
     override fun navigateBackToLanding() {
         LandingActivity.open(context)
+    }
+
+    override fun destroyViewBinding() {
+        binding = null
     }
 }

@@ -23,11 +23,12 @@ class LandingFragment :
     /**
      * Layout binding holder for this fragment.
      */
-    private lateinit var binding: FragmentLandingBinding
+    private var binding: FragmentLandingBinding? = null
+    private fun binding(): FragmentLandingBinding = binding!!
 
     override fun provideResourceView(inflater: LayoutInflater): View {
         binding = FragmentLandingBinding.inflate(inflater)
-        return binding.root
+        return binding().root
     }
 
     override fun providePresenter(): LandingContract.Presenter {
@@ -37,11 +38,11 @@ class LandingFragment :
     override fun onPostViewCreate(view: View) {
         super.onPostViewCreate(view)
 
-        binding.buttonLogin.setOnClickListener {
+        binding().buttonLogin.setOnClickListener {
             presenter.onLoginClick()
         }
 
-        binding.buttonSkipLogin.setOnClickListener {
+        binding().buttonSkipLogin.setOnClickListener {
             presenter.onSkipLoginClick()
         }
     }
@@ -52,5 +53,9 @@ class LandingFragment :
 
     override fun navigateToHome() {
         RepositoryListActivity.open(context)
+    }
+
+    override fun destroyViewBinding() {
+        binding = null
     }
 }
