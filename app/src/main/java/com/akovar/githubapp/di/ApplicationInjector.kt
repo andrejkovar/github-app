@@ -8,7 +8,6 @@ import com.akovar.githubapp.client.github.GitHubCredentials
 import com.akovar.githubapp.client.github.GitHubToken
 import com.akovar.githubapp.data.source.repository.remote.RepositoryApi
 import com.akovar.githubapp.data.source.user.remote.UserApi
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,28 +18,25 @@ class ApplicationInjector {
 
     companion object {
 
-        private val clientInstance: OkHttpClient by lazy {
-            OkHttpClient.Builder()
-                .build()
-        }
-
-        private val gitHubAuthClientInstance: AuthClient<GitHubToken, GitHubCredentials> by lazy {
-            GitHubAuthClient(
-                gitHubAuthServiceApiInstance,
-                clientInstance
-            )
-        }
-
-        private val retrofitInstance: Retrofit by lazy {
+        private val clientRetrofitInstance: Retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .client(clientInstance)
+                .baseUrl(BuildConfig.BASE_AUTH_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
 
-        private val gitHubAuthServiceApiInstance: GitHubAuthService by lazy {
-            retrofitInstance.create(GitHubAuthService::class.java)
+        private val gitHubAuthServiceApiInstance: GitHubAuthService =
+            clientRetrofitInstance.create(GitHubAuthService::class.java)
+
+        private val gitHubAuthClientInstance: AuthClient<GitHubToken, GitHubCredentials> =
+            GitHubAuthClient(gitHubAuthServiceApiInstance)
+
+        private val retrofitInstance: Retrofit by lazy {
+            Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .client(gitHubAuthClientInstance.client())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         }
 
         private val repositoryApiInstance: RepositoryApi by lazy {

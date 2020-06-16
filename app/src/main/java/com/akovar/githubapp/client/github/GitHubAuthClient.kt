@@ -3,9 +3,11 @@ package com.akovar.githubapp.client.github
 import com.akovar.githubapp.BuildConfig
 import com.akovar.githubapp.client.AuthClient
 import com.akovar.githubapp.client.base.BaseAuthClient
+import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.source.Result
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -17,11 +19,21 @@ import retrofit2.http.POST
  * Created by akovar on 15/06/2020.
  */
 class GitHubAuthClient(
-    private val gitHubAuthService: GitHubAuthService,
-    okHttpClient: OkHttpClient
+    private val gitHubAuthService: GitHubAuthService
 ) :
-    BaseAuthClient<GitHubToken, GitHubCredentials>(okHttpClient),
+    BaseAuthClient<GitHubToken, GitHubCredentials>(),
     AuthClient<GitHubToken, GitHubCredentials> {
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(this)
+        .build()
+
+    companion object {
+
+        private val needAuthPathsList: List<String> = listOf(
+            Constant.HTTP.ENDPOINT_USER_ME
+        )
+    }
 
     override suspend fun provideTokenFor(credentials: GitHubCredentials): Result<GitHubToken> {
         val response = gitHubAuthService.authWithCode(
@@ -44,13 +56,26 @@ class GitHubAuthClient(
     override fun logout() {
         // Not supported, user should revoke it manually or delete cookies from device
     }
+
+    override fun needToken(request: Request): Boolean {
+        val uri = request.url.toUri().toString()
+        return needAuthPathsList.any { needAuthPathsList -> uri.endsWith(needAuthPathsList) }
+    }
+
+    override fun provideTokenHeader(): Pair<String, String> {
+        return Pair("Authorization", "token ${token?.getToken()}")
+    }
+
+    override fun client(): OkHttpClient {
+        return client
+    }
 }
 
 interface GitHubAuthService {
 
     @Headers("Accept: application/json")
     @FormUrlEncoded
-    @POST("https://github.com/login/oauth/access_token")
+    @POST("/login/oauth/access_token")
     suspend fun authWithCode(
         @Field("client_id") clientId: String,
         @Field("client_secret") clientSecret: String,

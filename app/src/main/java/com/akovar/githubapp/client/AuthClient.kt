@@ -1,6 +1,7 @@
 package com.akovar.githubapp.client
 
 import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 
 /**
  * AuthClient interface which define the contract to handle authentication
@@ -13,7 +14,7 @@ import okhttp3.Interceptor
  *
  * Created by akovar on 15/06/2020.
  */
-interface AuthClient<T : AuthToken?, C : Credentials?> {
+interface AuthClient<T : AuthToken?, C : Credentials?> : Interceptor {
 
     /**
      * Check if the instance has a [AuthToken].
@@ -38,6 +39,13 @@ interface AuthClient<T : AuthToken?, C : Credentials?> {
      * Logout.
      */
     fun logout()
+
+    /**
+     * Provides internal client.
+     *
+     * @return client.
+     */
+    fun client(): OkHttpClient
 
     /**
      * Callback interface to be invoke when a new token is fetched.

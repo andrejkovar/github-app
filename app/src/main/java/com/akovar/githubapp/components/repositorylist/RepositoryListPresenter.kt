@@ -9,6 +9,10 @@ import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.source.Result
 import com.akovar.githubapp.data.source.repository.RepositoryDataSource
 import com.akovar.githubapp.data.source.repository.RepositorySort
+import com.akovar.githubapp.data.source.user.UserDataSource
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -16,6 +20,7 @@ import timber.log.Timber
  */
 class RepositoryListPresenter(
     private val repositoryDataSource: RepositoryDataSource,
+    private val userDataSource: UserDataSource,
     private val authClient: AuthClient<GitHubToken, GitHubCredentials>
 ) : BaseSearchListPresenter<Repository, RepositoryListContract.View>(),
     RepositoryListContract.Presenter {
@@ -24,6 +29,8 @@ class RepositoryListPresenter(
      * Current selected sort holder.
      */
     private var sort: RepositorySort = Constant.UI.DEFAULT_REPOSITORY_SORT
+
+    private val userScope = MainScope()
 
     override fun onViewReady() {
         super.onViewReady()
@@ -42,7 +49,16 @@ class RepositoryListPresenter(
 
     override fun onMyProfileClick() {
         Timber.d("onMyProfileClick")
-        view?.navigateToMyProfileDetails()
+
+        userScope.launch {
+            val result = userDataSource.getMe()
+
+            if (result is Result.Success) {
+                view?.navigateToMyProfileDetails(result.item)
+            } else {
+                view?.onError(0)
+            }
+        }
     }
 
     override fun onSortClick() {
@@ -72,5 +88,10 @@ class RepositoryListPresenter(
             Constant.UI.DEFAULT_QUERY,
             sort
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        userScope.cancel()
     }
 }

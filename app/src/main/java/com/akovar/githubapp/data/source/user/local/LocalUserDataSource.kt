@@ -9,6 +9,10 @@ import com.akovar.githubapp.data.source.user.UserDataSource
  */
 class LocalUserDataSource : UserDataSource {
 
+    override suspend fun getMe(): Result<User> {
+        throw UnsupportedOperationException()
+    }
+
     override suspend fun getById(id: String): Result<User> {
         throw UnsupportedOperationException()
     }

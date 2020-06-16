@@ -29,4 +29,14 @@ class Constant {
             )
         }
     }
+
+    class HTTP {
+
+        companion object {
+            const val ENDPOINT_USER_ME = "/user"
+            const val ENDPOINT_USERS = "/users/{login}"
+            const val ENDPOINT_USER_REPO = "/repos/{ownerLogin}/{repoName}"
+            const val ENDPOINT_REPOSITORY_SEARCH = "/search/repositories"
+        }
+    }
 }

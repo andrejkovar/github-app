@@ -47,7 +47,7 @@ interface RepositoryListContract {
          * Invoked by presenter to navigate to my profile
          * details screen.
          */
-        fun navigateToMyProfileDetails()
+        fun navigateToMyProfileDetails(user: User)
     }
 
     interface Presenter : BaseSearchListContract.Presenter<Repository, View> {

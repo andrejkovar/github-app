@@ -1,5 +1,6 @@
 package com.akovar.githubapp.data.source.repository.remote
 
+import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.Repository
 import com.akovar.githubapp.data.source.DataSourceException
 import com.akovar.githubapp.data.source.RemoteDataSourceHelper
@@ -85,13 +86,13 @@ class RemoteRepositoryDataSource(
 
 interface RepositoryApi {
 
-    @GET("/search/repositories")
+    @GET(Constant.HTTP.ENDPOINT_REPOSITORY_SEARCH)
     suspend fun query(
         @Query("q") query: String,
         @Query("sort") sort: String?
     ): Response<RepositoryResponse>
 
-    @GET("/repos/{ownerLogin}/{repoName}")
+    @GET(Constant.HTTP.ENDPOINT_USER_REPO)
     suspend fun getOwnerRepo(
         @Path("ownerLogin") ownerLogin: String,
         @Path("repoName") repoName: String

@@ -104,8 +104,8 @@ class RepositoryListFragment :
         UserActivity.open(context, user.login)
     }
 
-    override fun navigateToMyProfileDetails() {
-        // TODO
+    override fun navigateToMyProfileDetails(user: User) {
+        UserActivity.open(context, user.login)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

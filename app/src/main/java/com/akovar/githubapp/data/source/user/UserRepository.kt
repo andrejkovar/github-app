@@ -1,6 +1,7 @@
 package com.akovar.githubapp.data.source.user
 
 import com.akovar.githubapp.data.model.User
+import com.akovar.githubapp.data.source.Result
 import com.akovar.githubapp.data.source.base.BaseRepository
 
 /**
@@ -15,4 +16,8 @@ class UserRepository(
     override fun provideLocalDataSource(): UserDataSource = localDataSource
 
     override fun provideRemoteDataSource(): UserDataSource = remoteDataSource
+
+    override suspend fun getMe(): Result<User> {
+        return remoteDataSource.getMe()
+    }
 }

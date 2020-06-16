@@ -6,13 +6,15 @@ import com.akovar.githubapp.client.Credentials
 import com.akovar.githubapp.data.source.Result
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
+import okhttp3.Interceptor
+import okhttp3.Request
+import okhttp3.Response
 import timber.log.Timber
 
 /**
  * Created by akovar on 15/06/2020.
  */
-abstract class BaseAuthClient<T : AuthToken?, C : Credentials?>(val okHttpClient: OkHttpClient) :
+abstract class BaseAuthClient<T : AuthToken?, C : Credentials?> :
     AuthClient<T, C> {
 
     /**
@@ -52,7 +54,7 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?>(val okHttpClient
         }
     }
 
-    protected fun onAuthenticateResult(result: Result<T>) {
+    private fun onAuthenticateResult(result: Result<T>) {
         Timber.d("onNewTokenResult $result")
 
         if (result is Result.Success<T>) {
@@ -79,4 +81,20 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?>(val okHttpClient
     override fun setTokenHandler(tokenHandler: AuthClient.TokenHandler<T, C>?) {
         this.tokenHandler = tokenHandler
     }
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        var request = chain.request()
+        if (needToken(request)) {
+            val tokenHeader = provideTokenHeader()
+            request = request.newBuilder()
+                .addHeader(tokenHeader.first, tokenHeader.second)
+                .build()
+        }
+
+        return chain.proceed(request)
+    }
+
+    abstract fun needToken(request: Request): Boolean
+
+    abstract fun provideTokenHeader(): Pair<String, String>
 }
