@@ -17,8 +17,14 @@ class LoginFragment :
     BaseFragment<LoginContract.View, LoginContract.Presenter>(),
     LoginContract.View {
 
+    /**
+     * Login presenter holder.
+     */
     private val presenter: LoginContract.Presenter = PresenterProvider.provideLoginPresenter()
 
+    /**
+     * Layout binding holder for this fragment.
+     */
     private var binding: FragmentLoginBinding? = null
     private fun binding(): FragmentLoginBinding = binding!!
 

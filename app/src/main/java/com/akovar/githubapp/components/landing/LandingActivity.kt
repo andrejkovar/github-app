@@ -11,6 +11,9 @@ import com.akovar.githubapp.di.FragmentProvider
  */
 class LandingActivity : BaseActivity<LandingContract.View, LandingContract.Presenter>() {
 
+    /**
+     * Landing fragment holder.
+     */
     private val landingFragment: LandingFragment = FragmentProvider.provideLandingFragment()
 
     override fun provideFragment(): BaseFragment<LandingContract.View, LandingContract.Presenter> {

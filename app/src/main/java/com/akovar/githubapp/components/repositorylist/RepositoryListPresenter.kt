@@ -34,6 +34,9 @@ class RepositoryListPresenter(
      */
     private var sort: RepositorySort = Constant.UI.DEFAULT_REPOSITORY_SORT
 
+    /**
+     * User coroutine scope holder.
+     */
     private val userScope = MainScope()
 
     override fun onViewReady() {

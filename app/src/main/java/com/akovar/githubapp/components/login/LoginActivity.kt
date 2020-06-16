@@ -11,6 +11,9 @@ import com.akovar.githubapp.di.FragmentProvider
  */
 class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>() {
 
+    /**
+     * Login fragment holder.
+     */
     private val loginFragment: LoginFragment = FragmentProvider.provideLoginFragment()
 
     override fun provideFragment(): BaseFragment<LoginContract.View, LoginContract.Presenter> {

@@ -16,7 +16,7 @@ class LandingFragment :
     LandingContract.View {
 
     /**
-     * Login presenter holder.
+     * Landing presenter holder.
      */
     private val presenter: LandingContract.Presenter = PresenterProvider.provideLandingPresenter()
 
