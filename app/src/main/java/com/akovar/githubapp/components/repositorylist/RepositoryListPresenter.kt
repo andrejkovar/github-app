@@ -6,10 +6,13 @@ import com.akovar.githubapp.client.github.GitHubToken
 import com.akovar.githubapp.components.base.searchlist.BaseSearchListPresenter
 import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.Repository
+import com.akovar.githubapp.data.model.User
+import com.akovar.githubapp.data.source.DataSource
 import com.akovar.githubapp.data.source.Result
 import com.akovar.githubapp.data.source.repository.RepositoryDataSource
 import com.akovar.githubapp.data.source.repository.RepositorySort
-import com.akovar.githubapp.data.source.user.UserDataSource
+import com.akovar.githubapp.data.source.user.UserId
+import com.akovar.githubapp.data.source.user.UserMe
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -20,7 +23,7 @@ import timber.log.Timber
  */
 class RepositoryListPresenter(
     private val repositoryDataSource: RepositoryDataSource,
-    private val userDataSource: UserDataSource,
+    private val userDataSource: DataSource<User, UserId>,
     private val authClient: AuthClient<GitHubToken, GitHubCredentials>
 ) : BaseSearchListPresenter<Repository, RepositoryListContract.View>(),
     RepositoryListContract.Presenter {
@@ -53,7 +56,7 @@ class RepositoryListPresenter(
         userScope.launch {
             view?.showLoadingProgress(true)
 
-            val result = userDataSource.getMe()
+            val result = userDataSource.getById(UserMe)
             if (result is Result.Success) {
                 view?.navigateToMyProfileDetails(result.item)
             } else {

@@ -2,9 +2,12 @@ package com.akovar.githubapp.data.source.user.remote
 
 import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.User
+import com.akovar.githubapp.data.source.DataSource
 import com.akovar.githubapp.data.source.RemoteDataSourceHelper
 import com.akovar.githubapp.data.source.Result
-import com.akovar.githubapp.data.source.user.UserDataSource
+import com.akovar.githubapp.data.source.user.UserById
+import com.akovar.githubapp.data.source.user.UserId
+import com.akovar.githubapp.data.source.user.UserMe
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,10 +15,15 @@ import retrofit2.http.Path
 /**
  * Created by akovar on 10/06/2020.
  */
-class RemoteUserDataSource(private val userApi: UserApi) : UserDataSource {
+class RemoteUserDataSource(private val userApi: UserApi) : DataSource<User, UserId> {
 
-    override suspend fun getById(id: String): Result<User> {
-        return RemoteDataSourceHelper.processGet { userApi.getUser(id) }
+    override suspend fun getById(id: UserId): Result<User> {
+        return RemoteDataSourceHelper.processGet {
+            when (id) {
+                is UserMe -> userApi.getMe()
+                is UserById -> userApi.getUser(id.id)
+            }
+        }
     }
 
     override suspend fun getAll(): Result<List<User>> {
@@ -28,12 +36,6 @@ class RemoteUserDataSource(private val userApi: UserApi) : UserDataSource {
 
     override suspend fun saveAll(items: List<User>): Result<List<User>> {
         throw UnsupportedOperationException()
-    }
-
-    override suspend fun getMe(): Result<User> {
-        return RemoteDataSourceHelper.processGet {
-            userApi.getMe()
-        }
     }
 }
 

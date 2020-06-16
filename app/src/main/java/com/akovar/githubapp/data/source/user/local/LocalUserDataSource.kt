@@ -1,19 +1,16 @@
 package com.akovar.githubapp.data.source.user.local
 
 import com.akovar.githubapp.data.model.User
+import com.akovar.githubapp.data.source.DataSource
 import com.akovar.githubapp.data.source.Result
-import com.akovar.githubapp.data.source.user.UserDataSource
+import com.akovar.githubapp.data.source.user.UserId
 
 /**
  * Created by akovar on 10/06/2020.
  */
-class LocalUserDataSource : UserDataSource {
+class LocalUserDataSource : DataSource<User, UserId> {
 
-    override suspend fun getMe(): Result<User> {
-        throw UnsupportedOperationException()
-    }
-
-    override suspend fun getById(id: String): Result<User> {
+    override suspend fun getById(id: UserId): Result<User> {
         throw UnsupportedOperationException()
     }
 
