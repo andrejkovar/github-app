@@ -160,7 +160,7 @@
                 style="@style/GitHubApp.TextView.Body.1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin_details"
+                android:layout_marginTop="@dimen/default_margin_details"
                 android:autoLink="web"
                 android:textAlignment="center"
                 tools:text="https://api.github.com" />
