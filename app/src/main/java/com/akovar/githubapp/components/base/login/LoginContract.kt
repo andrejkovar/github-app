@@ -11,6 +11,12 @@ interface LoginContract {
     interface View : BaseContract.View {
 
         fun provideIntentUri(): Uri?
+
+        fun openGitHubLoginWeb(uri: Uri)
+
+        fun navigateToHome()
+
+        fun navigateBackToLanding()
     }
 
     interface Presenter : BaseContract.Presenter<View>

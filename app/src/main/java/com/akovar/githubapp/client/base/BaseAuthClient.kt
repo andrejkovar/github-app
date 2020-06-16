@@ -1,5 +1,8 @@
-package com.akovar.githubapp.client
+package com.akovar.githubapp.client.base
 
+import com.akovar.githubapp.client.AuthClient
+import com.akovar.githubapp.client.AuthToken
+import com.akovar.githubapp.client.Credentials
 import com.akovar.githubapp.data.source.Result
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -26,6 +29,8 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?>(val okHttpClient
      */
     var credentials: C? = null
 
+    private var tokenHandler: AuthClient.TokenHandler<T, C>? = null
+
     protected val scope = MainScope()
 
     abstract suspend fun provideTokenFor(credentials: C): Result<T>
@@ -34,8 +39,8 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?>(val okHttpClient
         return token != null
     }
 
-    override fun token(): T? {
-        return token
+    override fun resetToken() {
+        token = null
     }
 
     override fun authenticate(credentials: C) {
@@ -59,11 +64,19 @@ abstract class BaseAuthClient<T : AuthToken?, C : Credentials?>(val okHttpClient
 
     protected open fun onAuthenticateSuccess(success: Result.Success<T>) {
         Timber.d("onAuthenticateSuccess $success")
+
         token = success.item
+        tokenHandler?.onNewToken(this, token!!)
     }
 
     protected open fun onAuthenticateError(error: Result.Error<T>) {
         Timber.d("onAuthenticateError $error")
-        token = null
+
+        resetToken()
+        tokenHandler?.onFailed(this, error.error)
+    }
+
+    override fun setTokenHandler(tokenHandler: AuthClient.TokenHandler<T, C>?) {
+        this.tokenHandler = tokenHandler
     }
 }

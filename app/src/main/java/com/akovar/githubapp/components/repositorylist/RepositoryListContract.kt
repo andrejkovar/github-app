@@ -14,6 +14,13 @@ interface RepositoryListContract {
     interface View : BaseSearchListContract.View<Repository> {
 
         /**
+         * Invoked by presenter to show user profile.
+         *
+         * @param show show user profile
+         */
+        fun showUserProfile(show: Boolean)
+
+        /**
          * Invoked by presenter to show sort dialog.
          *
          * @param sort repository search sort
@@ -35,9 +42,20 @@ interface RepositoryListContract {
          * @param user user
          */
         fun navigateToUserDetails(user: User)
+
+        /**
+         * Invoked by presenter to navigate to my profile
+         * details screen.
+         */
+        fun navigateToMyProfileDetails()
     }
 
     interface Presenter : BaseSearchListContract.Presenter<Repository, View> {
+
+        /**
+         * Invoked when user press on my profile action view.
+         */
+        fun onMyProfileClick()
 
         /**
          * Invoked when user press on sort action view.

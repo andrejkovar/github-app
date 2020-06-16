@@ -1,9 +1,11 @@
 package com.akovar.githubapp.components.base.login
 
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import com.akovar.githubapp.components.base.BaseFragment
+import com.akovar.githubapp.components.repositorylist.RepositoryListActivity
 import com.akovar.githubapp.databinding.FragmentLoginBinding
 import com.akovar.githubapp.di.PresenterInjector
 
@@ -29,5 +31,17 @@ class LoginFragment :
 
     override fun provideIntentUri(): Uri? {
         return activity?.intent?.data
+    }
+
+    override fun openGitHubLoginWeb(uri: Uri) {
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+    }
+
+    override fun navigateToHome() {
+        RepositoryListActivity.open(context)
+    }
+
+    override fun navigateBackToLanding() {
+        close()
     }
 }

@@ -1,7 +1,11 @@
 package com.akovar.githubapp.di
 
 import com.akovar.githubapp.BuildConfig
-import com.akovar.githubapp.client.*
+import com.akovar.githubapp.client.AuthClient
+import com.akovar.githubapp.client.github.GitHubAuthClient
+import com.akovar.githubapp.client.github.GitHubAuthService
+import com.akovar.githubapp.client.github.GitHubCredentials
+import com.akovar.githubapp.client.github.GitHubToken
 import com.akovar.githubapp.data.source.repository.remote.RepositoryApi
 import com.akovar.githubapp.data.source.user.remote.UserApi
 import okhttp3.OkHttpClient
@@ -21,7 +25,10 @@ class ApplicationInjector {
         }
 
         private val gitHubAuthClientInstance: AuthClient<GitHubToken, GitHubCredentials> by lazy {
-            GitHubAuthClient(gitHubAuthServiceApiInstance, clientInstance)
+            GitHubAuthClient(
+                gitHubAuthServiceApiInstance,
+                clientInstance
+            )
         }
 
         private val retrofitInstance: Retrofit by lazy {

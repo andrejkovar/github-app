@@ -34,7 +34,10 @@ interface AuthClient<T : AuthToken?, C : Credentials?> {
      */
     fun authenticate(credentials: C)
 
-    fun token(): T?
+    /**
+     * Logout.
+     */
+    fun logout()
 
     /**
      * Callback interface to be invoke when a new token is fetched.
@@ -42,30 +45,29 @@ interface AuthClient<T : AuthToken?, C : Credentials?> {
      * @param <T> AuthToken
      * @param <C> Credentials
     </C></T> */
-    interface NewTokenHandler<T : AuthToken?, C : Credentials?> {
+    interface TokenHandler<T : AuthToken?, C : Credentials?> {
+
         /**
-         * Invoke when there is a new [AuthToken].
+         * Invoked when there is a new [AuthToken].
          *
          * @param client the caller of this method
          * @param token  the new token
-         * @return true if token is accepted or false otherwise
          */
-        fun accept(client: AuthClient<T, C>, token: T): Boolean
+        fun onNewToken(client: AuthClient<T, C>, token: T)
+
+        /**
+         * Invoked when authentication went wrong.
+         *
+         * @param client the caller of this method
+         * @param throwable reason
+         */
+        fun onFailed(client: AuthClient<T, C>, throwable: Throwable)
     }
-//
-//    /**
-//     * Callback interface to be invoke when a new token is fetched.
-//     *
-//     * @param <T> AuthToken
-//     * @param <C> Credentials
-//    </C></T> */
-//    interface OnTokenExpiredAction<T : AuthToken?, C : Credentials?> {
-//        /**
-//         * Invoke when the [AuthToken] has expired.
-//         *
-//         * @param client the caller of this method
-//         * @param token  the expired token
-//         */
-//        fun action(client: AuthClient<T, C>, token: T)
-//    }
+
+    /**
+     * Sets token handler to current AuthClient.
+     *
+     * @param tokenHandler token handler
+     */
+    fun setTokenHandler(tokenHandler: TokenHandler<T, C>?)
 }

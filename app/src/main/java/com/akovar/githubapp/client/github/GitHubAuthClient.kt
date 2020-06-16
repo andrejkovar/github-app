@@ -1,6 +1,8 @@
-package com.akovar.githubapp.client
+package com.akovar.githubapp.client.github
 
 import com.akovar.githubapp.BuildConfig
+import com.akovar.githubapp.client.AuthClient
+import com.akovar.githubapp.client.base.BaseAuthClient
 import com.akovar.githubapp.data.source.Result
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
@@ -21,10 +23,6 @@ class GitHubAuthClient(
     BaseAuthClient<GitHubToken, GitHubCredentials>(okHttpClient),
     AuthClient<GitHubToken, GitHubCredentials> {
 
-    override fun resetToken() {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun provideTokenFor(credentials: GitHubCredentials): Result<GitHubToken> {
         val response = gitHubAuthService.authWithCode(
             BuildConfig.GITHUB_CLIENT_ID,
@@ -33,12 +31,19 @@ class GitHubAuthClient(
         )
 
         return if (response.isSuccessful) {
-            Result.Success(GitHubToken(response.body()!!.accessToken))
+            Result.Success(
+                GitHubToken(
+                    response.body()!!.accessToken
+                )
+            )
         } else {
             Result.Error(Exception("${response.errorBody()}"))
         }
     }
 
+    override fun logout() {
+        // Not supported, user should revoke it manually or delete cookies from device
+    }
 }
 
 interface GitHubAuthService {

@@ -25,5 +25,6 @@
     <string name="dialog_option_last_update">Last update</string>
 
     <string name="error_unknown_error">Something went wrong!</string>
+    <string name="label_my_profile">My profile</string>
 
 </resources>

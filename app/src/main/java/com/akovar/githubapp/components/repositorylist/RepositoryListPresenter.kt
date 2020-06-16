@@ -1,5 +1,8 @@
 package com.akovar.githubapp.components.repositorylist
 
+import com.akovar.githubapp.client.AuthClient
+import com.akovar.githubapp.client.github.GitHubCredentials
+import com.akovar.githubapp.client.github.GitHubToken
 import com.akovar.githubapp.components.base.searchlist.BaseSearchListPresenter
 import com.akovar.githubapp.data.Constant
 import com.akovar.githubapp.data.model.Repository
@@ -12,7 +15,8 @@ import timber.log.Timber
  * Created by akovar on 08/06/2020.
  */
 class RepositoryListPresenter(
-    private val repositoryDataSource: RepositoryDataSource
+    private val repositoryDataSource: RepositoryDataSource,
+    private val authClient: AuthClient<GitHubToken, GitHubCredentials>
 ) : BaseSearchListPresenter<Repository, RepositoryListContract.View>(),
     RepositoryListContract.Presenter {
 
@@ -20,6 +24,11 @@ class RepositoryListPresenter(
      * Current selected sort holder.
      */
     private var sort: RepositorySort = Constant.UI.DEFAULT_REPOSITORY_SORT
+
+    override fun onViewReady() {
+        super.onViewReady()
+        view?.showUserProfile(authClient.hasToken())
+    }
 
     override fun onItemClick(item: Repository) {
         super.onItemClick(item)
@@ -29,6 +38,11 @@ class RepositoryListPresenter(
     override fun onOwnerAvatarClick(item: Repository) {
         Timber.d("onOwnerAvatarClick: ${item.id}")
         view?.navigateToUserDetails(item.user)
+    }
+
+    override fun onMyProfileClick() {
+        Timber.d("onMyProfileClick")
+        view?.navigateToMyProfileDetails()
     }
 
     override fun onSortClick() {

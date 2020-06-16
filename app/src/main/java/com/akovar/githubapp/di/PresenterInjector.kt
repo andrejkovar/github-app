@@ -30,7 +30,10 @@ class PresenterInjector {
         }
 
         fun provideRepositoryListPresenter(): RepositoryListContract.Presenter {
-            return RepositoryListPresenter(DataSourceInjector.provideRepositoryDataSource())
+            return RepositoryListPresenter(
+                DataSourceInjector.provideRepositoryDataSource(),
+                ApplicationInjector.provideAuthClient()
+            )
         }
 
         fun provideRepositoryPresenter(

@@ -63,6 +63,11 @@ class RepositoryListFragment :
     override fun onPostViewCreate(view: View) {
         initSortDialog()
         initAdapter()
+
+        binding.linearMyProfile.setOnClickListener {
+            presenter.onMyProfileClick()
+        }
+
         super.onPostViewCreate(view)
     }
 
@@ -75,6 +80,10 @@ class RepositoryListFragment :
             layoutManager = LinearLayoutManager(context)
             adapter = this@RepositoryListFragment.adapter
         }
+    }
+
+    override fun showUserProfile(show: Boolean) {
+        binding.linearMyProfile.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun showSortDialog(sort: RepositorySort) {
@@ -93,6 +102,10 @@ class RepositoryListFragment :
 
     override fun navigateToUserDetails(user: User) {
         UserActivity.open(context, user.login)
+    }
+
+    override fun navigateToMyProfileDetails() {
+        // TODO
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
