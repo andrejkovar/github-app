@@ -65,8 +65,8 @@ class GitHubAuthClient(
 
     override fun needToken(request: Request): Boolean {
         val uri = request.url.toUri().toString()
-        return needAuthPathsList.any { needAuthPathsList ->
-            uri.endsWith(needAuthPathsList)
+        return needAuthPathsList.any { path ->
+            uri.endsWith(path)
         }
     }
 
